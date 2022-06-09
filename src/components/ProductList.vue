@@ -4,6 +4,7 @@
     <div class="all-products">
       <div class="product-item" v-for="(product, index) in products" :key="index">
         <product-card
+          :index-product="index"
           :value="product.value"
           :name="product.name"
           :src-img="product.srcImg"

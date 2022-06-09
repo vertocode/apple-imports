@@ -5,7 +5,7 @@
         {{ name }}
       </h3>
       <img
-          :src="srcImg"
+          :src="`https://vertocode.github.io/verto-imports/${srcImg}`"
           :alt="name"
       />
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
@@ -15,8 +15,8 @@
             <div class="fw-bold">Processador:</div>
             <ul>
               <li v-for="(processor, index) in processors">
-                <input class="float-start mx-3 mt-1" type="radio" name="processor" v-if="index === 0" checked @click="calculateValue(processor, 'processor')">
-                <input class="float-start mx-3 mt-1" type="radio" name="processor" v-else @click="calculateValue(processor, 'processor')">{{ processor.name }}</li>
+                <input class="float-start mx-3 mt-1" type="radio" :name="`processor-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(processor, 'processor')">
+                <input class="float-start mx-3 mt-1" type="radio" :name="`processor-${indexProduct}`" v-else @click="calculateValue(processor, 'processor')">{{ processor.name }}</li>
             </ul>
           </div>
           <span class="badge bg-primary rounded-pill" title="Opções">{{ processors?.length ?? 0 }}</span>
@@ -26,8 +26,8 @@
             <div class="fw-bold">Memória RAM:</div>
             <ul>
               <li v-for="(ram, index) in rams">
-                <input class="float-start mx-3 mt-1" type="radio" name="ram" v-if="index === 0" checked @click="calculateValue(ram, 'ram')">
-                <input class="float-start mx-3 mt-1" type="radio" name="ram" v-else @click="calculateValue(ram, 'ram')">{{ ram.name }} GB - RAM</li>
+                <input class="float-start mx-3 mt-1" type="radio" :name="`ram-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(ram, 'ram')">
+                <input class="float-start mx-3 mt-1" type="radio" :name="`ram-${indexProduct}`" v-else @click="calculateValue(ram, 'ram')">{{ ram.name }} GB - RAM</li>
             </ul>
           </div>
           <span class="badge bg-primary rounded-pill" title="Opções">{{ rams?.length ?? 0 }}</span>
@@ -37,8 +37,8 @@
             <div class="fw-bold">Armazenamento:</div>
             <ul>
               <li v-for="(store, index) in stores">
-                <input class="float-start mx-3 mt-1" type="radio" name="store" v-if="index === 0" checked @click="calculateValue(store, 'store')">
-                <input class="float-start mx-3 mt-1" type="radio" name="store" v-else @click="calculateValue(store, 'store')">
+                <input class="float-start mx-3 mt-1" type="radio" :name="`store-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(store, 'store')">
+                <input class="float-start mx-3 mt-1" type="radio" :name="`store-${indexProduct}`" v-else @click="calculateValue(store, 'store')">
                 {{ store.name }} - SSD</li>
             </ul>
           </div>
@@ -51,10 +51,11 @@
 
 <script setup>
 
-import { onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
   value: Number,
+  indexProduct: Number,
   name: String,
   srcImg: String,
   processors: Array,
