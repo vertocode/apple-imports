@@ -1,48 +1,33 @@
 <template>
-  <div class="product-card">
+  <div class="product-card px-2">
     <div class="card-item">
       <h3 class="text-primary">
         {{ name }}
       </h3>
       <img
-          :src="`https://vertocode.github.io/verto-imports/${srcImg}`"
+          :src="`https://vertocode.github.io/verto-imports/src/assets/products/${srcImg}`"
           :alt="name"
       />
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
-      <ol class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="ms-2 me-auto">
-            <div class="fw-bold">Processador:</div>
-            <ul>
-              <li v-for="(processor, index) in processors">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`processor-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(processor, 'processor')">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`processor-${indexProduct}`" v-else @click="calculateValue(processor, 'processor')">{{ processor.name }}</li>
-            </ul>
+      <ol class="list-group px-3 py-2">
+        <li class="justify-content-between align-items-start">
+          <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
+            <div class="item-specification">
+              <div class="d-flex justify-content-between">
+                <div class="fw-bold mx-2 my-2">{{ specification.title }}:</div>
+                <div>
+                  <span class="badge bg-primary rounded-pill mt-2" title="Opções">{{ specification.items.length ?? 0 }}</span>
+                </div>
+              </div>
+              <ul>
+                <li v-for="(item, index) in specification.items">
+                  <input class="float-start mx-3 mt-1" type="radio" :name="`${indexSpecification}-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(item, specification.title)">
+                  <input class="float-start mx-3 mt-1" type="radio" :name="`${indexSpecification}-${indexProduct}`" v-else @click="calculateValue(item, specification.title)">
+                  <span class="specification-text">{{ item.name }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          <span class="badge bg-primary rounded-pill" title="Opções">{{ processors?.length ?? 0 }}</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="ms-2 me-auto">
-            <div class="fw-bold">Memória RAM:</div>
-            <ul>
-              <li v-for="(ram, index) in rams">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`ram-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(ram, 'ram')">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`ram-${indexProduct}`" v-else @click="calculateValue(ram, 'ram')">{{ ram.name }} GB - RAM</li>
-            </ul>
-          </div>
-          <span class="badge bg-primary rounded-pill" title="Opções">{{ rams?.length ?? 0 }}</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="ms-2 me-auto">
-            <div class="fw-bold">Armazenamento:</div>
-            <ul>
-              <li v-for="(store, index) in stores">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`store-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(store, 'store')">
-                <input class="float-start mx-3 mt-1" type="radio" :name="`store-${indexProduct}`" v-else @click="calculateValue(store, 'store')">
-                {{ store.name }} - SSD</li>
-            </ul>
-          </div>
-          <span class="badge bg-primary rounded-pill" title="Opções">{{ stores?.length ?? 0 }}</span>
         </li>
       </ol>
     </div>
@@ -58,37 +43,41 @@ const props = defineProps({
   indexProduct: Number,
   name: String,
   srcImg: String,
-  processors: Array,
-  rams: Array,
-  stores: Array
+  specifications: Object
 })
 
-let processor = ref(0)
-let ram = ref(0)
-let store = ref(0)
+let itemsMarked = []
 let totalValue = ref(props.value)
 
-const calculateValue = (item, type) => {
-  totalValue.value = props.value
-  switch (type) {
-    case 'processor':
-      processor.value = item.value
-          break
-    case 'ram':
-      ram.value = item.value
-          break
-    case 'store':
-      store.value = item.value
-          break
+const calculateValue = (specification, title) => {
+
+  const { name, value } = specification
+  totalValue.value = props.value || 0
+
+  const currentItem = itemsMarked.filter(item => item.title === title)
+
+  const indexItem = itemsMarked.indexOf(currentItem[0])
+
+  itemsMarked[indexItem] = {
+    title,
+    name,
+    value: value ?? 0
   }
 
-  totalValue.value += processor.value + ram.value + store.value
+  for (const item of itemsMarked) {
+    totalValue.value += item.value || 0
+  }
 }
 
 onMounted(() => {
-  totalValue.value += props.processors[0].value
-  totalValue.value += props.rams[0].value
-  totalValue.value += props.stores[0].value
+  props.specifications.forEach(specification => {
+    totalValue.value += specification.items[0].value ?? 0
+    itemsMarked.push({
+      title: specification.title,
+      name: specification.items[0].name,
+      value: specification.items[0].value
+    })
+  })
 })
 </script>
 
@@ -106,8 +95,18 @@ onMounted(() => {
       max-width: 80%;
       height: 100px;
     }
+    ol {
+      width: 95%;
+      margin: auto;
+    }
     li {
       list-style-type: none;
+      text-align: start;
+    }
+    .item-specification {
+      border-bottom: rgba(13, 110, 253, 0.69) solid 1px;
+      margin-top: 4px;
+      padding: 3px;
     }
   }
 }
