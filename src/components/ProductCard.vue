@@ -5,7 +5,7 @@
         {{ name }}
       </h3>
       <img
-          :src="`https://vertocode.github.io/verto-imports/src/assets/products/${srcImg}`"
+          :src="srcImg"
           :alt="name"
       />
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
@@ -104,6 +104,7 @@ onMounted(() => {
       text-align: start;
     }
     .item-specification {
+      min-height: 140px;
       border-bottom: rgba(13, 110, 253, 0.69) solid 1px;
       margin-top: 4px;
       padding: 3px;

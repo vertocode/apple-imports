@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <h1>Lista de produtos Apple: </h1>
+    <h1>All products: </h1>
     <div class="all-products">
       <div class="product-item" v-for="(product, index) in products" :key="index">
         <product-card
@@ -12,186 +12,101 @@
         />
       </div>
     </div>
+    <div>
+      <h2>Add new product: </h2>
+      <div class="mb-3 d-flex m-5">
+        <div class="m-3 col-3">
+          <label for="product_name">Name:</label>
+          <input type="text" class="form-control" placeholder="PRODUCT NAME" id="name-input">
+        </div>
+        <div class="col-9">
+          <div>
+            <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+            <input @change="handleFiles" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+          </div>
+          <div class="preview" id="image-append">
+            <p>No files currently selected for upload</p>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 d-flex">
+        <div class="input-group m-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
+          <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+          </div>
+        </div>
+        <label for="exampleFormControlTextarea1" class="form-label" disabled="disabled">Description(In development): </label>
+        <input id="description-input" disabled>
+      </div>
+      <button @click="addProduct" type="button" :disabled="addNewProductIsDisabled" :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'">Add this new product</button>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import ProductCard from './ProductCard.vue'
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      products: [
-        {
-          value: 7500,
-          name: 'MacBook Air',
-          srcImg: 'macbook-air-m1.jpg',
-          specifications: [
-            {
-              title: 'Processador',
-              items: [
-                {
-                  name: 'M1 chip'
-                },
-                {
-                  name: 'M2 chip',
-                  value: 4000
-                }
-              ]
-            },
-            {
-              title: 'Memoria RAM',
-              items: [
-                {
-                  name: '8 GB'
-                },
-                {
-                  name: '16 GB',
-                  value: 2000
-                }
-              ]
-            },
-            {
-              title: 'Armazenamento',
-              items: [
-                {
-                  name:'256 GB'
-                },
-                {
-                  name:'512 GB',
-                  value: 1000
-                },
-                {
-                  name:'1 TB',
-                  value: 1500
-                },
-                {
-                  name: '2 TB',
-                  value: 2000
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: 4000,
-          name: 'Iphone 13',
-          srcImg: 'iphone-13.jpeg',
-          specifications: [
-            {
-              title: 'Processador',
-              items: [
-                {
-                  name: '2x 3.22 GHz Avalanche + 4x 1.82 GHz Blizzard',
-                  value: 500
-                }
-              ]
-            },
-            {
-              title: 'GPU',
-              items: [
-                {
-                  name: 'Apple GPU (4‑core)'
-                }
-              ]
-            },
-            {
-              title: 'Câmera',
-              items: [
-                {
-                  name: '12 Mp'
-                },
-                {
-                  name: '14 Mp',
-                  value: 200
-                },
-                {
-                  name: '16 Mp',
-                  value: 400
-                }
-              ]
-            },
-            {
-              title: 'Memoria RAM',
-              items: [
-                {
-                  name: '4 GB'
-                }
-              ]
-            },
-            {
-              title: 'Armazenamento',
-              items: [
-                {
-                  name: '256 GB'
-                },
-                {
-                  name: '512 GB',
-                  value: 1000
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: 6000,
-          name: 'Mac Mini',
-          srcImg: 'mac-mini.png',
-          specifications: [
-            {
-              title: 'Processador',
-              items: [
-                {
-                  name: 'M1 chip'
-                },
-                {
-                  name: 'M2 chip',
-                  value: 3500
-                }
-              ]
-            },
-            {
-              title: 'Memoria RAM',
-              items: [
-                {
-                  name: '8 GB'
-                },
-                {
-                  name: '16 GB',
-                  value: 1500
-                }
-              ]
-            },
-            {
-              title: 'Armazenamento',
-              items: [
-                {
-                  name:'256 GB'
-                },
-                {
-                  name:'512 GB',
-                  value: 200
-                },
-                {
-                  name:'1 TB',
-                  value: 800
-                },
-                {
-                  name: '2 TB',
-                  value: 1500
-                }
-              ]
-            }
-          ]
-        },
-      ]
-    }
-  },
-  components: {
-    ProductCard
+import { useStore } from "vuex";
+import { reactive, ref } from "vue";
+
+const addNewProductIsDisabled = ref(false)
+
+const store = useStore()
+const products = store.state.products
+
+const addProductPayload = reactive({
+  value: 0,
+  name: '',
+  srcImg: '',
+  specifications: []
+})
+
+function handleFiles(event) {
+  const appendImg = document.getElementById('image-append')
+  const reader = new FileReader()
+  reader.onload = function () {
+    appendImg.innerHTML = `<img src="${reader.result}" alt="img">`
+    // Add image that was done an uploaded in payload to add product.
   }
+  reader.readAsDataURL(event.target.files[0])
+
+  const formData = new FormData()
+  formData.append('image', event.target.files[0])
+  fetch('https://api.imgur.com/3/', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Client-ID 17f3a3a2cdete7b'
+    },
+    body: formData
+  }).then(res => res.json()).then(res => {
+    addProductPayload.srcImg = res.data.link
+    if(res.data.error) {
+      alert(`Error with upload image. [Error:${res.data.error}][Status: ${res.status}][Success:${res.success}]`)
+      addProductPayload.srcImg = reader.result
+    }
+  })
 }
+
+const addProduct = () => {
+  let inputConfigs = [{key: 'name', id:'name'}, {id:'description'}, {key:'value',id:'value'}]
+  for (const config of inputConfigs) {
+    const { key, id } = config
+    const currentValueInput = document.querySelector(`#${id}-input`).value
+    if (key) {
+      addProductPayload[key] = currentValueInput
+      if (!currentValueInput.length > 0) {
+        alert('There are incomplete mandatory fields. Please fill this out.')
+        return
+      }
+    }
+  }
+  store.commit('addProducts', addProductPayload)
+}
+
 </script>
 
 <style lang="scss">
@@ -201,16 +116,27 @@ export default {
   .all-products {
     display: grid;
     @media only screen and (max-width: 600px) {
-      grid-template-columns: auto;
+      grid-template-columns: 100%;
     }
     @media only screen and (min-width: 600px) {
-      grid-template-columns: auto auto;
+      grid-template-columns: 50% 50%;
     }
     @media only screen and (min-width: 1000px) {
-      grid-template-columns: auto auto auto;
+      grid-template-columns: 33% 33% 33%;
     }
     @media only screen and (min-width: 1750px) {
-      grid-template-columns: auto auto auto auto;
+      grid-template-columns: 25% 25% 25% 25%;
+    }
+  }
+  .add-new-product {
+    &__enabled {
+    }
+    &__disabled {
+    }
+  }
+  #image-append {
+    img {
+      width: 100px;
     }
   }
 }
