@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <product-list/>
+    <navbar/>
+    <router-view />
   </div>
 </template>
 
 <script setup>
 import ProductList from './components/ProductList.vue'
+import Navbar from './components/Navbar.vue'
 
 </script>
 
