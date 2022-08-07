@@ -73,13 +73,16 @@ function handleFiles(event) {
     // Add image that was done an uploaded in payload to add product.
   }
   reader.readAsDataURL(event.target.files[0])
+  const clientId = '082f3d63c4c2091'
+  // const clientSecret = 'cd63c09150ce871d3fb57e6eaf5fcbbf447db1a3'
+  // Base authorization = Authorization: Client-ID YOUR_CLIENT_ID
 
   const formData = new FormData()
   formData.append('image', event.target.files[0])
-  fetch('https://api.imgur.com/3/', {
-    method: 'POST',
+  fetch('https://api.imgur.com/3/upload', {
+    method: 'post',
     headers: {
-      Authorization: 'Client-ID 17f3a3a2cdete7b'
+      Authorization: `Client-ID ${clientId}`
     },
     body: formData
   }).then(res => res.json()).then(res => {

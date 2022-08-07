@@ -6,7 +6,7 @@ export default createStore({
             {
                 value: 7500,
                 name: 'MacBook Air',
-                srcImg: 'https://vertocode.github.io/verto-imports/src/assets/products/macbook-air-m1.jpg',
+                srcImg: 'https://i.imgur.com/MPKg16X.jpg',
                 specifications: [
                     {
                         title: 'Processor',
@@ -57,7 +57,7 @@ export default createStore({
             {
                 value: 4000,
                 name: 'Iphone 13',
-                srcImg: 'https://vertocode.github.io/verto-imports/src/assets/products/iphone-13.jpeg',
+                srcImg: 'https://i.imgur.com/xs1Tyv4.jpg',
                 specifications: [
                     {
                         title: 'Processor',
@@ -109,7 +109,7 @@ export default createStore({
             {
                 value: 6000,
                 name: 'Mac Mini',
-                srcImg: 'https://vertocode.github.io/verto-imports/src/assets/products/mac-mini.png',
+                srcImg: 'https://i.imgur.com/9t6gtXV.png',
                 specifications: [
                     {
                         title: 'Processor',
