@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
+        isAdmin: false,
         products: [
             {
                 value: 7500,

@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import ProductList from './components/ProductList.vue'
+import ProductList from './components/ProductList/ProductList.vue'
 import Navbar from './components/Navbar.vue'
 
 </script>
