@@ -5,6 +5,7 @@
         {{ name }}
       </h3>
       <img
+          v-if="srcImg"
           :src="srcImg"
           :alt="name"
       />
@@ -12,11 +13,11 @@
       <ol class="list-group px-3 py-2">
         <li class="justify-content-between align-items-start">
           <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
-            <div class="item-specification">
+            <div class="item-specification" :style="{ 'border-bottom': indexSpecification === props.specifications.length - 1 ? 'none' : ''  }">
               <div class="d-flex justify-content-between">
                 <div class="fw-bold mx-2 my-2">{{ specification.title }}:</div>
                 <div>
-                  <span class="badge bg-primary rounded-pill mt-2" title="Opções">{{ specification.items.length ?? 0 }}</span>
+                  <span class="badge bg-primary rounded-pill mt-2" title="Options">{{ specification.items.length ?? 0 }}</span>
                 </div>
               </div>
               <ul>
@@ -30,6 +31,10 @@
           </div>
         </li>
       </ol>
+      <div id="action-buttons">
+        <button class="btn btn-primary" @click="buyClick">Add to cart</button>
+        <button class="btn btn-success" @click="buyClick">Buy directly</button>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +72,10 @@ const calculateValue = (specification, title) => {
   for (const item of itemsMarked) {
     totalValue.value += item.value || 0
   }
+}
+
+const buyClick = () => {
+  alert('yet not developed')
 }
 
 onMounted(() => {
@@ -108,6 +117,13 @@ onMounted(() => {
       border-bottom: rgba(13, 110, 253, 0.69) solid 1px;
       margin-top: 4px;
       padding: 3px;
+    }
+
+    #action-buttons {
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
     }
   }
 }

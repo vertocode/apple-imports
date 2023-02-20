@@ -162,8 +162,10 @@ export default createStore({
     },
     mutations: {
         addProducts(state, payload) {
-            console.log(payload)
             state.products.push(payload)
+        },
+        recoverState(state, payload) {
+            state = payload
         }
     },
     actions: {

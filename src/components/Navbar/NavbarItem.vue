@@ -12,5 +12,6 @@ const props = defineProps({
 .navbar-item {
   list-style-type: none;
   cursor: pointer;
+  padding-left: 1rem;
 }
 </style>

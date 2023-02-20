@@ -18,7 +18,7 @@
 
 <script setup>
 import AddNewProduct from './AddNewProduct.vue'
-import ProductCard from './ProductCard.vue'
+import ProductCard from '../components/ProductList/ProductCard.vue'
 
 import { useStore } from 'vuex'
 

@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import ProductList from './components/ProductList/ProductList.vue'
+import ProductList from './Pages/ProductList.vue'
 import Navbar from './components/Navbar.vue'
 
 </script>
@@ -18,6 +18,5 @@ import Navbar from './components/Navbar.vue'
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

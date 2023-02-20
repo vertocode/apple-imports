@@ -1,35 +1,37 @@
 <template>
-  <div>
-    <h2>Add new product: </h2>
-    <div class="mb-3 d-flex m-5">
-      <div class="m-3 col-3">
-        <label for="product_name">Name:</label>
-        <input type="text" class="form-control" placeholder="PRODUCT NAME" id="name-input">
-      </div>
-      <div class="col-9">
-        <div>
-          <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
-          <input @change="handleFiles" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+  <div class="add-new-product">
+    <div>
+      <h2>Add a new product: </h2>
+      <div class="mb-3 d-flex m-5">
+        <div class="m-3 col-3">
+          <label for="product_name">Name:</label>
+          <input type="text" class="form-control" placeholder="PRODUCT NAME" id="name-input">
         </div>
-        <div class="preview" id="image-append">
-          <p>No files currently selected for upload</p>
+        <div class="col-9">
+          <div>
+            <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+            <input @change="handleFiles" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+          </div>
+          <div class="preview" id="image-append">
+            <p>No files currently selected for upload</p>
+          </div>
         </div>
       </div>
+      <div class="mb-3 d-flex">
+        <div class="input-group m-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
+          <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+          </div>
+        </div>
+        <label for="exampleFormControlTextarea1" class="form-label" disabled="disabled">Description(In development): </label>
+        <input id="description-input" disabled>
+      </div>
+      <button @click="addProduct" type="button" :disabled="addNewProductIsDisabled" :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'">Add this new product</button>
     </div>
-    <div class="mb-3 d-flex">
-      <div class="input-group m-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
-        <div class="input-group-append">
-          <span class="input-group-text">.00</span>
-        </div>
-      </div>
-      <label for="exampleFormControlTextarea1" class="form-label" disabled="disabled">Description(In development): </label>
-      <input id="description-input" disabled>
-    </div>
-    <button @click="addProduct" type="button" :disabled="addNewProductIsDisabled" :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'">Add this new product</button>
   </div>
 </template>
 
@@ -88,5 +90,20 @@ const addProduct = () => {
     }
   }
   store.commit('addProducts', addProductPayload)
+  // window.location.href = '/product-list'
 }
 </script>
+
+<style lang="scss">
+.add-new-product {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  img {
+    width: 20rem;
+  }
+}
+</style>
