@@ -3,6 +3,22 @@ import { createStore } from 'vuex'
 export default createStore({
     state: {
         isAdmin: false,
+        userData: {
+            iss: "https://accounts.google.com",
+            nbf: 1677192197,
+            aud: "180900081631-7j3aopdirsgrquj6phi9fs9fl4ml9e8i.apps.googleusercontent.com",
+            sub: "104019791754000514478",
+            email: "evertonvanoni1@gmail.com",
+            email_verified: true,
+            azp: "180900081631-7j3aopdirsgrquj6phi9fs9fl4ml9e8i.apps.googleusercontent.com",
+            name: "Everton Vanoni",
+            picture: "https://lh3.googleusercontent.com/a/AGNmyxbdndq-Ghko4bJg32yooARklMJHs1Y5o30Gavvf6A=s96-c",
+            given_name: "Everton",
+            family_name: "Vanoni",
+            iat: 1677192497,
+            exp: 1677196097,
+            jti: "5ddb6b6dd90b1b74efe59ccb7ab77a0720abef24"
+        },
         products: [
             {
                 value: 7500,
@@ -166,6 +182,9 @@ export default createStore({
         },
         recoverState(state, payload) {
             state = payload
+        },
+        addUserData(state, payload) {
+            state.userData = payload
         }
     },
     actions: {
