@@ -35,27 +35,23 @@
 
       <!-- Register buttons -->
       <div class="text-center">
-        <p>Not a member? <a href="#">Register (in development)</a></p>
-        <p>or sign up with:</p>
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
+        <p>Sign in with:</p>
+        <GoogleLogin :callback="callback" prompt/>
+        <p class="mt-5">Not a member? <a href="#">Register (in development)</a></p>
       </div>
     </form>
   </div>
 </template>
+
+<script setup>
+import { decodeCredential } from 'vue3-google-login'
+
+  const callback = (response) => {
+      // decodeCredential will retrive the JWT payload from the credential
+      const userData = decodeCredential(response.credential)
+      console.log("Handle the userData", userData)
+  }
+</script>
 
 <style lang="scss">
 .login {

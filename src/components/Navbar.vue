@@ -4,7 +4,7 @@
       <img title="login" src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png" alt="login-icon">
     </router-link>
     <ul class="list">
-      <router-link :to="step.link" v-for="step in steps" :style="{ 'text-decoration': activeStep === step.link ? 'underline': 'none' }" @click="activeStep = step.link">
+      <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': activeStep === step.link ? 'underline': 'none' }" @click="activeStep = step.link">
         <navbar-item
             :item-name="step.title"
         />
@@ -39,11 +39,10 @@ const steps = [
 .content {
   font-family: SF Pro Text,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;;
   background-color: rgb(22,22,23);
-  margin-bottom: 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 2em;
+  justify-content: space-between;
+  padding: 1em;
   .list {
     display: flex;
     li {
@@ -59,7 +58,7 @@ const steps = [
   .badge {
     position: absolute;
     bottom: 5px;
-    right: 35px;
+    right: 20px;
   }
 
   a {
