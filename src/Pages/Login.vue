@@ -45,12 +45,17 @@
 
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
+import { useStore } from "vuex";
 
-  const callback = (response) => {
-      // decodeCredential will retrive the JWT payload from the credential
-      const userData = decodeCredential(response.credential)
-      console.log("Handle the userData", userData)
-  }
+const store = useStore()
+
+const callback = (response) => {
+    // decodeCredential will retrive the JWT payload from the credential
+    const userData = decodeCredential(response.credential)
+    console.log("Handle the userData", userData)
+    store.commit('addUserData', userData)
+    console.log(store.state.userData)
+}
 </script>
 
 <style lang="scss">
