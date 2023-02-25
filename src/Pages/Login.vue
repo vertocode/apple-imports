@@ -46,6 +46,8 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
+import { onMounted, watchEffect } from "vue";
+import router from "../router";
 
 const store = useStore()
 
@@ -56,12 +58,22 @@ const callback = (response) => {
     store.commit('addUserData', userData)
     console.log(store.state.userData)
 }
+
+const checkIfIsLoggedAndRedirect = (isLogged) => {
+  if (isLogged) {
+    router.push('product-list')
+  }
+}
+
+onMounted(() => checkIfIsLoggedAndRedirect())
+
+watchEffect(() => checkIfIsLoggedAndRedirect(store.state.userData.name))
 </script>
 
 <style lang="scss">
 .login {
   width: 70%;
-  margin: auto;
+  margin: 2em auto;
   height: 80vh;
   display: flex;
   justify-content: center;
