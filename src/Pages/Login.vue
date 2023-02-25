@@ -55,7 +55,7 @@ const callback = (response) => {
     // decodeCredential will retrive the JWT payload from the credential
     const userData = decodeCredential(response.credential)
     console.log("Handle the userData", userData)
-    store.commit('addUserData', userData)
+    store.commit('setUserLogged', userData)
     console.log(store.state.userData)
 }
 

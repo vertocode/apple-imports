@@ -80,10 +80,9 @@ const calculateValue = (specification, title) => {
 const buyClick = () => {
   const isNotLogged = !store.state.userData.name
   if (isNotLogged) {
-    console.log('not is logged')
     window.location.pathname = 'login'
   } else {
-    console.log('not is logged')
+    alert('yet not develop')
   }
 }
 

@@ -1,10 +1,26 @@
 <template>
   <div class="content navbar">
     <router-link v-if="!store.state.userData.name" to="login" style="text-decoration: underline">
-      <img title="login" src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png" alt="login-icon">
+      <img
+          title="login"
+          src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png"
+          alt="login-icon"
+      >
     </router-link>
     <div v-else>
-      <img :src="store.state.userData.picture" alt="img-profile" style="border-radius: 50%">
+      <img
+          @click="state.dropdownActivated = !state.dropdownActivated"
+          :src="store.state.userData.picture"
+          alt="img-profile"
+          style="border-radius: 50%; cursor: pointer">
+    </div>
+    <div class="dropdown" v-if="state.dropdownActivated">
+      <ul>
+        <li>Profile</li>
+        <li>Cart</li>
+        <li>Requests</li>
+        <li @click="logout">Logout</li>
+      </ul>
     </div>
     <ul class="list">
       <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }">
@@ -22,12 +38,15 @@
 
 <script setup>
 import NavbarItem from './Navbar/NavbarItem.vue'
-import { ref, watchEffect } from "vue";
+import { reactive, watchEffect } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from 'vue-router'
+import router from "../router";
 
+const state = reactive({
+  dropdownActivated: false
+})
 
-let activeStep = ref('login')
 const store = useStore()
 const route = useRoute()
 const steps = [
@@ -41,6 +60,18 @@ const steps = [
   },
 ]
 
+const logout = () => {
+  // Remove User data.
+  store.commit('setUserLogged', {})
+  localStorage.clear()
+
+  // Close dropdown.
+  state.dropdownActivated = false
+
+  // Redirect to the login screen.
+  router.push('login')
+}
+
 watchEffect(() => console.log(route.path))
 </script>
 
@@ -52,6 +83,26 @@ watchEffect(() => console.log(route.path))
   align-items: center;
   justify-content: space-between;
   padding: 1em;
+  .dropdown {
+    padding-top: 0.6em;
+    background-color: rgba(0, 0, 0, 0.48);
+    color: white;
+    position: absolute;
+    top: 100px;
+    height: max-content;
+    width: 7em;
+    ul {
+      padding-inline-start: 0 !important;
+      li {
+        padding-top: 0.3em;
+        cursor: pointer;
+        list-style-type: none;
+      }
+      li:hover {
+        background-color: #05cadc;
+      }
+    }
+  }
   .list {
     display: flex;
     li {

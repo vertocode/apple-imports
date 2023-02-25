@@ -168,7 +168,7 @@ export default createStore({
         recoverState(state, payload) {
             state = payload
         },
-        addUserData(state, payload) {
+        setUserLogged(state, payload) {
             state.userData = payload
         }
     },
