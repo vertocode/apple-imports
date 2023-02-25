@@ -4,14 +4,14 @@
       <img src="https://i.imgur.com/efI3UN6.png" alt="logo">
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example1">Email address</label>
-        <input placeholder="example@domain.com" type="email" id="form2Example1" class="form-control" />
+        <label class="form-label" for="email">Email address</label>
+        <input placeholder="example@domain.com" type="email" id="email" class="form-control" />
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <label class="form-label" for="form2Example2">Password</label>
-        <input placeholder="********" type="password" id="form2Example2" class="form-control" />
+        <label class="form-label" for="password">Password</label>
+        <input placeholder="********" type="password" id="password" class="form-control" />
       </div>
 
       <!-- 2 column grid layout for inline styling -->
@@ -31,38 +31,63 @@
       </div>
 
       <!-- Submit button -->
-      <button disabled type="button" class="btn btn-primary btn-block mb-4">Sign in (in development)</button>
+      <button type="button" class="btn btn-primary btn-block mb-4" @click="manualLogin">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
         <p>Sign in with:</p>
-        <GoogleLogin :callback="callback" prompt/>
+        <GoogleLogin :callback="loginWithGoogle" prompt/>
         <p class="mt-5">Not a member? <a href="#">Register (in development)</a></p>
       </div>
     </form>
+    <success-toasted
+        v-if="state.toastEnabled"
+        :title="`You are logged now! Welcome ${store.state.userData.name || ''}.`"
+    ></success-toasted>
   </div>
 </template>
 
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
-import { onMounted, watchEffect } from "vue";
+import { onMounted, reactive, watchEffect } from "vue";
 import router from "../router";
+import SuccessToasted from '../components/Toast/SuccessToasted.vue'
 
 const store = useStore()
-
-const callback = (response) => {
-    // decodeCredential will retrive the JWT payload from the credential
-    const userData = decodeCredential(response.credential)
-    console.log("Handle the userData", userData)
-    store.commit('setUserLogged', userData)
-    console.log(store.state.userData)
-}
+const state = reactive({
+  toastEnabled: false
+})
 
 const checkIfIsLoggedAndRedirect = (isLogged) => {
   if (isLogged) {
     router.push('product-list')
   }
+}
+
+const manualLogin = () => {
+  const email = document.querySelector('#email').value
+  const password = document.querySelector('#password').value
+  const allUsers = store.state.allUsers
+  const existAccount = allUsers.map(user => {
+    if (user.email === email && user.password === password) {
+      return user
+    }
+  }).filter(user => user)
+  if (existAccount) {
+    store.commit('setUserLogged', existAccount[0])
+    state.toastEnabled = true
+    checkIfIsLoggedAndRedirect(store.state.userData.name)
+    setInterval(() => state.toastEnabled = false, 5000)
+  }
+}
+
+const loginWithGoogle = (response) => {
+    // decodeCredential will retrive the JWT payload from the credential
+    const userData = decodeCredential(response.credential)
+    store.commit('setUserLogged', userData)
+    state.toastEnabled = true
+    setInterval(() => state.toastEnabled = false, 5000)
 }
 
 onMounted(() => checkIfIsLoggedAndRedirect())

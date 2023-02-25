@@ -38,7 +38,7 @@
 
 <script setup>
 import NavbarItem from './Navbar/NavbarItem.vue'
-import { reactive, watchEffect } from "vue";
+import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from 'vue-router'
 import router from "../router";
@@ -71,8 +71,6 @@ const logout = () => {
   // Redirect to the login screen.
   router.push('login')
 }
-
-watchEffect(() => console.log(route.path))
 </script>
 
 <style lang="scss">
