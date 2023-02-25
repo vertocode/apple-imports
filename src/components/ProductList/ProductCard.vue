@@ -42,6 +42,7 @@
 <script setup>
 
 import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
 
 const props = defineProps({
   value: Number,
@@ -53,6 +54,8 @@ const props = defineProps({
 
 let itemsMarked = []
 let totalValue = ref(props.value)
+
+const store = useStore()
 
 const calculateValue = (specification, title) => {
 
@@ -75,7 +78,13 @@ const calculateValue = (specification, title) => {
 }
 
 const buyClick = () => {
-  alert('yet not developed')
+  const isNotLogged = !store.state.userData.name
+  if (isNotLogged) {
+    console.log('not is logged')
+    window.location.pathname = 'login'
+  } else {
+    console.log('not is logged')
+  }
 }
 
 onMounted(() => {

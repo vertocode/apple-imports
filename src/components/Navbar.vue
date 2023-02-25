@@ -1,10 +1,10 @@
 <template>
   <div class="content navbar">
-    <router-link v-if="!store.state.userData" to="login" @click="activeStep = 'login'" style="text-decoration: underline">
+    <router-link v-if="!store.state.userData.name" to="login" @click="activeStep = 'login'" style="text-decoration: underline">
       <img title="login" src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png" alt="login-icon">
     </router-link>
     <div v-else>
-      <img :src="store.state.userData.picture" alt="">
+      <img :src="store.state.userData.picture" alt="img-profile" style="border-radius: 50%">
     </div>
     <ul class="list">
       <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': activeStep === step.link ? 'underline': 'none' }" @click="activeStep = step.link">

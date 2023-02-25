@@ -46,6 +46,7 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
+import { onMounted } from "vue";
 
 const store = useStore()
 
@@ -56,12 +57,18 @@ const callback = (response) => {
     store.commit('addUserData', userData)
     console.log(store.state.userData)
 }
+
+onMounted(() => {
+  if (store.state.userData.name) {
+    window.location.pathname = 'product-list'
+  }
+})
 </script>
 
 <style lang="scss">
 .login {
   width: 70%;
-  margin: auto;
+  margin: 2em auto;
   height: 80vh;
   display: flex;
   justify-content: center;
