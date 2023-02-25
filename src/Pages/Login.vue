@@ -40,10 +40,12 @@
         <p class="mt-5">Not a member? <a href="#">Register (in development)</a></p>
       </div>
     </form>
-    <success-toasted
+    <toasted
         v-if="state.toastEnabled"
-        :title="`You are logged now! Welcome ${store.state.userData.name || ''}.`"
-    ></success-toasted>
+        :state="state.stateToasted"
+        :title="state.titleToasted"
+        :description="state.descriptionToasted"
+    ></toasted>
   </div>
 </template>
 
@@ -52,11 +54,14 @@ import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
 import { onMounted, reactive, watchEffect } from "vue";
 import router from "../router";
-import SuccessToasted from '../components/Toast/SuccessToasted.vue'
+import Toasted from '../components/Toast/Toasted.vue'
 
 const store = useStore()
 const state = reactive({
-  toastEnabled: false
+  toastEnabled: false,
+  stateToasted: 'error',
+  titleToasted: 'Something is wrong!',
+  descriptionToasted: ''
 })
 
 const checkIfIsLoggedAndRedirect = (isLogged) => {
@@ -75,10 +80,25 @@ const manualLogin = () => {
     }
   }).filter(user => user)
   if (existAccount) {
-    store.commit('setUserLogged', existAccount[0])
+    try {
+      store.commit('setUserLogged', existAccount[0])
+      state.toastEnabled = true
+      state.stateToasted = 'success'
+      state.titleToasted = 'You are logged now.'
+      state.descriptionToasted = `Welcome ${store.state.userData.name || ''}!`
+      checkIfIsLoggedAndRedirect(store.state.userData.name)
+      setInterval(() => state.toastEnabled = false, 5000)
+    } catch (e) {
+      state.toastEnabled = true
+      state.stateToasted = 'error'
+      state.titleToasted = 'Something is wrong. Check your credentials and try again!'
+      state.descriptionToasted = e
+    }
+  } else {
     state.toastEnabled = true
-    checkIfIsLoggedAndRedirect(store.state.userData.name)
-    setInterval(() => state.toastEnabled = false, 5000)
+    state.stateToasted = 'error'
+    state.titleToasted = 'Account not found on the base Data.'
+    state.descriptionToasted = 'Sorry, you can Sign with Google or register in the system'
   }
 }
 
