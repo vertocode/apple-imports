@@ -1,13 +1,13 @@
 <template>
   <div class="content navbar">
-    <router-link v-if="!store.state.userData.name" to="login" @click="activeStep = 'login'" style="text-decoration: underline">
+    <router-link v-if="!store.state.userData.name" to="login" style="text-decoration: underline">
       <img title="login" src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png" alt="login-icon">
     </router-link>
     <div v-else>
       <img :src="store.state.userData.picture" alt="img-profile" style="border-radius: 50%">
     </div>
     <ul class="list">
-      <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': activeStep === step.link ? 'underline': 'none' }" @click="activeStep = step.link">
+      <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }">
         <navbar-item
             :item-name="step.title"
         />
@@ -22,21 +22,26 @@
 
 <script setup>
 import NavbarItem from './Navbar/NavbarItem.vue'
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from 'vue-router'
+
 
 let activeStep = ref('login')
 const store = useStore()
+const route = useRoute()
 const steps = [
   {
-    link: 'product-list',
+    link: '/product-list',
     title: 'Product list'
   },
   {
-    link: 'add-new-product',
+    link: '/add-new-product',
     title: 'Add a new product (Development)'
   },
 ]
+
+watchEffect(() => console.log(route.path))
 </script>
 
 <style lang="scss">
