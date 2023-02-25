@@ -1,0 +1,1 @@
+// product store (pinia/vuex)
