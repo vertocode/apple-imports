@@ -10,6 +10,7 @@
           :alt="name"
       />
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
+      <h5>{{ description || '' }}</h5>
       <ol class="list-group px-3 py-2">
         <li class="justify-content-between align-items-start">
           <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
@@ -32,9 +33,13 @@
         </li>
       </ol>
       <div id="action-buttons">
-        <button class="btn btn-primary" @click="buyClick">Add to cart</button>
-        <button class="btn btn-success" @click="buyClick">Buy directly</button>
+        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-primary" @click="buyClick">Add to cart</button>
+        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-success" @click="buyClick">Buy directly</button>
       </div>
+      <p class="mt-3" v-if="!isLogged">You need do the
+        <span @click="$router.push('login')" class="text-primary" style="cursor: pointer">login</span>
+        to enable these buttons</p>
+      <br v-else>
     </div>
   </div>
 </template>
@@ -47,6 +52,7 @@ import { useStore } from "vuex";
 const props = defineProps({
   value: Number,
   indexProduct: Number,
+  description: String,
   name: String,
   srcImg: String,
   specifications: Object
@@ -55,7 +61,11 @@ const props = defineProps({
 let itemsMarked = []
 let totalValue = ref(props.value)
 
+
 const store = useStore()
+
+const isLogged = store.state.userData?.name
+const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const calculateValue = (specification, title) => {
 
@@ -129,7 +139,9 @@ onMounted(() => {
 
     #action-buttons {
       margin: auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: 0.8fr 1fr;
+      gap: 1.5em;
       justify-content: space-between;
       width: 80%;
     }

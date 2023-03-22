@@ -1,7 +1,7 @@
 <template>
   <div class="add-new-product">
     <div>
-      <h2>Add a new product: </h2>
+      <h2>Add a new product (Admin): </h2>
       <div class="mb-3 d-flex m-5">
         <div class="m-3 col-3">
           <label for="product_name">Name:</label>
@@ -22,13 +22,13 @@
           <div class="input-group-prepend">
             <span class="input-group-text">$</span>
           </div>
-          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
+          <input step="0.01" type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
           <div class="input-group-append">
             <span class="input-group-text">.00</span>
           </div>
         </div>
-        <label for="exampleFormControlTextarea1" class="form-label" disabled="disabled">Description(In development): </label>
-        <input id="description-input" disabled>
+        <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
+        <input id="description-input" v-model="addProductPayload.description">
       </div>
       <button @click="addProduct" type="button" :disabled="addNewProductIsDisabled" :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'">Add this new product</button>
     </div>
@@ -38,15 +38,19 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from "vue-router";
 
 const store = useStore()
+const route = useRouter()
 const addNewProductIsDisabled = ref(false)
 const addProductPayload = reactive({
   value: 0,
   name: '',
+  description: '',
   srcImg: '',
   specifications: []
 })
+
 function handleFiles(event) {
   const appendImg = document.getElementById('image-append')
   const reader = new FileReader()
@@ -78,6 +82,7 @@ function handleFiles(event) {
 
 const addProduct = () => {
   let inputConfigs = [{key: 'name', id:'name'}, {id:'description'}, {key:'value',id:'value'}]
+  console.log(addProductPayload)
   for (const config of inputConfigs) {
     const { key, id } = config
     const currentValueInput = document.querySelector(`#${id}-input`).value
@@ -90,7 +95,10 @@ const addProduct = () => {
     }
   }
   store.commit('addProducts', addProductPayload)
-  // window.location.href = '/product-list'
+  route.push('/product-list')
+  setTimeout(() => {
+    document.querySelector('#last-item').scrollIntoView()
+  }, 100)
 }
 </script>
 

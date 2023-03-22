@@ -3,6 +3,7 @@
     "value": 7500,
     "name": "MacBook Air",
     "srcImg": "https://i.imgur.com/MPKg16X.jpg",
+    "description": "Macbook is very cool!",
     "specifications": [
       {
         "title": "Processor",

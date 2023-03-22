@@ -56,7 +56,7 @@ const steps = [
   },
   {
     link: '/add-new-product',
-    title: 'Add a new product (Development)'
+    title: 'Add a new product (Admin)'
   },
 ]
 

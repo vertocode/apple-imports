@@ -4,9 +4,11 @@
     <div class="all-products">
       <div class="product-item" v-for="(product, index) in products" :key="index">
         <product-card
+          :id="index === products.length -1 ? 'last-item' : ''"
           :index-product="index"
           :value="product.value"
           :name="product.name"
+          :description="product.description"
           :src-img="product.srcImg"
           :specifications="product.specifications"
         />
@@ -29,7 +31,7 @@ const products = store.state.products
 <style lang="scss">
 .product-list {
   margin: auto;
-  width: 90%;
+  width: 100%;
   .all-products {
     display: grid;
     @media only screen and (max-width: 600px) {
