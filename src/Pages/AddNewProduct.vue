@@ -1,37 +1,43 @@
 <template>
-  <div class="add-new-product">
-    <div>
-      <h2>Add a new product (Admin): </h2>
-      <div class="mb-3 d-flex m-5">
-        <div class="m-3 col-3">
-          <label for="product_name">Name:</label>
-          <input type="text" class="form-control" placeholder="PRODUCT NAME" id="name-input">
+  <div>
+    <h2 class="mt-4 text-center">Add a new product (Admin): </h2>
+    <div class="add-new-product">
+      <div class="m-3">
+        <label for="product_name">Name:</label>
+        <input type="text" class="form-control" placeholder="PRODUCT NAME" id="name-input">
+      </div>
+      <div class="input-group m-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
         </div>
-        <div class="col-9">
-          <div>
-            <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
-            <input @change="handleFiles" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
-          </div>
-          <div class="preview" id="image-append">
-            <p>No files currently selected for upload</p>
-          </div>
+        <input step="0.01" type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
+        <div class="input-group-append">
+          <span class="input-group-text">.00</span>
         </div>
       </div>
-      <div class="mb-3 d-flex">
-        <div class="input-group m-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text">$</span>
-          </div>
-          <input step="0.01" type="number" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Product Value" title="just dollars" id="value-input">
-          <div class="input-group-append">
-            <span class="input-group-text">.00</span>
-          </div>
-        </div>
-        <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
-        <input id="description-input" v-model="addProductPayload.description">
+      <div class="mb-3">
+        <p>Description:</p>
+        <textarea style="width: 100%" id="description-input" v-model="addProductPayload.description"></textarea>
       </div>
-      <button @click="addProduct" type="button" :disabled="addNewProductIsDisabled" :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'">Add this new product</button>
+      <div>
+        <div>
+          <label for="image_uploads">Choose images to upload (PNG, JPG)</label>
+          <input @change="handleFiles" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple>
+        </div>
+        <div class="preview" id="image-append">
+          <p>No files currently selected for upload</p>
+        </div>
+      </div>
     </div>
+    <button
+        @click="addProduct"
+        type="button"
+        :disabled="addNewProductIsDisabled"
+        class="mt-4"
+        :class="addNewProductIsDisabled ? 'add-new-product__disabled' : 'add-new-product__enabled btn btn-primary'"
+    >
+      Add this new product
+    </button>
   </div>
 </template>
 
@@ -106,10 +112,9 @@ const addProduct = () => {
 .add-new-product {
   width: 85%;
   margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 100px;
   img {
     width: 20rem;
   }

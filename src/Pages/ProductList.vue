@@ -1,5 +1,5 @@
 <template>
-  <div class="product-list">
+  <div class="product-list mt-3">
     <h1>All products: </h1>
     <div class="all-products">
       <div class="product-item" v-for="(product, index) in products" :key="index">
@@ -38,13 +38,13 @@ const products = store.state.products
       grid-template-columns: 100%;
     }
     @media only screen and (min-width: 600px) {
-      grid-template-columns: 50% 50%;
+      grid-template-columns: repeat(2, 50%);
     }
     @media only screen and (min-width: 1000px) {
-      grid-template-columns: 33% 33% 33%;
+      grid-template-columns: repeat(3, 33%);
     }
     @media only screen and (min-width: 1750px) {
-      grid-template-columns: 25% 25% 25% 25%;
+      grid-template-columns: repeat(4, 25%);
     }
   }
   .add-new-product {
