@@ -29,10 +29,11 @@
         />
       </router-link>
     </ul>
-    <div>
+    <div v-if="store.state.userData?.email">
       <img src="https://i.imgur.com/x8JUHgC.png" alt="shopping-cart">
       <span class="badge bg-success rounded-pill mt-2" title="Options">0</span>
     </div>
+    <div v-else></div>
   </div>
 </template>
 
