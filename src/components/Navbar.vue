@@ -16,7 +16,7 @@
     </div>
     <div class="dropdown" v-if="state.dropdownActivated">
       <ul>
-        <li>Profile</li>
+        <li @click="showProfileModal = true">Profile</li>
         <li>Cart</li>
         <li>Requests</li>
         <li @click="logout">Logout</li>
@@ -35,6 +35,10 @@
     </div>
     <div v-else></div>
   </div>
+  <base-modal
+    title="Edit Profile"
+  >
+  </base-modal>
 </template>
 
 <script setup>
@@ -43,6 +47,7 @@ import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from 'vue-router'
 import router from "../router";
+import BaseModal from './Modal/BaseModal.vue'
 
 const state = reactive({
   dropdownActivated: false

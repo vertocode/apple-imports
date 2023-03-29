@@ -6,7 +6,7 @@ import AddNewProduct from "../Pages/AddNewProduct.vue"
 const routes = [
     {
         path: "/",
-        redirect: "/login"
+        redirect: "/product-list"
     },
     {
         path: "/login",
