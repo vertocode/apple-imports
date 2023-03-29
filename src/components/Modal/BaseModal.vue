@@ -19,8 +19,8 @@
       </header>
       <slot></slot>
       <footer>
-        <h4>Any doubts, talk to me:</h4>
-        <div class="social-media">
+        <div class="social-media d-block">
+          <h4>Any doubts, contact to me:</h4>
           <a v-for="social in socials" :keys="social.id" :href="social.href" target="_blank">
             <img :src="social.src" :alt="social.alt" :title="social.title">
           </a>
@@ -41,10 +41,10 @@ const {
 const socials = [
   {
     id: 0,
-    src: 'test',
+    src: 'https://i.imgur.com/lyw4LJi.png',
     href: 'https://www.vertocode.com/contact',
-    alt: 'test',
-    title: 'test'
+    alt: 'Contact',
+    title: 'Contact'
   }
 ]
 </script>
