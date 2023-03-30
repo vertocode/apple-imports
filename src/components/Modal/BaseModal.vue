@@ -17,7 +17,9 @@
               alt="Close">
         </div>
       </header>
-      <slot></slot>
+      <main>
+        <slot></slot>
+      </main>
       <footer>
         <div class="social-media d-block">
           <h4>Any doubts, contact to me:</h4>
@@ -35,7 +37,8 @@
 const {
   title = ''
 } = defineProps({
-  title: String
+  title: String,
+  showModal: Boolean
 })
 
 const socials = [
@@ -45,6 +48,20 @@ const socials = [
     href: 'https://www.vertocode.com/contact',
     alt: 'Contact',
     title: 'Contact'
+  },
+  {
+    id: 1,
+    src: 'https://i.imgur.com/g9chQFf.png',
+    href: 'https://www.linkedin.com/in/evertonvanoni/',
+    alt: 'Gmail',
+    title: 'Gmail'
+  },
+  {
+    id: 1,
+    src: 'https://i.imgur.com/IEHUVU9.png',
+    href: 'mailto:evertonvanoni1@gmail.com',
+    alt: 'Gmail',
+    title: 'Gmail'
   }
 ]
 </script>
@@ -68,6 +85,9 @@ const socials = [
     .icon {
       width: 4rem;
     }
+  }
+  main {
+    height: 70%;
   }
   footer {
     display: flex;
