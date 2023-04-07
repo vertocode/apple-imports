@@ -2,9 +2,14 @@
   <base-modal
     class="edit-profile-modal"
     title="Edit Profile"
+    @close="this.$emit('close')"
   >
     <div>
-      <img :src="userData.picture" alt="profile-img" style="border-radius: 10%">
+      <img
+          class="profile-picture"
+          :src="userData.picture"
+          alt="profile-img"
+          style="border-radius: 10%">
     </div>
     <div></div>
     <div class="fields">
@@ -23,12 +28,15 @@
         <br>
         <input type="password" v-model="state.profile.password">
       </div>
+      <base-button action="Save Changes" @click="saveChanges"></base-button>
     </div>
   </base-modal>
 </template>
 
 <script setup>
+import AllUsers from './../../data/AllUsers.json'
 import BaseModal from './BaseModal.vue'
+import BaseButton from './../Buttons/BaseButton.vue'
 import { useStore } from "vuex"
 import { reactive } from "vue";
 
@@ -43,6 +51,19 @@ const state = reactive({
     password: userData.password
   }
 })
+
+const saveChanges = () => {
+  const userData = {
+    ...store.state.userData,
+    ...state.profile
+  }
+
+  store.commit('updateUserData', userData)
+
+  // TODO: Change to use the API.
+  const index = AllUsers.findIndex(user => user.email === store.state.userData.email)
+  AllUsers[index] = userData
+}
 </script>
 
 <style lang="scss">
@@ -51,6 +72,9 @@ const state = reactive({
     display: flex;
     justify-content: center;
     gap: 4rem;
+    .profile-picture {
+      width: 15em;
+    }
     .fields {
       display: grid;
       grid-auto-rows: max-content;

@@ -42,6 +42,7 @@
     </form>
     <toasted
         v-if="state.toastEnabled"
+        @close="state.toastEnabled = false"
         :state="state.stateToasted"
         :title="state.titleToasted"
         :description="state.descriptionToasted"

@@ -3,10 +3,12 @@ import "bootstrap"
 
 import App from './App.vue'
 import { createApp } from 'vue'
+// @ts-ignore
 import router from './router'
 // @ts-ignore
 import store from './store'
 import vue3GoogleLogin from 'vue3-google-login'
+import './styles/main.scss'
 
 const app = createApp(App)
 app.use(store)

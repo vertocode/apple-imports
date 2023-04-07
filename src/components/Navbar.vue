@@ -15,17 +15,18 @@
           style="border-radius: 50%; cursor: pointer">
     </div>
     <div class="dropdown" v-if="state.dropdownActivated">
-      <ul>
+      <ul @click="state.dropdownActivated = false">
         <li @click="state.showEditProfileModal = true">Profile</li>
         <li>Cart</li>
         <li>Requests</li>
         <li @click="logout">Logout</li>
       </ul>
     </div>
-    <ul class="list">
-      <router-link :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }">
+    <ul class="list m-2">
+      <router-link :disabled="step.isDisabled" :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }">
         <navbar-item
             :item-name="step.title"
+            v-if="!step.notShow"
         />
       </router-link>
     </ul>
@@ -37,6 +38,7 @@
   </div>
   <edit-profile-modal
       v-if="state.showEditProfileModal"
+      @close="state.showEditProfileModal = false"
   ></edit-profile-modal>
 </template>
 
@@ -62,7 +64,8 @@ const steps = [
   },
   {
     link: '/add-new-product',
-    title: 'Add a new product (Admin)'
+    title: 'Add a new product (Admin)',
+    notShow: true
   },
 ]
 

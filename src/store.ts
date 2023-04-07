@@ -17,10 +17,12 @@ export default createStore({
             state = payload
         },
         setUserLogged(state, payload) {
-            console.log(payload)
             if (!payload?.picture) {
                 payload.picture = 'https://i.imgur.com/QyxI8pB.png'
             }
+            state.userData = payload
+        },
+        updateUserData(state, payload) {
             state.userData = payload
         }
     },

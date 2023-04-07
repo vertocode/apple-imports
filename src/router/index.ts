@@ -1,9 +1,9 @@
-import { createWebHistory, createRouter } from "vue-router"
+import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router"
 import ProductList from "../Pages/ProductList.vue"
 import Login from "../Pages/Login.vue"
 import AddNewProduct from "../Pages/AddNewProduct.vue"
 
-const routes = [
+const routes: RouteRecordRaw[] = [
     {
         path: "/",
         redirect: "/product-list"

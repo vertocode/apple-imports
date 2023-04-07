@@ -1,7 +1,12 @@
 <template>
   <div :class="`${props.state}-toasted`">
-    <h1>{{ title }}</h1>
-    <h4 v-if="props.description">{{ description }}</h4>
+    <header>
+      <h1>{{ title }}</h1>
+      <span @click="this.$emit('close')"><b>X</b></span>
+    </header>
+    <div>
+      <h4 v-if="props.description">{{ description }}</h4>
+    </div>
   </div>
 </template>
 
@@ -23,7 +28,16 @@ const props = defineProps({
 })
 </script>
 
-<style>
+<style lang="scss">
+header {
+  display: flex;
+  span {
+    font-size: 2rem;
+    font-family: "Adelle Sans Devanagari", monospace;
+    padding: 3px;
+    cursor: pointer;
+  }
+}
 .success-toasted {
   border-radius: 5%;
   border: rgba(0, 0, 0, 0.6) solid 3px;

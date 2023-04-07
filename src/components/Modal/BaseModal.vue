@@ -12,6 +12,8 @@
         <h1>{{ title }}</h1>
         <div>
           <img
+              style="cursor: pointer"
+              @click="this.$emit('close')"
               class="icon"
               src="https://i.imgur.com/B4iIdkl.png"
               alt="Close">
