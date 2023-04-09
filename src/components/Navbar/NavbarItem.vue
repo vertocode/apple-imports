@@ -13,7 +13,9 @@ const props = defineProps({
   color: rgba(255, 255, 255, .8);
   list-style-type: none;
   cursor: pointer;
-  padding-left: 1rem;
+  font-family: 'Apple',sans-serif;
+  font-size: 1.9rem;
+  padding: 0 !important;
   li {
     text-decoration: none;
   }

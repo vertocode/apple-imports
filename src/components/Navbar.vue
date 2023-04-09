@@ -22,8 +22,14 @@
         <li @click="logout">Logout</li>
       </ul>
     </div>
-    <ul class="list m-2">
-      <router-link :disabled="step.isDisabled" :to="step.link" v-for="step in steps" :key="step.title" :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }">
+    <ul class="list m-2" style="padding-inline-start: 0 !important;">
+      <router-link
+          :disabled="step.isDisabled"
+          :to="step.link"
+          v-for="step in steps"
+          :key="step.title"
+          :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }"
+      >
         <navbar-item
             :item-name="step.title"
             v-if="!step.notShow"

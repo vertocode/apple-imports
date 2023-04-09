@@ -28,7 +28,11 @@
         <br>
         <input type="password" v-model="state.profile.password">
       </div>
-      <base-button action="Save Changes" @click="saveChanges"></base-button>
+      <base-button
+          :disabled="saveChangesDisabled"
+          action="Save Changes"
+          @click="saveChanges"
+      ></base-button>
     </div>
   </base-modal>
 </template>
@@ -38,12 +42,12 @@ import AllUsers from './../../data/AllUsers.json'
 import BaseModal from './BaseModal.vue'
 import BaseButton from './../Buttons/BaseButton.vue'
 import { useStore } from "vuex"
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 
 const store = useStore()
 const userData = store.state.userData
 
-console.log(userData)
+
 const state = reactive({
   profile: {
     name: userData.name,
@@ -53,6 +57,16 @@ const state = reactive({
 })
 
 const emit = defineEmits(['close'])
+
+const saveChangesDisabled = computed(() => {
+  const { name, email, password } = store.state.userData
+
+  const nameChanged = state.profile.name !== name
+  const emailChanged = state.profile.email !== email
+  const passwordChanged = state.profile.password !== password
+
+  return ![nameChanged, emailChanged, passwordChanged].some(field => field)
+})
 
 const saveChanges = () => {
   const userData = {
@@ -65,8 +79,6 @@ const saveChanges = () => {
   // TODO: Change to use the API.
   const index = AllUsers.findIndex(user => user.email === store.state.userData.email)
   AllUsers[index] = userData
-
-  console.log(AllUsers[index])
 
   emit('close')
 }
