@@ -2,7 +2,7 @@
   <base-modal
     class="edit-profile-modal"
     title="Edit Profile"
-    @close="this.$emit('close')"
+    @close="emit('close')"
   >
     <div>
       <img
@@ -52,6 +52,8 @@ const state = reactive({
   }
 })
 
+const emit = defineEmits(['close'])
+
 const saveChanges = () => {
   const userData = {
     ...store.state.userData,
@@ -63,6 +65,10 @@ const saveChanges = () => {
   // TODO: Change to use the API.
   const index = AllUsers.findIndex(user => user.email === store.state.userData.email)
   AllUsers[index] = userData
+
+  console.log(AllUsers[index])
+
+  emit('close')
 }
 </script>
 
