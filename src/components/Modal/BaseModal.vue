@@ -13,7 +13,7 @@
         <div>
           <img
               style="cursor: pointer"
-              @click="this.$emit('close')"
+              @click="emit('close')"
               class="icon"
               src="https://i.imgur.com/B4iIdkl.png"
               alt="Close">
@@ -42,6 +42,8 @@ const {
   title: String,
   showModal: Boolean
 })
+
+const emit = defineEmits(['close'])
 
 const socials = [
   {

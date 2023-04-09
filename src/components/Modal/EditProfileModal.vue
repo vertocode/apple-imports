@@ -39,6 +39,11 @@
         </div>
       </div>
     </div>
+    <toasted
+        v-if="state.toastEnabled"
+        @close="state.toastEnabled = false"
+        title="Successfully saved!"
+    ></toasted>
   </base-modal>
 </template>
 
@@ -46,19 +51,20 @@
 import AllUsers from './../../data/AllUsers.json'
 import BaseModal from './BaseModal.vue'
 import BaseButton from './../Buttons/BaseButton.vue'
+import Toasted from './../Toast/Toasted.vue'
 import { useStore } from "vuex"
 import { computed, reactive } from "vue";
 
 const store = useStore()
 const userData = store.state.userData
 
-
 const state = reactive({
   profile: {
     name: userData.name,
     email: userData.email,
     password: userData.password
-  }
+  },
+  toastEnabled: false
 })
 
 const emit = defineEmits(['close'])
@@ -85,7 +91,11 @@ const saveChanges = () => {
   const index = AllUsers.findIndex(user => user.email === store.state.userData.email)
   AllUsers[index] = userData
 
-  emit('close')
+  state.toastEnabled = true
+
+  setTimeout(() => {
+    state.toastEnabled = false
+  }, 5000)
 }
 </script>
 

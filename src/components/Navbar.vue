@@ -1,47 +1,19 @@
 <template>
-  <div class="content navbar">
-    <router-link v-if="!store.state.userData.name" to="login" style="text-decoration: underline">
+  <div class="content navbar py-3">
+    <hamburguer
+        @show-edit-profile="state.showEditProfileModal = true"
+        :options="steps"
+    ></hamburguer>
+    <div class="d-flex gap-3" v-if="store.state.userData.name">
+      <div>
+        <h4 class="align-self-center gap-3">{{ store.state.userData.name }}</h4>
+        <h6 class="align-self-center gap-3">{{ store.state.userData.email }}</h6>
+      </div>
       <img
-          title="login"
-          src="https://cdn-icons-png.flaticon.com/512/9052/9052119.png"
-          alt="login-icon"
-      >
-    </router-link>
-    <div v-else>
-      <img
-          @click="state.dropdownActivated = !state.dropdownActivated"
           :src="store.state.userData.picture"
           alt="img-profile"
-          style="border-radius: 50%; cursor: pointer">
-      <h4>{{ store.state.userData.name }}</h4>
+          style="border-radius: 50%">
     </div>
-    <div class="dropdown" v-if="state.dropdownActivated">
-      <ul @click="state.dropdownActivated = false">
-        <li @click="state.showEditProfileModal = true">Profile</li>
-        <li>Cart</li>
-        <li>Requests</li>
-        <li @click="logout">Logout</li>
-      </ul>
-    </div>
-    <ul class="list m-2" style="padding-inline-start: 0 !important;">
-      <router-link
-          :disabled="step.isDisabled"
-          :to="step.link"
-          v-for="step in steps"
-          :key="step.title"
-          :style="{ 'text-decoration': route.path === step.link ? 'underline': 'none' }"
-      >
-        <navbar-item
-            :item-name="step.title"
-            v-if="!step.notShow"
-        />
-      </router-link>
-    </ul>
-    <div v-if="store.state.userData?.email">
-      <img src="https://i.imgur.com/x8JUHgC.png" alt="shopping-cart">
-      <span class="badge bg-success rounded-pill" title="Options">0</span>
-    </div>
-    <div v-else></div>
   </div>
   <edit-profile-modal
       v-if="state.showEditProfileModal"
@@ -50,11 +22,11 @@
 </template>
 
 <script setup>
-import NavbarItem from './Navbar/NavbarItem.vue'
 import { reactive } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from 'vue-router'
 import router from "../router";
+import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
 
 const state = reactive({
@@ -70,23 +42,19 @@ const steps = [
     title: 'Product list'
   },
   {
-    link: '/add-new-product',
-    title: 'Add a new product (Admin)',
-    notShow: true
+    link: '/cart',
+    title: 'Cart'
   },
+  {
+    link: '/requests',
+    title: 'Requests'
+  },
+  // {
+  //   link: '/add-new-product',
+  //   title: 'Add a new product (Admin)',
+  //   notShow: true
+  // },
 ]
-
-const logout = () => {
-  // Remove User data.
-  store.commit('setUserLogged', {})
-  localStorage.clear()
-
-  // Close dropdown.
-  state.dropdownActivated = false
-
-  // Redirect to the login screen.
-  router.push('login')
-}
 </script>
 
 <style lang="scss">
@@ -99,12 +67,12 @@ const logout = () => {
   padding: 0.3em 2em;
   .dropdown {
     padding-top: 0.6em;
-    background-color: rgba(0, 0, 0, 0.48);
+    background-color: rgba(0, 0, 0, 0.65);
     color: white;
     position: absolute;
     top: 100px;
     height: max-content;
-    width: 7em;
+    width: 13em;
     ul {
       padding-inline-start: 0 !important;
       li {

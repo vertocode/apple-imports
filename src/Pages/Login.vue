@@ -101,6 +101,9 @@ const manualLogin = () => {
     state.titleToasted = 'Account not found on the base Data.'
     state.descriptionToasted = 'Sorry, you can Sign with Google or register in the system'
   }
+  setTimeout(() => {
+    state.toastEnabled = false
+  }, 5000)
 }
 
 const loginWithGoogle = (response) => {
