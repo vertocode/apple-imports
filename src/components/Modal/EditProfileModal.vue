@@ -5,34 +5,39 @@
     @close="emit('close')"
   >
     <div>
-      <img
-          class="profile-picture"
-          :src="userData.picture"
-          alt="profile-img"
-          style="border-radius: 10%">
-    </div>
-    <div></div>
-    <div class="fields">
-      <div>
-        Name
-        <br>
-        <input type="text" v-model="state.profile.name">
+      <div class="mt-1">
+        <img
+            class="profile-picture"
+            :src="userData.picture"
+            alt="profile-img"
+            style="border-radius: 10%">
       </div>
-      <div>
-        Email
-        <br>
-        <input id="email" type="email" v-model="state.profile.email">
+      <div></div>
+      <div class="fields mt-4">
+        <div>
+          Name
+          <br>
+          <input type="text" v-model="state.profile.name">
+        </div>
+        <div>
+          Email
+          <br>
+          <input id="email" type="email" v-model="state.profile.email">
+        </div>
+        <div id="password">
+          Password
+          <br>
+          <input type="password" v-model="state.profile.password">
+        </div>
+        <div style="width: 100%;">
+          <base-button
+              class="m-auto mt-3"
+              :disabled="saveChangesDisabled"
+              action="Save Changes"
+              @click="saveChanges"
+          ></base-button>
+        </div>
       </div>
-      <div id="password">
-        Password
-        <br>
-        <input type="password" v-model="state.profile.password">
-      </div>
-      <base-button
-          :disabled="saveChangesDisabled"
-          action="Save Changes"
-          @click="saveChanges"
-      ></base-button>
     </div>
   </base-modal>
 </template>

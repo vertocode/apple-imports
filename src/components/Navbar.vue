@@ -13,6 +13,7 @@
           :src="store.state.userData.picture"
           alt="img-profile"
           style="border-radius: 50%; cursor: pointer">
+      <h4>{{ store.state.userData.name }}</h4>
     </div>
     <div class="dropdown" v-if="state.dropdownActivated">
       <ul @click="state.dropdownActivated = false">
@@ -38,7 +39,7 @@
     </ul>
     <div v-if="store.state.userData?.email">
       <img src="https://i.imgur.com/x8JUHgC.png" alt="shopping-cart">
-      <span class="badge bg-success rounded-pill mt-2" title="Options">0</span>
+      <span class="badge bg-success rounded-pill" title="Options">0</span>
     </div>
     <div v-else></div>
   </div>
@@ -95,7 +96,7 @@ const logout = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1em;
+  padding: 0.3em 2em;
   .dropdown {
     padding-top: 0.6em;
     background-color: rgba(0, 0, 0, 0.48);
@@ -130,8 +131,8 @@ const logout = () => {
 
   .badge {
     position: absolute;
-    bottom: 5px;
-    right: 20px;
+    bottom: 15px;
+    right: 35px;
   }
 
   a {
