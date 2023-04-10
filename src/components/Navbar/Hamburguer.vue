@@ -6,12 +6,14 @@
       <div class="bar"></div>
     </div>
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
-      <li v-if="!store.state.userData.name"><router-link to="login">Login</router-link></li>
+      <li v-if="!store.state.userData.name"
+      :class="{ active: isLogin }"
+      ><router-link to="login">Login</router-link></li>
       <li
           v-if="store.state.userData.name"
           @click="emit('showEditProfile')"
       ><a href="#">Profile</a></li>
-      <li v-for="step in options"><router-link :to="step.link">{{ step.title }}</router-link></li>
+      <li v-for="step in options" :class="{ active: route.path === step.link }"><router-link :to="step.link">{{ step.title }}</router-link></li>
       <li v-if="store.state.userData.name" @click="logout"><router-link to="login">Logout</router-link></li>
     </ul>
   </nav>
@@ -19,11 +21,18 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import {computed, reactive} from 'vue';
 import { useStore } from "vuex";
 import router from "../../router";
+import { useRoute } from "vue-router";
 
 const store = useStore()
+const route = useRoute()
+
+console.log(route.path)
+const isLogin = computed(() => route.path === '/login')
+const isProductList = computed(() => route.path === '/product-list')
+
 const props = defineProps({
   options: Array
 })
@@ -93,6 +102,11 @@ nav {
     cursor: pointer;
     border-bottom: 0.1px rgba(255, 255, 255, 0.21) solid;
   }
+
+  .menu li.active {
+   background-color: rgba(119, 149, 215, 0.45);
+  }
+
 
   .menu li:hover {
     background-color: rgba(255, 255, 255, 0.46);
