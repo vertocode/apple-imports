@@ -5,7 +5,7 @@
         :options="steps"
     ></hamburguer>
     <div class="d-flex gap-3" v-if="store.state.userData.name">
-      <div>
+      <div v-if="higherViewport">
         <h4 class="align-self-center gap-3">{{ store.state.userData.name }}</h4>
         <h6 class="align-self-center gap-3">{{ store.state.userData.email }}</h6>
       </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import {computed, reactive} from "vue";
 import { useStore } from "vuex";
 import { useRoute } from 'vue-router'
 import router from "../router";
@@ -36,6 +36,7 @@ const state = reactive({
 
 const store = useStore()
 const route = useRoute()
+const higherViewport = computed(() => window.innerWidth > 600)
 const steps = [
   {
     link: '/product-list',

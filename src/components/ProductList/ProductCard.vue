@@ -110,8 +110,8 @@ onMounted(() => {
 
 <style lang="scss">
 .product-card {
-  margin: 20px;
   .card-item {
+    background-color: white;
     margin: 20px auto;
     max-width: 500px;
     min-width: 200px;

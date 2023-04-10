@@ -1,6 +1,6 @@
 <template>
-  <div class="product-list mt-3">
-    <h1>All products: </h1>
+  <div class="product-list">
+    <h1 class="mt-3">All products: </h1>
     <div class="all-products">
       <div class="product-item" v-for="(product, index) in products" :key="index">
         <product-card
@@ -34,6 +34,7 @@ const products = store.state.products
   width: 100%;
   .all-products {
     display: grid;
+    gap: 1rem;
     @media only screen and (max-width: 600px) {
       grid-template-columns: 100%;
     }
