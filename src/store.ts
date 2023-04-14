@@ -1,17 +1,16 @@
 import { createStore } from 'vuex'
 import AllUsers from './data/AllUsers.json'
-import AllProducts from './data/AllProducts.json'
 
 export default createStore({
     state: {
         isAdmin: false,
         userData: {},
         allUsers: AllUsers,
-        products: AllProducts
+        products: []
     },
     mutations: {
-        addProducts(state, payload) {
-            state.products.push(payload)
+        setAllProducts(state, payload) {
+            state.products = payload
         },
         recoverState(state, payload) {
             state = payload

@@ -54,9 +54,11 @@ import BaseButton from './../Buttons/BaseButton.vue'
 import Toasted from './../Toast/Toasted.vue'
 import { useStore } from "vuex"
 import { computed, reactive } from "vue";
+import { Products } from "../../modules/product/usecases/product-list";
 
 const store = useStore()
 const userData = store.state.userData
+const product = new Products()
 
 const state = reactive({
   profile: {
@@ -84,6 +86,7 @@ const saveChanges = () => {
     ...store.state.userData,
     ...state.profile
   }
+  product.getAllProducts()
 
   store.commit('updateUserData', userData)
 

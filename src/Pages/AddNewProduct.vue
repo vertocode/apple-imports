@@ -88,7 +88,6 @@ function handleFiles(event) {
 
 const addProduct = () => {
   let inputConfigs = [{key: 'name', id:'name'}, {id:'description'}, {key:'value',id:'value'}]
-  console.log(addProductPayload)
   for (const config of inputConfigs) {
     const { key, id } = config
     const currentValueInput = document.querySelector(`#${id}-input`).value

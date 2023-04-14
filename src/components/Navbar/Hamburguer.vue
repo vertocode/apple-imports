@@ -29,7 +29,6 @@ import { useRoute } from "vue-router";
 const store = useStore()
 const route = useRoute()
 
-console.log(route.path)
 const isLogin = computed(() => route.path === '/login')
 const isProductList = computed(() => route.path === '/product-list')
 

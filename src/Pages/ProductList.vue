@@ -1,17 +1,19 @@
 <template>
   <div class="product-list">
-    <h1 class="mt-3">All products: </h1>
-    <div class="all-products">
-      <div class="product-item" v-for="(product, index) in products" :key="index">
-        <product-card
-          :id="index === products.length -1 ? 'last-item' : ''"
-          :index-product="index"
-          :value="product.value"
-          :name="product.name"
-          :description="product.description"
-          :src-img="product.srcImg"
-          :specifications="product.specifications"
-        />
+    <loading v-if="state.isLoading" :is-loading="true"></loading>
+    <div v-else>
+      <h1 class="mt-3">All products: </h1>
+      <div class="all-products">
+        <div class="product-item" v-for="(product, index) in product.products" :key="index">
+          <product-card
+              :index-product="index"
+              :value="product.value"
+              :name="product.name"
+              :description="product.description"
+              :src-img="product.srcImg"
+              :specifications="product.specifications"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -21,11 +23,23 @@
 <script setup>
 import AddNewProduct from './AddNewProduct.vue'
 import ProductCard from '../components/ProductList/ProductCard.vue'
+import Loading from '../components/Loading/Loading.vue'
 
 import { useStore } from 'vuex'
+import { Products } from "../modules/product/usecases/product-list";
+import { onBeforeMount, reactive } from "vue";
 
 const store = useStore()
-const products = store.state.products
+const product = new Products()
+const state = reactive({
+  isLoading: true
+})
+
+onBeforeMount(async () => {
+  const allProducts = await product.getAllProducts()
+  store.commit('setAllProducts', allProducts)
+  state.isLoading = false
+})
 </script>
 
 <style lang="scss">

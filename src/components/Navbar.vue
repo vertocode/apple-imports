@@ -35,7 +35,6 @@ const state = reactive({
 })
 
 const store = useStore()
-const route = useRoute()
 const higherViewport = computed(() => window.innerWidth > 600)
 const steps = [
   {
