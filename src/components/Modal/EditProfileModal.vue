@@ -4,7 +4,8 @@
     title="Edit Profile"
     @close="emit('close')"
   >
-    <div>
+    <loading v-if="state.isLoading" :is-loading="true"></loading>
+    <div v-else>
       <div class="mt-1">
         <img
             class="profile-picture"
@@ -12,7 +13,6 @@
             alt="profile-img"
             style="border-radius: 10%">
       </div>
-      <div></div>
       <div class="fields mt-4">
         <div>
           Name
@@ -48,13 +48,14 @@
 </template>
 
 <script setup>
-import AllUsers from './../../data/AllUsers.json'
 import BaseModal from './BaseModal.vue'
 import BaseButton from './../Buttons/BaseButton.vue'
 import Toasted from './../Toast/Toasted.vue'
 import { useStore } from "vuex"
-import { computed, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { Products } from "../../modules/product/usecases/product-list";
+import Loading from '../Loading/Loading.vue'
+import { Users } from '../../modules/users/user'
 
 const store = useStore()
 const userData = store.state.userData
@@ -66,10 +67,16 @@ const state = reactive({
     email: userData.email,
     password: userData.password
   },
-  toastEnabled: false
+  toastEnabled: false,
+  isLoading: false
 })
 
 const emit = defineEmits(['close'])
+const users = new Users()
+
+onMounted(() => {
+  state.isLoading = false
+})
 
 const saveChangesDisabled = computed(() => {
   const { name, email, password } = store.state.userData
@@ -81,18 +88,19 @@ const saveChangesDisabled = computed(() => {
   return ![nameChanged, emailChanged, passwordChanged].some(field => field)
 })
 
-const saveChanges = () => {
+const saveChanges = async () => {
   const userData = {
     ...store.state.userData,
     ...state.profile
   }
-  product.getAllProducts()
 
-  store.commit('updateUserData', userData)
+  const allUsers = await users.getAllUsers()
+  const index = allUsers.findIndex(user => user.email === store.state.userData.email)
 
-  // TODO: Change to use the API.
-  const index = AllUsers.findIndex(user => user.email === store.state.userData.email)
-  AllUsers[index] = userData
+  const response = await users.updateUserData(userData, index)
+
+  const data = response?.email || userData
+  store.commit('updateUserData', data)
 
   state.toastEnabled = true
 

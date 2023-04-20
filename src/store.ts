@@ -5,10 +5,14 @@ export default createStore({
     state: {
         isAdmin: false,
         userData: {},
-        allUsers: AllUsers,
+        allUsers: [],
         products: []
     },
     mutations: {
+        setAllUsers(state, payload) {
+            console.log(payload)
+            state.allUsers = payload
+        },
         setAllProducts(state, payload) {
             state.products = payload
         },
