@@ -1,6 +1,6 @@
 <template>
   <div style="width: max-content">
-    <button :disabled="disabled" class="btn btn-primary">{{ action }}</button>
+    <button :disabled="disabled" class="btn btn-outline-primary">{{ action }}</button>
   </div>
 </template>
 

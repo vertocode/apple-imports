@@ -32,10 +32,11 @@
         <div style="width: 100%;">
           <base-button
               class="m-auto mt-3"
+              :loading="true"
               :disabled="saveChangesDisabled"
               action="Save Changes"
               @click="saveChanges"
-          ></base-button>
+          >Save Changes</base-button>
         </div>
       </div>
     </div>
@@ -90,9 +91,14 @@ const saveChangesDisabled = computed(() => {
   const passwordChanged = state.profile.password !== password
 
   return ![nameChanged, emailChanged, passwordChanged].some(field => field)
+  || Object.values(state.profile).some(field => field === '')
 })
 
 const saveChanges = async () => {
+  if (saveChangesDisabled.value) {
+    return
+  }
+
   const userData = {
     ...store.state.userData,
     ...state.profile
@@ -106,6 +112,7 @@ const saveChanges = async () => {
 
     const data = response?.email || userData
     store.commit('updateUserData', data)
+    state.titleToast = 'Successfully saved!'
   } catch (e) {
     state.titleToast = 'I apologize, as there appears to be an error occurring in the Rest API to change the profile data.'
     state.descriptionToast = e
