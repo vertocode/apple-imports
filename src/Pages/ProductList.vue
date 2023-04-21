@@ -7,7 +7,7 @@
           :set-is-loading="setIsLoading"
           :filters="filters"
       ></multi-filter>
-      <div class="all-products">
+      <div class="all-products" v-if="store.state.products.length">
         <div class="product-item" v-for="(product, index) in store.state.products" :key="index">
           <product-card
               :index-product="index"
@@ -19,6 +19,9 @@
           />
         </div>
       </div>
+      <div v-else>
+        <none-products></none-products>
+      </div>
     </div>
   </div>
   <add-new-product v-if="store.state.isAdmin"/>
@@ -27,6 +30,7 @@
 <script setup>
 import AddNewProduct from './AddNewProduct.vue'
 import ProductCard from '../components/ProductList/ProductCard.vue'
+import NoneProducts from '../components/ProductList/NoneProducts.vue'
 import MultiFilter from '../components/Input/MultiFilter.vue'
 import Loading from '../components/Loading/Loading.vue'
 

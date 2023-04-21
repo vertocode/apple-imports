@@ -19,8 +19,7 @@ export class Users {
             .then(response => {
                 return response
             }).catch(error => {
-                console.error(error)
-                return error
+                throw new Error(error)
             })
     }
 }

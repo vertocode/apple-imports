@@ -31,6 +31,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+
 header {
   display: flex;
   span {
@@ -40,22 +41,23 @@ header {
     cursor: pointer;
   }
 }
-.success-toasted {
+
+[class$="-toasted"] {
   border-radius: 5%;
   border: rgba(0, 0, 0, 0.6) solid 3px;
   bottom: 50em;
   position: absolute;
-  background-color: #88e188;
-  width: 50%;
+  width: 80vw;
   height: max-content;
+  word-wrap: break-word !important;
 }
+
 .error-toasted {
-  border-radius: 5%;
-  border: rgba(0, 0, 0, 0.6) solid 3px;
-  bottom: 50em;
-  position: absolute;
-  background-color: #ea5959;
-  width: 50%;
-  height: max-content;
+  background-color: #DC3545;
 }
+
+.success-toasted {
+  background-color: #28A745;
+}
+
 </style>

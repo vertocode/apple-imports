@@ -92,7 +92,7 @@ const manualLogin = () => {
     } catch (e) {
       state.toastEnabled = true
       state.stateToasted = 'error'
-      state.titleToasted = 'Something is wrong. Check your credentials and try again!'
+      state.titleToasted = 'We regret to inform you that there appears to be an issue. Please verify your credentials and attempt to proceed again.'
       state.descriptionToasted = e
     }
   } else {
@@ -107,11 +107,11 @@ const manualLogin = () => {
 }
 
 const loginWithGoogle = (response) => {
-    // decodeCredential will retrive the JWT payload from the credential
-    const userData = decodeCredential(response.credential)
-    store.commit('setUserLogged', userData)
-    state.toastEnabled = true
-    setInterval(() => state.toastEnabled = false, 5000)
+  // decodeCredential will retrive the JWT payload from the credential
+  const userData = decodeCredential(response.credential)
+  store.commit('setUserLogged', userData)
+  state.toastEnabled = true
+  setInterval(() => state.toastEnabled = false, 5000)
 }
 
 onMounted(() => checkIfIsLoggedAndRedirect())

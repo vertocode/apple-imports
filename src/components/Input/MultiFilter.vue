@@ -65,9 +65,12 @@ const applyFilters = async () => {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .multi-filter {
-  display: flex;
+  text-align: left;
   gap: 2em;
+  @media only screen and (min-width: 600px) {
+    display: flex;
+  }
 }
 </style>

@@ -42,7 +42,9 @@
     <toasted
         v-if="state.toastEnabled"
         @close="state.toastEnabled = false"
-        title="Successfully saved!"
+        :state="state.titleToast.includes('error') ? 'error' : 'success'"
+        :title="state.titleToast"
+        :description="state.descriptionToast"
     ></toasted>
   </base-modal>
 </template>
@@ -68,6 +70,8 @@ const state = reactive({
     password: userData.password
   },
   toastEnabled: false,
+  titleToast: 'Successfully saved!',
+  descriptionToast: '',
   isLoading: false
 })
 
@@ -97,11 +101,15 @@ const saveChanges = async () => {
   const allUsers = await users.getAllUsers()
   const index = allUsers.findIndex(user => user.email === store.state.userData.email)
 
-  const response = await users.updateUserData(userData, index)
+  try {
+    const response = await users.updateUserData(userData, index)
 
-  const data = response?.email || userData
-  store.commit('updateUserData', data)
-
+    const data = response?.email || userData
+    store.commit('updateUserData', data)
+  } catch (e) {
+    state.titleToast = 'I apologize, as there appears to be an error occurring in the Rest API to change the profile data.'
+    state.descriptionToast = e
+  }
   state.toastEnabled = true
 
   setTimeout(() => {
@@ -118,6 +126,9 @@ const saveChanges = async () => {
     gap: 4rem;
     .profile-picture {
       width: 15em;
+      @media only screen and (max-width: 600px) {
+       width: 10em;
+      }
     }
     .fields {
       display: grid;
