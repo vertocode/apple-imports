@@ -3,8 +3,12 @@
     <loading v-if="state.isLoading" :is-loading="true"></loading>
     <div v-else>
       <h1 class="mt-3">All products: </h1>
+      <multi-filter
+          :set-is-loading="setIsLoading"
+          :filters="filters"
+      ></multi-filter>
       <div class="all-products">
-        <div class="product-item" v-for="(product, index) in product.products" :key="index">
+        <div class="product-item" v-for="(product, index) in store.state.products" :key="index">
           <product-card
               :index-product="index"
               :value="product.value"
@@ -23,6 +27,7 @@
 <script setup>
 import AddNewProduct from './AddNewProduct.vue'
 import ProductCard from '../components/ProductList/ProductCard.vue'
+import MultiFilter from '../components/Input/MultiFilter.vue'
 import Loading from '../components/Loading/Loading.vue'
 
 import { useStore } from 'vuex'
@@ -30,12 +35,36 @@ import { Products } from "../modules/product/usecases/product-list";
 import { onBeforeMount, reactive } from "vue";
 
 const store = useStore()
-const product = new Products()
+
+const filters = [
+  {
+    value: 'macbook',
+    label: 'Macbook'
+  },
+  {
+    value: 'iphone',
+    label: 'IPhone'
+  },
+  {
+    value: 'mac-mini',
+    label: 'Mac Mini'
+  },
+  {
+    value: 'mac-studio',
+    label: 'Mac Studio'
+  }
+]
 const state = reactive({
   isLoading: true
 })
 
+const setIsLoading = (param) => {
+  console.log('entrou')
+  console.log(param)
+}
+
 onBeforeMount(async () => {
+  const product = new Products()
   const allProducts = await product.getAllProducts()
   store.commit('setAllProducts', allProducts)
   state.isLoading = false

@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import AllUsers from './data/AllUsers.json'
 
 export default createStore({
     state: {
