@@ -45,7 +45,7 @@ onBeforeMount(async () => {
 <style lang="scss">
 .product-list {
   margin: auto;
-  width: 100%;
+  width: 90%;
   .all-products {
     display: grid;
     gap: 1rem;

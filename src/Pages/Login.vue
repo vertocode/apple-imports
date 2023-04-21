@@ -37,7 +37,7 @@
       <div class="text-center">
         <p>Sign in with:</p>
         <GoogleLogin :callback="loginWithGoogle" prompt/>
-        <p class="mt-5">Not a member? <a href="#">Register (in development)</a></p>
+<!--        <p class="mt-5">Not a member? <a href="#">Register (in development)</a></p>-->
       </div>
     </form>
     <toasted

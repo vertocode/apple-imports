@@ -8,13 +8,20 @@
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
       <li v-if="!store.state.userData.name"
       :class="{ active: isLogin }"
-      ><router-link to="login">Login</router-link></li>
+       @click="redirect('login')"
+      >Login</li>
       <li
           v-if="store.state.userData.name"
           @click="emit('showEditProfile')"
-      ><a href="#">Profile</a></li>
-      <li v-for="step in options" :class="{ active: route.path === step.link }"><router-link :to="step.link">{{ step.title }}</router-link></li>
-      <li v-if="store.state.userData.name" @click="logout"><router-link to="login">Logout</router-link></li>
+      >Profile</li>
+      <li
+          v-for="step in options"
+          :class="{ active: route.path === step.link }"
+          @click="redirect(step.link)">{{ step.title }}</li>
+      <li
+          v-if="store.state.userData.name"
+          @click="logout"
+      >Logout</li>
     </ul>
   </nav>
 
@@ -30,7 +37,6 @@ const store = useStore()
 const route = useRoute()
 
 const isLogin = computed(() => route.path === '/login')
-const isProductList = computed(() => route.path === '/product-list')
 
 const props = defineProps({
   options: Array
@@ -46,6 +52,10 @@ const toggleMenu = () => {
   state.isMenuOpen = !state.isMenuOpen
 }
 
+const redirect = (path) => {
+  router.push(path)
+}
+
 const logout = () => {
   // Remove User data.
   store.commit('setUserLogged', {})
@@ -55,7 +65,7 @@ const logout = () => {
   state.dropdownActivated = false
 
   // Redirect to the login screen.
-  router.push('login')
+  redirect('login')
 }
 </script>
 
@@ -100,6 +110,9 @@ nav {
     margin-bottom: 10px;
     cursor: pointer;
     border-bottom: 0.1px rgba(255, 255, 255, 0.21) solid;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.3rem;
   }
 
   .menu li.active {
@@ -109,11 +122,6 @@ nav {
 
   .menu li:hover {
     background-color: rgba(255, 255, 255, 0.46);
-  }
-
-  .menu a {
-    color: #fff;
-    text-decoration: none;
   }
 
   .show {

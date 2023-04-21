@@ -45,10 +45,10 @@ const steps = [
     link: '/cart',
     title: 'Cart'
   },
-  {
-    link: '/requests',
-    title: 'Requests'
-  },
+  // {
+  //   link: '/requests',
+  //   title: 'Requests'
+  // },
   // {
   //   link: '/add-new-product',
   //   title: 'Add a new product (Admin)',
