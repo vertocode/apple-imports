@@ -31,7 +31,7 @@
       </div>
 
       <!-- Submit button -->
-      <button type="button" class="btn btn-primary btn-block mb-4" @click="manualLogin">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block mb-4" @click="manualLogin">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
@@ -122,6 +122,9 @@ watchEffect(() => checkIfIsLoggedAndRedirect(store.state.userData.name))
 <style lang="scss">
 .login {
   width: 70%;
+  background-color: white;
+  border: 1px solid black;
+  padding: 35px;
   margin: 2em auto;
   height: 80vh;
   display: flex;

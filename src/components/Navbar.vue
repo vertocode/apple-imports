@@ -4,6 +4,7 @@
         @show-edit-profile="state.showEditProfileModal = true"
         :options="steps"
     ></hamburguer>
+
     <div class="d-flex gap-3" v-if="store.state.userData.name">
       <div v-if="higherViewport">
         <h4 class="align-self-center gap-3">{{ store.state.userData.name }}</h4>
@@ -40,10 +41,6 @@ const steps = [
   {
     link: '/product-list',
     title: 'Product list'
-  },
-  {
-    link: '/cart',
-    title: 'Cart'
   },
   // {
   //   link: '/requests',
@@ -110,6 +107,36 @@ const steps = [
 
   a:hover {
     text-decoration: underline;
+  }
+
+  .apple {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f00;
+    position: relative;
+  }
+
+  .stem {
+    width: 10px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #654321;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .leaf {
+    width: 20px;
+    height: 30px;
+    border-radius: 50% 50% 0 50%;
+    background-color: #0f0;
+    position: absolute;
+    top: -30%;
+    left: 30%;
+    transform: rotate(-45deg);
   }
 }
 </style>

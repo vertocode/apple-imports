@@ -56,9 +56,9 @@ import BaseButton from './../Buttons/BaseButton.vue'
 import Toasted from './../Toast/Toasted.vue'
 import { useStore } from "vuex"
 import { computed, onMounted, reactive } from "vue";
-import { Products } from "../../modules/product/usecases/product-list";
+import { Products } from "../../services/product/usecases/product-list";
 import Loading from '../Loading/Loading.vue'
-import { Users } from '../../modules/users/user'
+import { Users } from '../../services/users/user'
 
 const store = useStore()
 const userData = store.state.userData

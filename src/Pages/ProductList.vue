@@ -35,7 +35,7 @@ import MultiFilter from '../components/Input/MultiFilter.vue'
 import Loading from '../components/Loading/Loading.vue'
 
 import { useStore } from 'vuex'
-import { Products } from "../modules/product/usecases/product-list";
+import { Products } from "../services/product/usecases/product-list";
 import { onBeforeMount, reactive } from "vue";
 
 const store = useStore()

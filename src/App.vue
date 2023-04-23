@@ -7,10 +7,9 @@
 </template>
 
 <script setup>
-import ProductList from './Pages/ProductList.vue'
 import Navbar from './components/Navbar.vue'
 import { useStore } from "vuex";
-import { Users } from "./modules/users/user";
+import { Users } from "./services/users/user";
 import { onMounted } from "vue";
 import { reactive } from "vue";
 import Loading from './components/Loading/Loading.vue'
@@ -30,6 +29,6 @@ onMounted(async () => {
 
 <style>
 body {
-  background-color: rgba(243, 233, 233, 0.2);
+  background-color: #EBEBEB;
 }
 </style>

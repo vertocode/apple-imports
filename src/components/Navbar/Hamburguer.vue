@@ -20,6 +20,10 @@
           @click="redirect(step.link)">{{ step.title }}</li>
       <li
           v-if="store.state.userData.name"
+          @click="redirect('/cart')"
+      >Cart</li>
+      <li
+          v-if="store.state.userData.name"
           @click="logout"
       >Logout</li>
     </ul>

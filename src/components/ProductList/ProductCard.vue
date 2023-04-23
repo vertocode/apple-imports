@@ -10,8 +10,19 @@
           :alt="name"
       />
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
-      <h5>{{ description || '' }}</h5>
-      <ol class="list-group px-3 py-2">
+      <button
+          class="btn btn-sm dropdown-btn"
+          @click="state.isActive = !state.isActive"
+      >
+        See more details <span
+          class="arrow-icon"
+          :class="{ 'arrow-active': state.isActive }"
+      ></span>
+      </button>
+      <ol class="list-group px-3 py-2" v-if="state.isActive">
+        <li>
+          {{ description || '' }}
+        </li>
         <li class="justify-content-between align-items-start">
           <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
             <div class="item-specification" :style="{ 'border-bottom': indexSpecification === props.specifications.length - 1 ? 'none' : ''  }">
@@ -32,7 +43,7 @@
           </div>
         </li>
       </ol>
-      <div id="action-buttons">
+      <div id="action-buttons" class="mt-5">
         <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-primary" @click="buyClick">Add to cart</button>
         <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-success" @click="buyClick">Buy directly</button>
       </div>
@@ -46,8 +57,9 @@
 
 <script setup>
 
-import { onMounted, ref } from "vue";
+import {onMounted, reactive, ref} from "vue";
 import { useStore } from "vuex";
+import { Currency } from "../../services/common/currency";
 
 const props = defineProps({
   value: Number,
@@ -61,8 +73,10 @@ const props = defineProps({
 let itemsMarked = []
 let totalValue = ref(props.value)
 
-
 const store = useStore()
+const state = reactive({
+  isActive: false
+})
 
 const isLogged = store.state.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
@@ -110,6 +124,30 @@ onMounted(() => {
 
 <style lang="scss">
 .product-card {
+  .dropdown-btn {
+    position: relative;
+    background-color: white;
+    border: solid black 0.5px;
+    padding: 5px 40px 5px 10px;
+    cursor: pointer;
+  }
+
+  .arrow-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent black transparent;
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  .arrow-active {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
   .card-item {
     background-color: white;
     margin: 20px auto;
