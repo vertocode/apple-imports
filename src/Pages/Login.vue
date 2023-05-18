@@ -4,14 +4,14 @@
       <img src="https://i.imgur.com/efI3UN6.png" alt="logo">
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <label class="form-label" for="email">Email address</label>
-        <input placeholder="example@domain.com" type="email" id="email" class="form-control" />
+        <label class="form-label" for="email" >Email address</label>
+        <input placeholder="example@domain.com" data-cy="email" type="email" id="email" class="form-control" />
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
-        <label class="form-label" for="password">Password</label>
-        <input placeholder="********" type="password" id="password" class="form-control" />
+        <label class="form-label" for="password" >Password</label>
+        <input placeholder="********" type="password" data-cy="password" id="password" class="form-control" />
       </div>
 
       <!-- 2 column grid layout for inline styling -->
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4" @click="manualLogin">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block mb-4" @click="manualLogin" data-cy="sign-in">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">

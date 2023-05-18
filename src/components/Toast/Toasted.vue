@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${props.state}-toasted`">
+  <div :class="`${props.state}-toasted`" :data-cy="`${props.state}-toast`">
     <header>
       <h1>{{ title }}</h1>
       <span @click="emit('close')"><b>X</b></span>
