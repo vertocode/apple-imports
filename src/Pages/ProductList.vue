@@ -4,24 +4,40 @@
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
             <h1 class="mt-3">All products: </h1>
-            <multi-filter
-                    :set-is-loading="setIsLoading"
-                    :filters="filters"
-            ></multi-filter>
+          <div class="d-flex justify-content-around">
+            <div>
+              <multi-filter
+                  :set-is-loading="setIsLoading"
+                  :filters="filters"
+              ></multi-filter>
+            </div>
+
+            <div class="d-flex gap-3 align-items-end">
+                <base-text-field
+                    icon="search-icon"
+                    @input-value="state.searchValue = $event"
+                />
+                <base-button
+                    size="small"
+                    action="Search"
+                    @click="search"
+                />
+            </div>
+          </div>
             <div class="all-products" v-if="store.state.products.length">
                 <div class="product-item" v-for="(product, index) in store.state.products" :key="index">
                     <product-card
-                            :index-product="index"
-                            :value="product.value"
-                            :name="product.name"
-                            :description="product.description"
-                            :src-img="product.srcImg"
-                            :specifications="product.specifications"
+                        :index-product="index"
+                        :value="product.value"
+                        :name="product.name"
+                        :description="product.description"
+                        :src-img="product.srcImg"
+                        :specifications="product.specifications"
                     />
                 </div>
             </div>
             <div v-else>
-                <none-products></none-products>
+                <none-products />
             </div>
         </div>
       </main>
@@ -43,8 +59,11 @@ import Pagination from '../components/ProductList/Pagination.vue'
 import { useStore } from 'vuex'
 import { Products } from "../services/product/usecases/product-list";
 import { onBeforeMount, reactive } from "vue";
+import BaseTextField from "../components/Input/BaseTextField.vue";
+import BaseButton from "../components/Buttons/BaseButton.vue";
 
 const store = useStore()
+const product = new Products()
 
 const filters = [
   {
@@ -65,7 +84,8 @@ const filters = [
   }
 ]
 const state = reactive({
-  isLoading: true
+  isLoading: true,
+  searchValue: ''
 })
 
 const setIsLoading = (param) => {
@@ -73,8 +93,18 @@ const setIsLoading = (param) => {
   console.log(param)
 }
 
+const search = () => {
+  const { products } = product
+  const { searchValue } = state
+  const filteredProducts = products.filter(product => {
+    if (product.name.toLowerCase().includes(searchValue.toLowerCase())) {
+      return product
+    }
+  })
+  store.commit('setAllProducts', filteredProducts)
+}
+
 onBeforeMount(async () => {
-  const product = new Products()
   const allProducts = await product.getAllProducts()
   store.commit('setAllProducts', allProducts)
   state.isLoading = false
