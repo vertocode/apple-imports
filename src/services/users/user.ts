@@ -1,11 +1,12 @@
 import { NormalUser, GoogleUser } from "../../interfaces/User";
 import axios from "axios";
+import {API} from "../../data/api";
 
 export class Users {
     allUsers = []
 
     getAllUsers(): Promise<NormalUser|GoogleUser[]> | Error {
-        return axios.get('https://imports-api.vertocode.com/users')
+        return axios.get(`${API}/users`)
             .then(({ data: users }) => {
                 this.allUsers = users
                 return users
@@ -15,7 +16,7 @@ export class Users {
     }
 
     async updateUserData(userData: NormalUser|GoogleUser, userIndex: number) {
-        return axios.put(`https://imports-api.vertocode.com/users/${userIndex}`, userData)
+        return axios.put(`${API}/${userIndex}`, userData)
             .then(response => {
                 return response
             }).catch(error => {
