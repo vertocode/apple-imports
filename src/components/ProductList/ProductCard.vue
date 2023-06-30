@@ -4,11 +4,7 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <img
-          v-if="srcImg"
-          :src="srcImg"
-          :alt="name"
-      />
+      <slider :images="srcImg"/>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
       <button
           class="btn btn-sm dropdown-btn"
@@ -57,9 +53,9 @@
 
 <script setup>
 
-import {onMounted, reactive, ref} from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useStore } from "vuex";
-import { Currency } from "../../services/common/currency";
+import Slider from "../Slider/Slider.vue";
 
 const props = defineProps({
   value: Number,

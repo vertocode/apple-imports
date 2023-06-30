@@ -3,7 +3,7 @@
       <main>
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
-            <h1 class="mt-3">All products: </h1>
+          <h1 class="mt-3">All products: </h1>
           <div class="d-flex justify-content-around">
             <div>
               <multi-filter
