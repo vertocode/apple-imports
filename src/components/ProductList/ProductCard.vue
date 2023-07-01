@@ -4,7 +4,7 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <slider :images="srcImg"/>
+      <slider :images="allImages"/>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
       <button
           class="btn btn-sm dropdown-btn"
@@ -53,7 +53,7 @@
 
 <script setup>
 
-import { onMounted, reactive, ref } from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import { useStore } from "vuex";
 import Slider from "../Slider/Slider.vue";
 
@@ -72,6 +72,14 @@ let totalValue = ref(props.value)
 const store = useStore()
 const state = reactive({
   isActive: false
+})
+const allImages = computed(() => {
+  const { items = null } = props.specifications.filter(specification => specification.title === 'Color')[0]
+  const colorImages = items?.map(item => item?.srcImg).filter(item => item) || []
+  return [
+    ...colorImages,
+      ...(typeof props.srcImg === 'string' ? [props.srcImg] : props.srcImg)
+  ]
 })
 
 const isLogged = store.state.userData?.name
