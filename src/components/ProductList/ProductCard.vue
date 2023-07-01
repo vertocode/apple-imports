@@ -4,7 +4,7 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <slider :images="allImages"/>
+      <slider :selectedImageByColor="state.imageColor" :images="allImages"/>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
       <button
           class="btn btn-sm dropdown-btn"
@@ -71,14 +71,16 @@ let totalValue = ref(props.value)
 
 const store = useStore()
 const state = reactive({
-  isActive: false
+  isActive: false,
+  imageColor: null
 })
+
 const allImages = computed(() => {
-  const { items = null } = props.specifications.filter(specification => specification.title === 'Color')[0]
+  const { items = [] } = props.specifications.filter(specification => specification.title === 'Color')[0] || {}
   const colorImages = items?.map(item => item?.srcImg).filter(item => item) || []
   return [
     ...colorImages,
-      ...(typeof props.srcImg === 'string' ? [props.srcImg] : props.srcImg)
+    ...(typeof props.srcImg === 'string' ? [props.srcImg] : props.srcImg)
   ]
 })
 
@@ -86,8 +88,7 @@ const isLogged = store.state.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const calculateValue = (specification, title) => {
-
-  const { name, value } = specification
+  const { name, value, srcImg } = specification
   totalValue.value = props.value || 0
 
   const currentItem = itemsMarked.filter(item => item.title === title)
@@ -102,6 +103,11 @@ const calculateValue = (specification, title) => {
 
   for (const item of itemsMarked) {
     totalValue.value += item.value || 0
+  }
+
+  if (title === 'Color') {
+    state.imageColor = srcImg || null
+    console.log(state.imageColor)
   }
 }
 

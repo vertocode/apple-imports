@@ -6,7 +6,7 @@
       </button>
     </div>
     <transition name="slide-fade" mode="out-in">
-      <div :key="selectedImage">
+      <div :key="selectedImage" v-if="selectedImage">
         <img :src="selectedImage" :key="selectedImage" :alt="selectedImage"/>
       </div>
     </transition>
@@ -34,13 +34,25 @@ export default {
     }
   },
   props: {
-    images: Array | String
+    images: Array | String,
+    selectedImageByColor: {
+      type: String,
+      default: null
+    },
+  },
+  watch: {
+    selectedImageByColor: function (value) {
+      this.updateSelectedImage(value)
+    }
   },
   mounted() {
     this.urls = this.allImages
     this.selectedImage = this.urls[0];
   },
   methods: {
+    updateSelectedImage(value) {
+      this.selectedImage = value
+    },
     displayNextSlide() {
       if (this.imageIndex < this.urls.length - 1) {
         this.imageIndex++;
