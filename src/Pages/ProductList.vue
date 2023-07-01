@@ -4,15 +4,16 @@
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
           <h1 class="mt-3">All products: </h1>
-          <div class="d-flex justify-content-around">
+          <div class="content-filters">
             <div>
               <multi-filter
+                  class="center"
                   :set-is-loading="setIsLoading"
                   :filters="filters"
               ></multi-filter>
             </div>
 
-            <div class="d-flex gap-3 align-items-end">
+            <div class="center d-flex gap-3 align-items-end">
                 <base-text-field
                     icon="search-icon"
                     @input-value="state.searchValue = $event"
@@ -115,6 +116,21 @@ onBeforeMount(async () => {
 .product-list {
   margin: auto;
   width: 90%;
+  .content-filters {
+    @media only screen and (max-width: 800px) {
+      display: block;
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    @media only screen and (min-width: 800px) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
   .all-products {
     display: grid;
     gap: 1rem;
