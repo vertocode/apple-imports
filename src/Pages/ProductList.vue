@@ -28,6 +28,7 @@
             <div class="all-products" v-if="store.state.products.length">
                 <div class="product-item" v-for="(product, index) in store.state.products" :key="index">
                     <product-card
+                        :key="product"
                         :index-product="index"
                         :value="product.value"
                         :name="product.name"
