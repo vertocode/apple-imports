@@ -5,7 +5,10 @@ import { API } from "../../../data/api"
 export class Products {
   products = []
 
-  getAllProducts(): Promise<Product[]> | Error {
+  getAllProducts(): Promise<Product[]> | Product[] | Error {
+    if (this.products.length) {
+      return this.products
+    }
     return axios.get(`${API}/products`)
     .then(({ data: products }) => {
       this.products = products

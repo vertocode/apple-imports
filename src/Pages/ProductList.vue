@@ -1,18 +1,11 @@
 <template>
   <div class="product-list">
+    <sub-navbar :selected-type="state.selectedTypeProduct" :items="subNavbarItems" @click="setProductSelected"/>
       <main>
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
-          <h1 class="mt-3">All products: </h1>
-          <div class="content-filters">
-            <div>
-              <multi-filter
-                  class="center"
-                  :set-is-loading="setIsLoading"
-                  :filters="filters"
-              ></multi-filter>
-            </div>
-
+          <h1 class="mt-3">All Apple Products: </h1>
+          <div class="content-filters mt-3">
             <div class="center d-flex gap-3 align-items-end">
                 <base-text-field
                     icon="search-icon"
@@ -60,9 +53,10 @@ import Pagination from '../components/ProductList/Pagination.vue'
 
 import { useStore } from 'vuex'
 import { Products } from "../services/product/usecases/product-list";
-import { onBeforeMount, reactive } from "vue";
+import {computed, onBeforeMount, reactive, watch} from "vue";
 import BaseTextField from "../components/Input/BaseTextField.vue";
 import BaseButton from "../components/Buttons/BaseButton.vue";
+import SubNavbar from "../components/SubNavbar.vue";
 
 const store = useStore()
 const product = new Products()
@@ -87,13 +81,30 @@ const filters = [
 ]
 const state = reactive({
   isLoading: true,
-  searchValue: ''
+  searchValue: '',
+  selectedTypeProduct: ''
 })
 
-const setIsLoading = (param) => {
-  console.log('entrou')
-  console.log(param)
-}
+const subNavbarItems = computed(() => {
+  return [
+    { label:'Iphone', type: 'iphone' },
+    { label:'Macbook', type: 'macbook' },
+    { label:'Ipad', type: 'ipad' },
+    { label:'Mac Mini', type: 'mac-mini' },
+    { label:'Mac Studio', type: 'mac-studio' }
+  ]
+})
+
+watch(() => state.selectedTypeProduct, async () => {
+  const allProducts = await product.getAllProducts()
+  store.state.products = allProducts
+      .filter(product => {
+        if (product.type === state.selectedTypeProduct) {
+          return product
+        }
+        return null
+      }).filter(p => p)
+})
 
 const search = () => {
   const { products } = product
@@ -106,29 +117,33 @@ const search = () => {
   store.commit('setAllProducts', filteredProducts)
 }
 
+const setProductSelected = ({ type }) => {
+  if (type === 'click') {
+    return
+  }
+  console.log(type)
+  console.log(type)
+  state.selectedTypeProduct = type
+}
+
 onBeforeMount(async () => {
   const allProducts = await product.getAllProducts()
   store.commit('setAllProducts', allProducts)
+  state.selectedTypeProduct = 'iphone'
   state.isLoading = false
 })
 </script>
 
 <style lang="scss">
 .product-list {
-  margin: auto;
-  width: 90%;
+  main {
+    width: 90%;
+    margin: auto;
+  }
   .content-filters {
-    @media only screen and (max-width: 800px) {
-      display: block;
-      .center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
     @media only screen and (min-width: 800px) {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
     }
   }
 

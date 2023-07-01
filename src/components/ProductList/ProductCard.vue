@@ -4,7 +4,9 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <slider :selectedImageByColor="state.imageColor" :images="allImages"/>
+      <div style="height: 15rem" class="d-flex justify-content-evenly ">
+        <slider :is-mini="name.toLowerCase().includes('mini')" :selectedImageByColor="state.imageColor" :images="allImages"/>
+      </div>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
       <button
           class="btn btn-sm dropdown-btn"
@@ -71,7 +73,7 @@ let totalValue = ref(props.value)
 
 const store = useStore()
 const state = reactive({
-  isActive: false,
+  isActive: true,
   imageColor: null
 })
 

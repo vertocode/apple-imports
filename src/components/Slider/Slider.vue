@@ -6,8 +6,8 @@
       </button>
     </div>
     <transition name="slide-fade" mode="out-in">
-      <div :key="selectedImage" v-if="selectedImage">
-        <img :src="selectedImage" :key="selectedImage" :alt="selectedImage"/>
+      <div :key="selectedImage" v-if="selectedImage" class="d-flex justify-content-center align-self-center">
+        <img :src="selectedImage" :key="selectedImage" :alt="selectedImage" :style="{ 'max-height': isMini ? '10rem' : '100%' }"/>
       </div>
     </transition>
     <div class="content-btn-slider">
@@ -25,7 +25,7 @@ export default {
     return {
       urls: [],
       selectedImage: null,
-      imageIndex: 0,
+      imageIndex: 0
     };
   },
   computed: {
@@ -39,6 +39,10 @@ export default {
       type: String,
       default: null
     },
+    isMini: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     selectedImageByColor: function (value) {
