@@ -153,8 +153,8 @@ onMounted(() => {
     border-style: groove;
     border-radius: 30px;
     img {
-      max-width: 80%;
-      height: 100px;
+      max-width: 100%;
+      height: 200px;
     }
     ol {
       width: 95%;
