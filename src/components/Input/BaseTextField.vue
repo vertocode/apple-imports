@@ -2,7 +2,11 @@
   <div class="ba">
     <label>{{ label }}</label>
     <div :class="['input-wrapper', { 'with-icon': icon }]">
+      <datalist id="search">
+        <option v-for="option in store.state.products" :value="option.name" :key="option.name"/>
+      </datalist>
       <input
+        list="search"
         v-model="state.value"
         type="text"
         :placeholder="placeholder"
@@ -15,7 +19,9 @@
 <script setup>
 
 import { reactive, watch } from "vue";
+import { useStore } from "vuex";
 
+const store = useStore()
 const state = reactive({
   value: ''
 })

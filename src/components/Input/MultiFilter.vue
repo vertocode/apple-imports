@@ -46,7 +46,6 @@ const state = reactive({
   selectedFilters: props.filters.map(filter => filter.value),
   isLoading: false
 })
-const emits = defineEmits(['setIsLoading'])
 
 const applyFilters = async () => {
   state.isLoading = true

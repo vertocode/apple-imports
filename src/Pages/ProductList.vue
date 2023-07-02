@@ -6,7 +6,7 @@
         <div v-else>
           <h1 class="mt-3">{{ subNavbarItems.filter(item => item.type === state.selectedTypeProduct)[0].label }} Products: </h1>
           <div class="content-filters mt-3">
-            <div class="center d-flex gap-3 align-items-end">
+            <div class="center d-flex gap-3 align-items-end justify-content-center">
                 <base-text-field
                     icon="search-icon"
                     @input-value="state.searchValue = $event"
@@ -47,13 +47,12 @@
 import AddNewProduct from './AddNewProduct.vue'
 import ProductCard from '../components/ProductList/ProductCard.vue'
 import NoneProducts from '../components/ProductList/NoneProducts.vue'
-import MultiFilter from '../components/Input/MultiFilter.vue'
 import Loading from '../components/Loading/Loading.vue'
 import Pagination from '../components/ProductList/Pagination.vue'
 
 import { useStore } from 'vuex'
 import { Products } from "../services/product/usecases/product-list";
-import {computed, onBeforeMount, reactive, watch} from "vue";
+import { computed, onBeforeMount, reactive, watch } from "vue";
 import BaseTextField from "../components/Input/BaseTextField.vue";
 import BaseButton from "../components/Buttons/BaseButton.vue";
 import SubNavbar from "../components/SubNavbar.vue";
@@ -61,24 +60,6 @@ import SubNavbar from "../components/SubNavbar.vue";
 const store = useStore()
 const product = new Products()
 
-const filters = [
-  {
-    value: 'macbook',
-    label: 'Macbook'
-  },
-  {
-    value: 'iphone',
-    label: 'IPhone'
-  },
-  {
-    value: 'mac-mini',
-    label: 'Mac Mini'
-  },
-  {
-    value: 'mac-studio',
-    label: 'Mac Studio'
-  }
-]
 const state = reactive({
   isLoading: true,
   searchValue: '',
@@ -87,16 +68,17 @@ const state = reactive({
 
 const subNavbarItems = computed(() => {
   return [
-    { label:'iPhone', type: 'iphone' },
-    { label:'Macbook', type: 'macbook' },
-    { label:'iPad', type: 'ipad' },
-    { label:'Mac Mini', type: 'mac-mini' },
-    { label:'Mac Studio', type: 'mac-studio' }
+    { label: 'iPhone', type: 'iphone' },
+    { label: 'MacBook', type: 'macbook' },
+    { label: 'iPad', type: 'ipad' },
+    { label: 'Mac Mini', type: 'mac-mini' },
+    { label: 'Mac Studio', type: 'mac-studio' },
+    { label: 'Accessories', type: 'accessories' }
   ]
 })
 
 watch(() => state.selectedTypeProduct, async () => {
-  const allProducts = await product.getAllProducts()
+  const allProducts = await product.getProductByType(state.selectedTypeProduct)
   store.state.products = allProducts
       .filter(product => {
         if (product.type === state.selectedTypeProduct) {
@@ -122,7 +104,7 @@ const setProductSelected = (type) => {
 }
 
 onBeforeMount(async () => {
-  const allProducts = await product.getAllProducts()
+  const allProducts = await product.getProductByType(state.selectedTypeProduct)
   store.commit('setAllProducts', allProducts)
   state.selectedTypeProduct = 'iphone'
   state.isLoading = false
