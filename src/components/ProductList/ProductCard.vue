@@ -163,7 +163,7 @@ onMounted(() => {
   .card-item {
     background-color: white;
     margin: 20px auto;
-    max-width: 500px;
+    max-width: 700px;
     min-width: 200px;
     padding: 10px;
     border-style: groove;

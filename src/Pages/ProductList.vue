@@ -4,7 +4,7 @@
       <main>
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
-          <h1 class="mt-3">All Apple Products: </h1>
+          <h1 class="mt-3">{{ subNavbarItems.filter(item => item.type === state.selectedTypeProduct)[0].label }} Products: </h1>
           <div class="content-filters mt-3">
             <div class="center d-flex gap-3 align-items-end">
                 <base-text-field
@@ -87,9 +87,9 @@ const state = reactive({
 
 const subNavbarItems = computed(() => {
   return [
-    { label:'Iphone', type: 'iphone' },
+    { label:'iPhone', type: 'iphone' },
     { label:'Macbook', type: 'macbook' },
-    { label:'Ipad', type: 'ipad' },
+    { label:'iPad', type: 'ipad' },
     { label:'Mac Mini', type: 'mac-mini' },
     { label:'Mac Studio', type: 'mac-studio' }
   ]
@@ -145,17 +145,20 @@ onBeforeMount(async () => {
   .all-products {
     display: grid;
     gap: 1rem;
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 1000px) {
       grid-template-columns: 100%;
     }
-    @media only screen and (min-width: 600px) {
+    @media only screen and (min-width: 1500px) {
       grid-template-columns: repeat(2, 50%);
     }
-    @media only screen and (min-width: 1000px) {
+    @media only screen and (min-width: 2000px) {
       grid-template-columns: repeat(3, 33%);
     }
-    @media only screen and (min-width: 1750px) {
+    @media only screen and (min-width: 2500px) {
       grid-template-columns: repeat(4, 25%);
+    }
+    @media only screen and (min-width: 3000px) {
+      grid-template-columns: repeat(5, 20%);
     }
   }
   .add-new-product {
