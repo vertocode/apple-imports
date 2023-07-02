@@ -19,14 +19,14 @@ export class Products {
     })
   }
 
-  getProductByType(type: string): Promise<Product[]> | Product[] | Error {
-    if (this.producstByType.length) {
+  getProductByType(type: string, newQuery: Boolean = false): Promise<Product[]> | Product[] | Error {
+    if (this.producstByType.length && !newQuery) {
       return this.producstByType
     }
     return axios.get(`${API}/products/${type}`)
         .then(({ data: products }) => {
           this.products = products
-          return products
+          return products.reverse()
         }).catch(error => {
           throw new Error(error)
         })

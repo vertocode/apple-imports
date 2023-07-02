@@ -2,8 +2,8 @@
   <div>
     <nav class="sub-navbar">
       <ul
-          class="items d-flex justify-content-evenly bg-opacity-100 shadow border-bottom gap-5 flex-wrap text-black-50 font-monospace">
-        <li class="mx-5" :class="{'link-primary': selectedType === item.type}" @click="select(item.type)" v-for="(item, index) in items" :key="index">{{ item.label }}</li>
+          class="px-5 items d-flex justify-content-evenly bg-opacity-100 shadow border-bottom gap-3 flex-wrap text-black-50 font-monospace">
+        <li :class="{'link-primary': selectedType === item.type}" @click="select(item.type)" v-for="(item, index) in items" :key="index">{{ item.label }}</li>
       </ul>
     </nav>
   </div>

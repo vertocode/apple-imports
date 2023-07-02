@@ -93,12 +93,12 @@ export default {
 }
 
 .slider-btn {
-  margin-bottom: 1em;
   color: #fff;
+  background-color: white;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
-  margin: 2em 0.5em;
+  margin: 0 0.5em;
 }
 
 .slider-btn:hover {

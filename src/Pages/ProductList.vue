@@ -50,9 +50,9 @@ import NoneProducts from '../components/ProductList/NoneProducts.vue'
 import Loading from '../components/Loading/Loading.vue'
 import Pagination from '../components/ProductList/Pagination.vue'
 
-import { useStore } from 'vuex'
-import { Products } from "../services/product/usecases/product-list";
-import { computed, onBeforeMount, reactive, watch } from "vue";
+import {useStore} from 'vuex'
+import {Products} from "../services/product/usecases/product-list";
+import {computed, nextTick, onBeforeMount, reactive, watch} from "vue";
 import BaseTextField from "../components/Input/BaseTextField.vue";
 import BaseButton from "../components/Buttons/BaseButton.vue";
 import SubNavbar from "../components/SubNavbar.vue";
@@ -127,7 +127,7 @@ onBeforeMount(async () => {
   .all-products {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
   .add-new-product {
     &__enabled {
