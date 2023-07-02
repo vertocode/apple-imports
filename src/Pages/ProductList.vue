@@ -110,7 +110,7 @@ const search = () => {
   const { products } = product
   const { searchValue } = state
   const filteredProducts = products.filter(product => {
-    if (product.name.toLowerCase().includes(searchValue.toLowerCase())) {
+    if (product.name.toLowerCase().includes(searchValue.toLowerCase()) && product.type === state.selectedTypeProduct) {
       return product
     }
   })
