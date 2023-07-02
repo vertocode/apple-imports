@@ -1,5 +1,5 @@
 <template>
-  <div class="transition d-flex justify-content-center" :class="{ 'justify-content-between': allImages?.length > 1 }">
+  <div class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }">
     <div class="content-btn-slider">
       <button v-if="allImages?.length > 1" @click="displayPreviousSlide" class="slider-btn">
         <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180850.png" alt="previous">

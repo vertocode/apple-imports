@@ -4,7 +4,7 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <div style="height: 15rem" class="d-flex justify-content-evenly ">
+      <div style="height: 15rem">
         <slider :is-mini="name.toLowerCase().includes('mini')" :selectedImageByColor="state.imageColor" :images="allImages"/>
       </div>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
