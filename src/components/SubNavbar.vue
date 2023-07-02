@@ -3,7 +3,7 @@
     <nav class="sub-navbar">
       <ul
           class="items d-flex justify-content-evenly bg-opacity-100 shadow border-bottom gap-5 flex-wrap text-black-50 font-monospace">
-        <li :class="{'link-primary': selectedType === item.type}" @click="this.$emit('click', item)" v-for="(item, index) in items" :key="index">{{ item.label }}</li>
+        <li :class="{'link-primary': selectedType === item.type}" @click="select(item.type)" v-for="(item, index) in items" :key="index">{{ item.label }}</li>
       </ul>
     </nav>
   </div>
@@ -20,6 +20,12 @@ const props = defineProps({
     default: 'iphone'
   }
 })
+
+const emits = defineEmits(['select-product-type'])
+
+const select = (type) => {
+  emits('select-product-type', type)
+}
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <sub-navbar :selected-type="state.selectedTypeProduct" :items="subNavbarItems" @click="setProductSelected"/>
+    <sub-navbar :selected-type="state.selectedTypeProduct" :items="subNavbarItems" @select-product-type="setProductSelected"/>
       <main>
         <loading v-if="state.isLoading" :is-loading="true"></loading>
         <div v-else>
@@ -117,12 +117,7 @@ const search = () => {
   store.commit('setAllProducts', filteredProducts)
 }
 
-const setProductSelected = ({ type }) => {
-  if (type === 'click') {
-    return
-  }
-  console.log(type)
-  console.log(type)
+const setProductSelected = (type) => {
   state.selectedTypeProduct = type
 }
 
