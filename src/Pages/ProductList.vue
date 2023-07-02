@@ -145,21 +145,7 @@ onBeforeMount(async () => {
   .all-products {
     display: grid;
     gap: 1rem;
-    @media only screen and (max-width: 1000px) {
-      grid-template-columns: 100%;
-    }
-    @media only screen and (min-width: 1500px) {
-      grid-template-columns: repeat(2, 50%);
-    }
-    @media only screen and (min-width: 2000px) {
-      grid-template-columns: repeat(3, 33%);
-    }
-    @media only screen and (min-width: 2500px) {
-      grid-template-columns: repeat(4, 25%);
-    }
-    @media only screen and (min-width: 3000px) {
-      grid-template-columns: repeat(5, 20%);
-    }
+    grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
   }
   .add-new-product {
     &__enabled {
