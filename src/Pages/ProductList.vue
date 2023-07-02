@@ -50,14 +50,16 @@ import NoneProducts from '../components/ProductList/NoneProducts.vue'
 import Loading from '../components/Loading/Loading.vue'
 import Pagination from '../components/ProductList/Pagination.vue'
 
-import {useStore} from 'vuex'
-import {Products} from "../services/product/usecases/product-list";
-import {computed, nextTick, onBeforeMount, reactive, watch} from "vue";
+import { useStore } from 'vuex'
+import { Products } from "../services/product/usecases/product-list";
+import { computed, onBeforeMount, onMounted, reactive, watch } from "vue";
 import BaseTextField from "../components/Input/BaseTextField.vue";
 import BaseButton from "../components/Buttons/BaseButton.vue";
 import SubNavbar from "../components/SubNavbar.vue";
+import { useRoute, useRouter } from "vue-router";
 
 const store = useStore()
+const router = useRouter()
 const product = new Products()
 
 const state = reactive({
@@ -78,6 +80,7 @@ const subNavbarItems = computed(() => {
 })
 
 watch(() => state.selectedTypeProduct, async () => {
+  state.isLoading = true
   const allProducts = await product.getProductByType(state.selectedTypeProduct)
   store.state.products = allProducts
       .filter(product => {
@@ -86,6 +89,7 @@ watch(() => state.selectedTypeProduct, async () => {
         }
         return null
       }).filter(p => p)
+  state.isLoading = false
 })
 
 const search = () => {
@@ -100,13 +104,15 @@ const search = () => {
 }
 
 const setProductSelected = (type) => {
+  router.push(type)
   state.selectedTypeProduct = type
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
+  const route = useRoute()
+  state.selectedTypeProduct = route.params.id || 'iphone'
   const allProducts = await product.getProductByType(state.selectedTypeProduct)
   store.commit('setAllProducts', allProducts)
-  state.selectedTypeProduct = 'iphone'
   state.isLoading = false
 })
 </script>

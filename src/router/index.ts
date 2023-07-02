@@ -9,12 +9,24 @@ const routes: RouteRecordRaw[] = [
         redirect: "/product-list"
     },
     {
+        path: "/*",
+        redirect: "/product-list"
+    },
+    {
         path: "/login",
         name: 'Login',
         component: Login
     },
     {
         path: "/product-list",
+        redirect: '/product-list/apple/iphone'
+    },
+    {
+        path: "/product-list/:id",
+        redirect: '/product-list/apple/iphone'
+    },
+    {
+        path: "/product-list/apple/:id",
         name: "ProductList",
         component: ProductList,
     },
