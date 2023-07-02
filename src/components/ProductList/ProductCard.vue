@@ -18,8 +18,13 @@
       ></span>
       </button>
       <ol class="list-group px-3 py-2" v-if="state.isActive">
-        <li>
-          {{ description || '' }}
+        <li
+            style="list-style-type: circle"
+            class="text-capitalize font-monospace"
+            v-for="(textDescription, index) in description?.split('\n')"
+            :key="index"
+        >
+          {{ textDescription }}
         </li>
         <li class="justify-content-between align-items-start">
           <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
