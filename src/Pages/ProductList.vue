@@ -52,7 +52,7 @@ import Pagination from '../components/ProductList/Pagination.vue'
 
 import { useStore } from 'vuex'
 import { Products } from "../services/product/usecases/product-list";
-import { computed, onBeforeMount, onMounted, reactive, watch } from "vue";
+import { computed, onMounted, reactive, watch } from "vue";
 import BaseTextField from "../components/Input/BaseTextField.vue";
 import BaseButton from "../components/Buttons/BaseButton.vue";
 import SubNavbar from "../components/SubNavbar.vue";

@@ -6,7 +6,8 @@ export default createStore({
         isAdmin: false,
         userData: {},
         allUsers: [],
-        products: []
+        products: [],
+        showNavbar: true
     },
     mutations: {
         setAllUsers(state, payload) {

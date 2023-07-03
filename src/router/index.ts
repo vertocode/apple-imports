@@ -1,7 +1,9 @@
-import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router"
+import { createWebHistory, createRouter, RouteRecordRaw, RouteLocationNormalized} from "vue-router"
 import ProductList from "../Pages/ProductList.vue"
 import Login from "../Pages/Login.vue"
 import AddNewProduct from "../Pages/AddNewProduct.vue"
+import NotFound from "../Pages/NotFound.vue";
+import {useStore} from "vuex";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -9,8 +11,8 @@ const routes: RouteRecordRaw[] = [
         redirect: "/product-list"
     },
     {
-        path: "/*",
-        redirect: "/product-list"
+        path: "/:id",
+        redirect: "/not-found"
     },
     {
         path: "/login",
@@ -23,17 +25,36 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/product-list/:id",
-        redirect: '/product-list/apple/iphone'
+        redirect: 'not-found'
     },
     {
         path: "/product-list/apple/:id",
         name: "ProductList",
         component: ProductList,
+        beforeEnter: (to: any, from, next) => {
+            const allTypes = [
+                'iphone',
+                'macbook',
+                'ipad',
+                'mac-mini',
+                'mac-studio',
+                'accessories'
+            ]
+            if (allTypes.includes(to.params.id)) {
+                next()
+            }
+            next('/not-found')
+        }
     },
     {
         path: "/add-new-product",
         name: 'AddNewProduct',
         component: AddNewProduct
+    },
+    {
+        path: "/not-found",
+        name: 'notFound',
+        component: NotFound
     }
 ];
 
