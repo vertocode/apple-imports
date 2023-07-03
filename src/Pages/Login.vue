@@ -1,17 +1,17 @@
 <template>
-  <div class="login">
+  <div class="login m-auto mt-4">
     <form>
-      <img src="https://i.imgur.com/efI3UN6.png" alt="logo">
+      <img src="https://i.imgur.com/fCspoHI.jpg" alt="logo">
       <!-- Email input -->
       <div class="form-outline mb-4">
         <label class="form-label" for="email" >Email address</label>
-        <input placeholder="example@domain.com" data-cy="email" type="email" id="email" class="form-control" />
+        <input v-model="email" placeholder="example@domain.com" data-cy="email" type="email" id="email" class="form-control" />
       </div>
 
       <!-- Password input -->
       <div class="form-outline mb-4">
         <label class="form-label" for="password" >Password</label>
-        <input placeholder="********" type="password" data-cy="password" id="password" class="form-control" />
+        <input v-model="password" placeholder="********" type="password" data-cy="password" id="password" class="form-control" />
       </div>
 
       <!-- 2 column grid layout for inline styling -->
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Submit button -->
-      <button type="submit" class="btn btn-primary btn-block mb-4" @click="manualLogin" data-cy="sign-in">Sign in</button>
+      <button type="submit" :class="{ 'disabled': !isFormValid }" class="btn btn-primary btn-block mb-4" @click="manualLogin" data-cy="sign-in">Sign in</button>
 
       <!-- Register buttons -->
       <div class="text-center">
@@ -53,7 +53,7 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
-import { onMounted, reactive, watchEffect } from "vue";
+import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
 import router from "../router";
 import Toasted from '../components/Toast/Toasted.vue'
 
@@ -64,6 +64,15 @@ const state = reactive({
   titleToasted: 'Something is wrong!',
   descriptionToasted: ''
 })
+const email = ref('')
+const password = ref('')
+const isFormValid = computed(() => {
+  return email.value && password.value
+})
+
+watch(() => email.value, () => {
+  console.log(email.value)
+})
 
 const checkIfIsLoggedAndRedirect = (isLogged) => {
   if (isLogged) {
@@ -72,11 +81,9 @@ const checkIfIsLoggedAndRedirect = (isLogged) => {
 }
 
 const manualLogin = () => {
-  const email = document.querySelector('#email').value
-  const password = document.querySelector('#password').value
   const allUsers = store.state.allUsers
   const existAccount = allUsers.map(user => {
-    if (user.email === email && user.password === password) {
+    if (user.email === email.value && user.password === password.value) {
       return user
     }
   }).filter(user => user)
@@ -121,17 +128,14 @@ watchEffect(() => checkIfIsLoggedAndRedirect(store.state.userData.name))
 
 <style lang="scss">
 .login {
-  width: 70%;
+  border-radius: 10%;
+  max-width: 45em;
   background-color: white;
   border: 1px solid black;
   padding: 35px;
-  margin: 2em auto;
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 80%;
   img {
-    width: 50%;
+    width: 10em;
     margin-bottom: 3rem;
   }
 }

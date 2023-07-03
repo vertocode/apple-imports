@@ -8,7 +8,7 @@
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
       <li v-if="!store.state.userData.name"
       :class="{ active: isLogin }"
-       @click="redirect('login')"
+       @click="redirect('/login')"
       >Login</li>
       <li
           v-if="store.state.userData.name"

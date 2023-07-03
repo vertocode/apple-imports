@@ -23,10 +23,8 @@
 </template>
 
 <script setup>
-import {computed, reactive} from "vue";
+import { computed, reactive } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from 'vue-router'
-import router from "../router";
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
 
