@@ -1,4 +1,4 @@
-<template>
+]<template>
   <div class="product-list">
     <sub-navbar :selected-type="state.selectedTypeProduct" :items="subNavbarItems" @select-product-type="setProductSelected"/>
       <main>
@@ -133,7 +133,10 @@ onMounted(async () => {
   .all-products {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    @media (min-width: 570px) {
+      grid-template-columns: repeat(auto-fill, minmax(520px, 2fr));
+    }
+    grid-template-columns: repeat(auto-fill, minmax(320px, 2fr));
   }
   .add-new-product {
     &__enabled {
