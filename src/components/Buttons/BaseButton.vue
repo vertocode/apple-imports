@@ -2,8 +2,11 @@
   <div style="width: max-content">
     <button
         :disabled="disabled"
-        class="btn btn-outline-primary"
-        :class="{ 'btn-sm': size === 'small' }"
+        class="btn"
+        :class="[
+          {'btn-sm': size === 'small'},
+          `btn-${variant}`
+         ]"
     >{{ action }}</button>
   </div>
 </template>
@@ -13,7 +16,11 @@
 const props = defineProps({
   action: String,
   disabled: Boolean,
-  size: String
+  size: String,
+  variant: {
+    type: String,
+    default: 'outline-primary'
+  }
 })
 </script>
 

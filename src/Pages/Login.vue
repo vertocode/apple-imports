@@ -52,7 +52,7 @@
 <script setup>
 import { decodeCredential } from 'vue3-google-login'
 import { useStore } from "vuex";
-import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import router from "../router";
 import Toasted from '../components/Toast/Toasted.vue'
 
@@ -67,10 +67,6 @@ const email = ref('')
 const password = ref('')
 const isFormValid = computed(() => {
   return email.value && password.value
-})
-
-watch(() => email.value, () => {
-  console.log(email.value)
 })
 
 const checkIfIsLoggedAndRedirect = (isLogged) => {

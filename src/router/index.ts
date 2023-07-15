@@ -3,7 +3,7 @@ import ProductList from "../Pages/ProductList.vue"
 import Login from "../Pages/Login.vue"
 import AddNewProduct from "../Pages/AddNewProduct.vue"
 import NotFound from "../Pages/NotFound.vue";
-import {useStore} from "vuex";
+import Cart from "../Pages/Cart.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -45,6 +45,11 @@ const routes: RouteRecordRaw[] = [
             }
             next('/not-found')
         }
+    },
+    {
+      path: "/cart",
+      name: 'Card',
+      component: Cart
     },
     {
         path: "/add-new-product",

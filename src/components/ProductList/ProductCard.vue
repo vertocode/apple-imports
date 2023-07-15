@@ -47,13 +47,23 @@
         </li>
       </ol>
       <div id="action-buttons" class="mt-5">
-        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-primary" @click="buyClick">Add to cart</button>
-        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-success" @click="buyClick">Buy directly</button>
+        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-primary" @click="addItemCart">Add to cart</button>
       </div>
       <p class="mt-3" v-if="!isLogged">You need do the
         <span @click="$router.push('/login')" class="text-primary" style="cursor: pointer">login</span>
-        to enable these buttons</p>
+        to enable this button</p>
       <br v-else>
+      <div v-if="isAddedCart" class="alert-success">
+        <p class="text-green">
+          You have {{ numberOfItems }} {{ name }}
+          <span v-if="numberOfItems === 1">product</span>
+          <span v-else>products</span>
+          added in the Cart!
+        </p>
+        <span @click="$router.push('/cart')" class="link-info" style="cursor:pointer;">
+          Click here to redirect to your cart.
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +79,7 @@ const props = defineProps({
   indexProduct: Number,
   description: String,
   name: String,
+  isAddedCart: Boolean,
   srcImg: String,
   specifications: Object
 })
@@ -79,7 +90,12 @@ let totalValue = ref(props.value)
 const store = useStore()
 const state = reactive({
   isActive: true,
+  isAddedCart: false,
   imageColor: null
+})
+
+const numberOfItems = computed(() => {
+  return store.state.cart.filter(product => product.name === props.name).length
 })
 
 const allImages = computed(() => {
@@ -95,6 +111,9 @@ const isLogged = store.state.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const calculateValue = (specification, title) => {
+  // change the selected specification.
+  console.log(itemsMarked)
+
   const { name, value, srcImg } = specification
   totalValue.value = props.value || 0
 
@@ -105,7 +124,7 @@ const calculateValue = (specification, title) => {
   itemsMarked[indexItem] = {
     title,
     name,
-    value: value ?? 0
+    value: value || 0
   }
 
   for (const item of itemsMarked) {
@@ -114,17 +133,30 @@ const calculateValue = (specification, title) => {
 
   if (title === 'Color') {
     state.imageColor = srcImg || null
-    console.log(state.imageColor)
   }
 }
 
-const buyClick = () => {
-  const isNotLogged = !store.state.userData.name
-  if (isNotLogged) {
-    window.location.pathname = 'login'
-  } else {
-    alert('yet not develop')
-  }
+const addItemCart = () => {
+  console.log(itemsMarked)
+  const { srcImg, name, indexProduct, value } = props
+  store.commit('addItemCart', {
+    srcImg,
+    name,
+    value: itemsMarked.reduce(({value: previousValue}, {value: currentValue}) => {
+      return (previousValue || 0) + (currentValue || 0)
+    }) + value,
+    specifications: itemsMarked.map(item => {
+      return {
+        title: item.title,
+        items: [
+          {
+            name: item.name
+          }
+        ]
+      }
+    }),
+    indexProduct
+  })
 }
 
 onMounted(() => {
@@ -133,7 +165,7 @@ onMounted(() => {
     itemsMarked.push({
       title: specification.title,
       name: specification.items[0].name,
-      value: specification.items[0].value
+      value: specification.items[0].value || 0
     })
   })
 })

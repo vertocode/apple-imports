@@ -27,6 +27,7 @@
                         :name="product.name"
                         :description="product.description"
                         :src-img="product.srcImg"
+                        :is-added-cart="isAddedInTheCart(product)"
                         :specifications="product.specifications"
                     />
                 </div>
@@ -101,6 +102,11 @@ const search = () => {
     }
   })
   store.commit('setAllProducts', filteredProducts)
+}
+
+const isAddedInTheCart = (product) => {
+  const { cart } = store.state
+  return cart.map(product => product.name).includes(product.name)
 }
 
 const setProductSelected = (type) => {
