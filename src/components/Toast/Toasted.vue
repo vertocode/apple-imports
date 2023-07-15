@@ -43,11 +43,13 @@ header {
 }
 
 [class$="-toasted"] {
-  border-radius: 5%;
+  margin: auto;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
   border: rgba(0, 0, 0, 0.6) solid 3px;
-  bottom: 50em;
   position: absolute;
-  width: 80vw;
   height: max-content;
   word-wrap: break-word !important;
 }
@@ -58,6 +60,10 @@ header {
 
 .success-toasted {
   background-color: #28A745;
+}
+
+.warning-toasted {
+  background-color: #FFA500;
 }
 
 </style>

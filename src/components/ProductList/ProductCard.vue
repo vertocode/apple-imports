@@ -51,7 +51,7 @@
         <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-success" @click="buyClick">Buy directly</button>
       </div>
       <p class="mt-3" v-if="!isLogged">You need do the
-        <span @click="$router.push('login')" class="text-primary" style="cursor: pointer">login</span>
+        <span @click="$router.push('/login')" class="text-primary" style="cursor: pointer">login</span>
         to enable these buttons</p>
       <br v-else>
     </div>

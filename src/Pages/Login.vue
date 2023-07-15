@@ -1,10 +1,10 @@
 <template>
   <div class="login m-auto mt-4">
-    <form>
+    <form @submit.prevent>
       <img src="https://i.imgur.com/fCspoHI.jpg" alt="logo">
       <!-- Email input -->
       <div class="form-outline mb-4">
-        <label class="form-label" for="email" >Email address</label>
+        <label class="form-label" for="email" >Username</label>
         <input v-model="email" placeholder="example@domain.com" data-cy="email" type="email" id="email" class="form-control" />
       </div>
 
@@ -24,10 +24,10 @@
           </div>
         </div>
 
-        <div class="col">
-          <!-- Simple link -->
-          <a href="#!">Forgot password?</a>
-        </div>
+<!--        <div class="col">-->
+<!--          &lt;!&ndash; Simple link &ndash;&gt;-->
+<!--          <a href="#!">Forgot password?</a>-->
+<!--        </div>-->
       </div>
 
       <!-- Submit button -->
@@ -45,7 +45,6 @@
         @close="state.toastEnabled = false"
         :state="state.stateToasted"
         :title="state.titleToasted"
-        :description="state.descriptionToasted"
     ></toasted>
   </div>
 </template>
@@ -87,7 +86,7 @@ const manualLogin = () => {
       return user
     }
   }).filter(user => user)
-  if (existAccount) {
+  if (existAccount.length) {
     try {
       store.commit('setUserLogged', existAccount[0])
       state.toastEnabled = true
@@ -104,9 +103,9 @@ const manualLogin = () => {
     }
   } else {
     state.toastEnabled = true
-    state.stateToasted = 'error'
-    state.titleToasted = 'Account not found on the base Data.'
-    state.descriptionToasted = 'Sorry, you can Sign with Google or register in the system'
+    state.stateToasted = 'warning'
+    state.titleToasted = 'Login Error: Invalid credentials. Please check your username and password and try again.'
+    state.descriptionToasted = 'You can Sign with Google if you do not have an account..'
   }
   setTimeout(() => {
     state.toastEnabled = false
@@ -118,12 +117,14 @@ const loginWithGoogle = (response) => {
   const userData = decodeCredential(response.credential)
   store.commit('setUserLogged', userData)
   state.toastEnabled = true
+  state.stateToasted = 'success'
+  state.titleToasted = 'You are logged now.'
+  state.descriptionToasted = `Welcome ${store.state.userData.name || ''}!`
+  checkIfIsLoggedAndRedirect(store.state.userData.name)
   setInterval(() => state.toastEnabled = false, 5000)
 }
 
 onMounted(() => checkIfIsLoggedAndRedirect())
-
-watchEffect(() => checkIfIsLoggedAndRedirect(store.state.userData.name))
 </script>
 
 <style lang="scss">

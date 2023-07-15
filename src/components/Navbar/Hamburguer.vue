@@ -69,7 +69,7 @@ const logout = () => {
   state.dropdownActivated = false
 
   // Redirect to the login screen.
-  redirect('login')
+  redirect('/login')
 }
 </script>
 
