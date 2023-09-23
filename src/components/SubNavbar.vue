@@ -1,9 +1,15 @@
 <template>
   <div>
     <nav class="sub-navbar">
-      <ul
-          class="px-5 items d-flex justify-content-evenly bg-opacity-100 shadow border-bottom gap-3 flex-wrap text-black-50 font-monospace">
-        <li :class="{'link-primary': selectedType === item.type}" @click="select(item.type)" v-for="(item, index) in items" :key="index">{{ item.label }}</li>
+      <ul class="nav-list">
+        <li
+            :class="['nav-item', { 'active': selectedType === item.type }]"
+            @click="select(item.type)"
+            v-for="(item, index) in items"
+            :key="index"
+        >
+          {{ item.label }}
+        </li>
       </ul>
     </nav>
   </div>
@@ -30,17 +36,48 @@ const select = (type) => {
 
 <style lang="scss">
 .sub-navbar {
-  .items {
-    font-size: 1.5rem;
-    list-style-type: none;
+  background-color: #007bff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color 0.3s ease-in-out;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.nav-item.active {
+  background-color: #0056b3;
+}
+
+.nav-item:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .sub-navbar {
+    padding: 10px 0;
   }
 
-  .items li {
-    margin: 10px 0;
-    cursor: pointer;
-    &:hover {
-      background-color: gray;
-    }
+  .nav-list {
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    margin: 5px;
   }
 }
 </style>

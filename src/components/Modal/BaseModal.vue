@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="base-modal">
-      <header>
+      <header class="base-modal-header">
         <div>
           <img
               class="icon"
@@ -22,7 +22,7 @@
       <main>
         <slot></slot>
       </main>
-      <footer>
+      <footer class="base-modal-footer">
         <div class="social-media d-block">
           <h4>Any doubts, contact to me:</h4>
           <a v-for="social in socials" :keys="social.id" :href="social.href" target="_blank">
@@ -72,32 +72,67 @@ const socials = [
 
 <style lang="scss">
 .base-modal {
-  border: blue solid 1px;
-  border-radius: 1%;
-  position: absolute;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  position: fixed;
   z-index: 1;
-  top: 12%;
-  left: 15%;
-  width: 70%;
-  height: 80%;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 80%;
   background-color: white;
-  header {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+
+  .base-modal-header {
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
-    height: max-content;
-    .icon {
-      width: 4rem;
-    }
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
-  main {
-    height: 70%;
-  }
-  footer {
+
+  .icon {
+    width: 2rem;
+    height: 2rem;
     display: flex;
-    min-height: 100px;
     justify-content: center;
-    align-items: end;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+
+  .close-button {
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .base-modal-footer {
+    padding: 1rem;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    top: 5%;
+    max-width: 95%;
+    border-radius: 0;
+  }
+  @media (min-width: 600px) {
+    min-width: 600px;
   }
 }
 </style>

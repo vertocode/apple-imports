@@ -31,7 +31,6 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-
 header {
   display: flex;
   span {
@@ -43,13 +42,13 @@ header {
 }
 
 [class$="-toasted"] {
+  position: absolute;
   margin: auto;
-  top: 90%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
   border: rgba(0, 0, 0, 0.6) solid 3px;
-  position: absolute;
+  width: 800px;
   height: max-content;
   word-wrap: break-word !important;
 }

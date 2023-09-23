@@ -31,6 +31,7 @@
         </div>
         <div style="width: 100%;">
           <base-button
+              v-if="!saveChangesDisabled"
               class="m-auto mt-3"
               :loading="true"
               :disabled="saveChangesDisabled"
@@ -131,6 +132,7 @@ const saveChanges = async () => {
     display: flex;
     justify-content: center;
     gap: 4rem;
+    overflow: visible;
     .profile-picture {
       width: 15em;
       @media only screen and (max-width: 600px) {

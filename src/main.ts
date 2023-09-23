@@ -1,11 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css"
+import 'font-awesome/css/font-awesome.css'
 import "bootstrap"
 
 import App from './App.vue'
 import { createApp } from 'vue'
-// @ts-ignore
 import router from './router'
-// @ts-ignore
 import store from './store'
 import vue3GoogleLogin from 'vue3-google-login'
 import './styles/main.scss'

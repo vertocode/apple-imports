@@ -8,11 +8,11 @@
           <div class="content-filters mt-3">
             <div class="center d-flex gap-3 align-items-end justify-content-center">
                 <base-text-field
-                    icon="search-icon"
+                    icon="fa fa-search"
                     @input-value="state.searchValue = $event"
                 />
                 <base-button
-                    size="small"
+                    variant="primary"
                     action="Search"
                     @click="search"
                 />
@@ -37,7 +37,7 @@
             </div>
         </div>
       </main>
-      <footer class="m-auto">
+      <footer class="m-auto" v-if="store.state.products.length > 20">
           <pagination />
       </footer>
   </div>

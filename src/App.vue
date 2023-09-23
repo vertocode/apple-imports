@@ -48,6 +48,7 @@ watch(() => route.path, () => {
 
 <style>
 body {
+  position: relative;
   background-color: #EBEBEB;
 }
 </style>

@@ -12,11 +12,12 @@
       >Login</li>
       <li
           v-if="store.state.userData.name"
+          :class="{ active: state.showEditProfileModal }"
           @click="emit('showEditProfile')"
       >Profile</li>
       <li
           v-for="step in options"
-          :class="{ active: route.path === step.link }"
+          :class="{ active: route.path.includes(step.link) }"
           @click="redirect(step.link)">{{ step.title }}</li>
       <li
           v-if="store.state.userData.name"
@@ -101,9 +102,8 @@ nav {
     z-index: 1;
     display: none;
     position: absolute;
-    margin-top: 2rem;
     top: 80px;
-    left: 0;
+    left: 1.73%;
     background-color: #333;
     padding: 20px;
     width: 20rem;

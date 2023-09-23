@@ -1,19 +1,20 @@
 <template>
-  <div class="content navbar py-3">
+  <div class="navbar">
     <hamburguer
         @show-edit-profile="state.showEditProfileModal = true"
         :options="steps"
     ></hamburguer>
 
-    <div class="d-flex gap-3" v-if="store.state.userData.name">
-      <div v-if="higherViewport">
-        <h4 class="align-self-center gap-3">{{ store.state.userData.name }}</h4>
-        <h6 class="align-self-center gap-3">{{ store.state.userData.email }}</h6>
+    <div class="profile-info" v-if="store.state.userData.name">
+      <div class="profile-text">
+        <h4>{{ store.state.userData.name }}</h4>
+        <h6>{{ store.state.userData.email }}</h6>
       </div>
       <img
           :src="store.state.userData.picture"
           alt="img-profile"
-          style="border-radius: 50%">
+          class="profile-image"
+      >
     </div>
   </div>
   <edit-profile-modal
@@ -29,12 +30,10 @@ import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
 
 const state = reactive({
-  dropdownActivated: false,
   showEditProfileModal: false
 })
 
 const store = useStore()
-const higherViewport = computed(() => window.innerWidth > 600)
 const steps = [
   {
     link: '/product-list',
@@ -53,88 +52,57 @@ const steps = [
 </script>
 
 <style lang="scss">
-.content {
-  font-family: SF Pro Text,SF Pro Icons,Helvetica Neue,Helvetica,Arial,sans-serif;;
-  background-color: rgb(22,22,23);
+.navbar {
+  background-color: #000;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.3em 2em;
-  .dropdown {
-    padding-top: 0.6em;
-    background-color: rgba(0, 0, 0, 0.65);
-    color: white;
-    position: absolute;
-    top: 100px;
-    height: max-content;
-    width: 13em;
-    ul {
-      padding-inline-start: 0 !important;
-      li {
-        padding-top: 0.3em;
-        cursor: pointer;
-        list-style-type: none;
-      }
-      li:hover {
-        background-color: #05cadc;
-      }
-    }
-  }
-  .list {
-    display: flex;
-    li {
-      margin: 0 50px
-    }
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-text {
+  margin-right: 20px;
+}
+
+.profile-text h4 {
+  font-size: 1.2rem;
+}
+
+.profile-text h6 {
+  font-size: 0.9rem;
+}
+
+.profile-image {
+  width: 70px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.5em;
+    align-items: center;
+    text-align: center;
   }
 
-  img {
-    width: 70px;
-    position: relative;
+  .profile-info {
+    margin-top: 10px;
   }
 
-  .badge {
-    position: absolute;
-    bottom: 15px;
-    right: 35px;
+  .profile-text {
+    margin-right: 0;
+    margin-bottom: 10px;
   }
 
-  a {
-    text-decoration: none;
-    font-size: 1.5em;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
-  .apple {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #f00;
-    position: relative;
-  }
-
-  .stem {
-    width: 10px;
-    height: 30px;
-    border-radius: 5px;
-    background-color: #654321;
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .leaf {
-    width: 20px;
-    height: 30px;
-    border-radius: 50% 50% 0 50%;
-    background-color: #0f0;
-    position: absolute;
-    top: -30%;
-    left: 30%;
-    transform: rotate(-45deg);
+  .profile-image {
+    margin-top: 10px;
   }
 }
 </style>
