@@ -11,10 +11,11 @@ import vue3GoogleLogin from 'vue3-google-login'
 import './styles/main.scss'
 
 const app = createApp(App)
+
 app.use(store)
 app.use(router)
 app.use(vue3GoogleLogin, {
-    clientId: '180900081631-7j3aopdirsgrquj6phi9fs9fl4ml9e8i.apps.googleusercontent.com'
+    clientId: import.meta.env.VITE_APP_GOOGLE_CLIENT_ID
 })
 
 app.mount('#app')
