@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Loading v-if="isLoading" />
-    <div v-for="(listType, index) in store.state.productListTypes" :key="index" v-else-if="store.state.productListTypes.length">
+    <Loading :is-loading="true" v-if="isLoading" />
+    <div v-for="(listType, index) in store.state.productListTypes" :key="index" v-if="store.state.productListTypes.length">
       <product-list-type :list-type="listType"></product-list-type>
     </div>
-    <NoProductListTypes />
+    <NoProductListTypes v-else/>
   </div>
 </template>
 
@@ -22,5 +22,6 @@ const isLoading = ref(true)
 onMounted(async () => {
   await getProductListTypes(store)
   isLoading.value = false
+  console.log(isLoading.value)
 })
 </script>
