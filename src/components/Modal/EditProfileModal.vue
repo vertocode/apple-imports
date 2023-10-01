@@ -135,7 +135,7 @@ const saveChanges = async () => {
     overflow: visible;
     .profile-picture {
       width: 15em;
-      @media only screen and (max-width: 600px) {
+      @media (max-width: 600px) {
        width: 10em;
       }
     }

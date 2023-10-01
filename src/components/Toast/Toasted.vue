@@ -42,7 +42,7 @@ header {
 }
 
 [class$="-toasted"] {
-  position: absolute;
+  position: fixed;
   margin: auto;
   top: 80%;
   left: 50%;
@@ -51,6 +51,12 @@ header {
   width: 800px;
   height: max-content;
   word-wrap: break-word !important;
+}
+
+@media (max-width: 810px) {
+  [class$="-toasted"] {
+    width: 90%;
+  }
 }
 
 .error-toasted {

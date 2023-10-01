@@ -77,7 +77,7 @@ const logout = () => {
 <style scoped lang="scss">
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #333;
   color: #fff;
@@ -102,8 +102,8 @@ nav {
     z-index: 1;
     display: none;
     position: absolute;
-    top: 80px;
-    left: 1.73%;
+    top: 85px;
+    left: 2.11%;
     background-color: #333;
     padding: 20px;
     width: 20rem;
@@ -130,6 +130,15 @@ nav {
 
   .show {
     display: block;
+  }
+
+  @media (max-width: 450px) {
+   .menu {
+     top: 184px;
+     left: 9%;
+   }
+
+    width: 5px;
   }
 }
 </style>

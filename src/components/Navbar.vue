@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { computed, reactive } from "vue";
+import { reactive } from "vue";
 import { useStore } from "vuex";
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
@@ -86,23 +86,48 @@ const steps = [
 
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 0.2em;
     padding: 0.5em;
     align-items: center;
     text-align: center;
   }
 
   .profile-info {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    flex-direction: row;
+
+    .profile-text {
+      margin-right: 0;
+      margin-top: 1em;
+    }
+
+    .profile-image {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .profile-image {
+        width: 50px;
+      }
+    }
+  }
+}
+
+@media (max-width: 370px) {
+  .navbar {
+    flex-direction: column-reverse;
+    gap: 0.2em;
   }
 
-  .profile-text {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  .profile-image {
-    margin-top: 10px;
+  .profile-info {
+    flex-direction: row-reverse;
+    margin-top: 5px;
+    margin-bottom: 0.5em;
   }
 }
 </style>

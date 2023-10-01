@@ -127,10 +127,14 @@ const socials = [
   }
 
   @media (max-width: 768px) {
-    top: 5%;
-    max-width: 95%;
-    border-radius: 0;
+    .base-modal-header {
+      padding: 0.2rem;
+    }
+    width: 90%;
+    top: 1%;
+    min-width: 95%;
   }
+
   @media (min-width: 600px) {
     min-width: 600px;
   }
