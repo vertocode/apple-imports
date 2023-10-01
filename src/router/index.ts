@@ -5,6 +5,7 @@ import NotFound from "../Pages/NotFound.vue";
 import Cart from "../Pages/Cart.vue";
 import ProductListProducts from "../components/ProductList/ProductListProducts.vue";
 import ProductListTypes from "../components/ProductList/ProductListTypes.vue";
+import RequestProduct from "../components/ProductList/RequestProduct.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -46,6 +47,10 @@ const routes: RouteRecordRaw[] = [
             }
             next('/not-found')
         }
+    },
+    {
+      path: '/request-product',
+      component: RequestProduct
     },
     {
       path: "/cart",
