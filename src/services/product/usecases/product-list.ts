@@ -23,7 +23,7 @@ export class Products {
     if (this.producstByType.length && !newQuery) {
       return this.producstByType
     }
-    return axios.get(`${API}/products/${type}`)
+    return axios.get(`${API}/product/${type}`)
         .then(({ data: products }) => {
           this.products = products
           return products.reverse()
