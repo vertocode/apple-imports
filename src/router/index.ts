@@ -1,9 +1,10 @@
 import { createWebHistory, createRouter, RouteRecordRaw, RouteLocationNormalized} from "vue-router"
-import ProductList from "../Pages/ProductList.vue"
 import Login from "../Pages/Login.vue"
 import AddNewProduct from "../Pages/AddNewProduct.vue"
 import NotFound from "../Pages/NotFound.vue";
 import Cart from "../Pages/Cart.vue";
+import ProductListProducts from "../components/ProductList/ProductListProducts.vue";
+import ProductListTypes from "../components/ProductList/ProductListTypes.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -21,16 +22,16 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/product-list",
-        redirect: '/product-list/apple/iphone'
+        component: ProductListTypes
     },
     {
         path: "/product-list/:id",
-        redirect: 'not-found'
+        redirect: 'not-found',
     },
     {
         path: "/product-list/apple/:id",
         name: "ProductList",
-        component: ProductList,
+        component: ProductListProducts,
         beforeEnter: (to: any, from, next) => {
             const allTypes = [
                 'iphone',

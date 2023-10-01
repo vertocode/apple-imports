@@ -57,8 +57,8 @@ const socials = [
     id: 1,
     src: 'https://i.imgur.com/g9chQFf.png',
     href: 'https://www.linkedin.com/in/evertonvanoni/',
-    alt: 'Gmail',
-    title: 'Gmail'
+    alt: 'Linkedin',
+    title: 'Linkedin'
   },
   {
     id: 1,
