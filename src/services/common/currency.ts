@@ -11,7 +11,6 @@ export class Currency {
         {
             const dollar = data['USDBRL']['bid']
             this.dollar = dollar
-            console.log(this.dollar)
             return dollar
         })
     }

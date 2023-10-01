@@ -1,2 +1,0 @@
-// export assets
-export {}

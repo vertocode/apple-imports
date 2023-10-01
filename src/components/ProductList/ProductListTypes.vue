@@ -13,14 +13,15 @@ import ProductListType from './ProductListType.vue'
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 import Loading from '../Loading/Loading.vue'
-import { getProductListTypes } from '../../services/product/usecases/product-types'
+import { ProductTypes } from '../../services/product/ProductTypes'
 import NoProductListTypes from './NoProductListTypes.vue'
 
 const store = useStore()
 const isLoading = ref(true)
 
 onMounted(async () => {
-  await getProductListTypes(store)
+  const productTypes = new ProductTypes()
+  await productTypes.getProductListTypes(store)
   isLoading.value = false
   console.log(isLoading.value)
 })

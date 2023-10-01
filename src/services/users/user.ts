@@ -1,26 +1,26 @@
-import { NormalUser, GoogleUser } from "../../interfaces/User";
-import axios from "axios";
-import {API} from "../../data/api";
+import { NormalUser, GoogleUser } from '../../interfaces/User'
+import {Api} from "../Api";
+
+const api = new Api()
 
 export class Users {
     allUsers = []
 
-    getAllUsers(): Promise<NormalUser|GoogleUser[]> | Error {
-        return axios.get(`${API}/users`)
-            .then(({ data: users }) => {
-                this.allUsers = users
-                return users
-            }).catch(error => {
-                throw new Error(error)
-            })
+    async getAllUsers(): Promise<NormalUser[] | GoogleUser[] | Error> {
+        try {
+            const response = await api.get('/users')
+            this.allUsers = response.data
+            return this.allUsers
+        } catch (error: unknown | any) {
+            throw new Error(error)
+        }
     }
 
     async updateUserData(userData: NormalUser|GoogleUser, userIndex: number) {
-        return axios.put(`${API}/${userIndex}`, userData)
-            .then(response => {
-                return response
-            }).catch(error => {
-                throw new Error(error)
-            })
+        try {
+            return await api.put(`/${userIndex}`, userData)
+        } catch (error: unknown | any) {
+            throw new Error(error)
+        }
     }
 }

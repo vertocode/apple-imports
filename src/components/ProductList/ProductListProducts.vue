@@ -49,7 +49,7 @@ import NoneProducts from './NoneProducts.vue'
 import Loading from '../Loading/Loading.vue'
 import Pagination from './Pagination.vue'
 import { useStore } from 'vuex'
-import { Products } from '../../services/product/usecases/product-list'
+import { Products } from '../../services/product/ProductList'
 import { computed, onMounted, reactive, watch } from "vue";
 import BaseTextField from "../Input/BaseTextField.vue";
 import BaseButton from "../Buttons/BaseButton.vue";

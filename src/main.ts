@@ -5,7 +5,7 @@ import "bootstrap"
 import App from './App.vue'
 import { createApp } from 'vue'
 import router from './router'
-import store from './store'
+import store from './store/store'
 import vue3GoogleLogin from 'vue3-google-login'
 import './styles/main.scss'
 

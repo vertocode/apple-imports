@@ -27,7 +27,7 @@
 
 import { reactive } from "vue";
 import { useStore } from "vuex";
-import { Products } from "../../services/product/usecases/product-list";
+import { Products } from "../../services/product/ProductList";
 import Loading from '../../components/Loading/Loading.vue'
 
 const store = useStore()

@@ -1,2 +1,0 @@
-// product routes
-export {}
