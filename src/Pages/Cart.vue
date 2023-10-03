@@ -2,7 +2,7 @@
   <main class="cart-container mt-3">
     <div class="cart-header d-flex justify-content-between align-items-center">
       <h1>Your Cart</h1>
-      <BaseButton action="Add New Items" @click="$router.push('/product-list')" />
+      <BaseButton v-if="cartStore.cart.length" action="Add New Items" @click="$router.push('/product-list')" />
     </div>
 
     <table class="cart-table" v-if="cartStore.cart.length">
@@ -49,7 +49,12 @@
       </tbody>
     </table>
     <div v-else>
-      <p>Your cart is empty.</p>
+      <div class="empty-cart">
+        <img src="../assets/empty-cart.png" alt="Empty Cart" class="empty-cart-icon" />
+        <div class="shop-now-button">
+          <BaseButton action="Shop Now" @click="$router.push('/product-list')" />
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -148,6 +153,30 @@ const formatCurrency = (value) => {
         left: 50%;
         transform: translateX(-50%);
       }
+    }
+  }
+
+  .empty-cart {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .empty-cart-icon {
+      width: 300px;
+      margin-bottom: 20px;
+    }
+
+    .shop-now-button {
+      display: flex;
+      justify-content: center;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
     }
   }
 }
