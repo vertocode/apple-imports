@@ -18,8 +18,8 @@
             />
           </div>
         </div>
-        <div class="all-products" v-if="store.state.products.length">
-          <div class="product-item" v-for="(product, index) in store.state.products" :key="index">
+        <div class="all-products" v-if="productListStore.products.length">
+          <div class="product-item" v-for="(product, index) in productListStore.products" :key="index">
             <product-card
                 :key="product"
                 :index-product="index"
@@ -37,7 +37,7 @@
         </div>
       </div>
     </main>
-    <footer class="m-auto" v-if="store.state.products.length > 20">
+    <footer class="m-auto" v-if="productListStore.products.length > 20">
       <pagination />
     </footer>
   </div>
@@ -48,16 +48,18 @@ import ProductCard from './ProductCard.vue'
 import NoneProducts from './NoneProducts.vue'
 import Loading from '../Loading/Loading.vue'
 import Pagination from './Pagination.vue'
-import { useStore } from 'vuex'
-import { Products } from '../../services/product/ProductList'
-import { computed, onMounted, reactive, watch } from "vue";
+import {Products} from '../../services/product/ProductList'
+import {computed, onMounted, reactive, watch} from "vue";
 import BaseTextField from "../Input/BaseTextField.vue";
 import BaseButton from "../Buttons/BaseButton.vue";
 import SubNavbar from "../SubNavbar.vue";
-import { useRoute, useRouter } from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+import {useProductListStore} from "../../store/useProductListStore";
+import {useCartStore} from "../../store/useCartStore";
 
-const store = useStore()
 const router = useRouter()
+const productListStore = useProductListStore()
+const cartStore = useCartStore()
 const product = new Products()
 
 const state = reactive({
@@ -81,7 +83,7 @@ const subNavbarItems = computed(() => {
 watch(() => state.selectedProductType, async () => {
   state.isLoading = true
   const allProducts = await product.getProductByType(state.selectedProductType)
-  store.state.products = allProducts
+  productListStore.products = allProducts
       .filter(product => {
         if (product.type === state.selectedProductType) {
           return product
@@ -94,17 +96,15 @@ watch(() => state.selectedProductType, async () => {
 const search = () => {
   const { products } = product
   const { searchValue } = state
-  const filteredProducts = products.filter(product => {
+  productListStore.products = products.filter(product => {
     if (product.name.toLowerCase().includes(searchValue.toLowerCase()) && product.type === state.selectedProductType) {
       return product
     }
   })
-  store.commit('setAllProducts', filteredProducts)
 }
 
 const isAddedInTheCart = (product) => {
-  const { cart } = store.state
-  return cart.map(product => product.name).includes(product.name)
+  return cartStore.cart.map(product => product.name).includes(product.name)
 }
 
 const setProductSelected = (type) => {
@@ -118,8 +118,7 @@ onMounted(async () => {
   if (route.params.id) {
     state.selectedProductListType = route.path
     state.selectedProductType = route.params.id || 'iphone'
-    const allProducts = await product.getProductByType(state.selectedProductType)
-    store.commit('setAllProducts', allProducts)
+    productListStore.products = await product.getProductByType(state.selectedProductType)
   } else {
     // Force wrong route if unexpect behavior happens.
     window.replace.path = 'not-found'

@@ -4,14 +4,10 @@ import {Api} from "../Api";
 const api = new Api()
 
 export class ProductTypes {
-    async getProductListTypes(store: Store<any>) {
-        if (store.state.productListTypes.length) {
-            return store.state.productListTypes
-        }
-
+    async getProductListTypes() {
         try {
             const response = await api.get('/product-types')
-            store.state.productListTypes = response.data
+            return response.data
         } catch (error: unknown | any) {
             throw new Error(error)
         }

@@ -55,15 +55,13 @@
 import BaseModal from './BaseModal.vue'
 import BaseButton from './../Buttons/BaseButton.vue'
 import Toasted from './../Toast/Toasted.vue'
-import { useStore } from "vuex"
-import { computed, onMounted, reactive } from "vue";
-import { Products } from "../../services/product/ProductList";
+import {computed, onMounted, reactive} from "vue";
 import Loading from '../Loading/Loading.vue'
-import { Users } from '../../services/users/user'
+import {Users} from '../../services/users/user'
+import {useUserStore} from "../../store/useUserStore";
 
-const store = useStore()
-const userData = store.state.userData
-const product = new Products()
+const userStore = useUserStore()
+const userData = userStore.userData
 
 const state = reactive({
   profile: {
@@ -85,7 +83,7 @@ onMounted(() => {
 })
 
 const saveChangesDisabled = computed(() => {
-  const { name, email, password } = store.state.userData
+  const { name, email, password } = userStore.userData
 
   const nameChanged = state.profile.name !== name
   const emailChanged = state.profile.email !== email
@@ -99,26 +97,27 @@ const saveChanges = async () => {
   if (saveChangesDisabled.value) {
     return
   }
+  state.isLoading = true
 
   const userData = {
-    ...store.state.userData,
+    ...userStore.userData,
     ...state.profile
   }
 
   const allUsers = await users.getAllUsers()
-  const index = allUsers.findIndex(user => user.email === store.state.userData.email)
+  const index = allUsers.findIndex(user => user.email === userStore.userData.email)
 
   try {
     const response = await users.updateUserData(userData, index)
 
-    const data = response?.email || userData
-    store.commit('updateUserData', data)
+    userStore.userData = response?.data || userData
     state.titleToast = 'Successfully saved!'
   } catch (e) {
     state.titleToast = 'I apologize, as there appears to be an error occurring in the Rest API to change the profile data.'
     state.descriptionToast = e
   }
   state.toastEnabled = true
+  state.isLoading = false
 
   setTimeout(() => {
     state.toastEnabled = false

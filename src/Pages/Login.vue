@@ -50,13 +50,14 @@
 </template>
 
 <script setup>
-import { decodeCredential } from 'vue3-google-login'
-import { useStore } from "vuex";
-import { computed, onMounted, reactive, ref } from "vue";
+import {decodeCredential} from 'vue3-google-login'
+import {computed, onMounted, reactive, ref} from "vue";
 import router from "../router";
 import Toasted from '../components/Toast/Toasted.vue'
+import {useUserStore} from "../store/useUserStore"
+import {Users} from "../services/users/user";
 
-const store = useStore()
+const userStore = useUserStore()
 const state = reactive({
   toastEnabled: false,
   stateToasted: 'error',
@@ -76,7 +77,7 @@ const checkIfIsLoggedAndRedirect = (isLogged) => {
 }
 
 const manualLogin = () => {
-  const allUsers = store.state.allUsers
+  const allUsers = userStore.allUsers
   const existAccount = allUsers.map(user => {
     if (user.email === email.value && user.password === password.value) {
       return user
@@ -84,12 +85,12 @@ const manualLogin = () => {
   }).filter(user => user)
   if (existAccount.length) {
     try {
-      store.commit('setUserLogged', existAccount[0])
+      userStore.userData = existAccount[0]
       state.toastEnabled = true
       state.stateToasted = 'success'
       state.titleToasted = 'You are logged now.'
-      state.descriptionToasted = `Welcome ${store.state.userData.name || ''}!`
-      checkIfIsLoggedAndRedirect(store.state.userData.name)
+      state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
+      checkIfIsLoggedAndRedirect(userStore.userData.name)
       setInterval(() => state.toastEnabled = false, 5000)
     } catch (e) {
       state.toastEnabled = true
@@ -110,17 +111,20 @@ const manualLogin = () => {
 
 const loginWithGoogle = (response) => {
   // decodeCredential will retrive the JWT payload from the credential
-  const userData = decodeCredential(response.credential)
-  store.commit('setUserLogged', userData)
+  userStore.userData = decodeCredential(response.credential)
   state.toastEnabled = true
   state.stateToasted = 'success'
   state.titleToasted = 'You are logged now.'
-  state.descriptionToasted = `Welcome ${store.state.userData.name || ''}!`
-  checkIfIsLoggedAndRedirect(store.state.userData.name)
+  state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
+  checkIfIsLoggedAndRedirect(userStore.userData.name)
   setInterval(() => state.toastEnabled = false, 5000)
 }
 
-onMounted(() => checkIfIsLoggedAndRedirect())
+onMounted(async () => {
+  const users = new Users()
+  userStore.allUsers = await users.getAllUsers()
+  checkIfIsLoggedAndRedirect(userStore.userData.name)
+})
 </script>
 
 <style lang="scss">

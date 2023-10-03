@@ -6,12 +6,12 @@
       <div class="bar"></div>
     </div>
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
-      <li v-if="!store.state.userData.name"
+      <li v-if="!userStore.userData.name"
       :class="{ active: isLogin }"
        @click="redirect('/login')"
       >Login</li>
       <li
-          v-if="store.state.userData.name"
+          v-if="userStore.userData.name"
           :class="{ active: state.showEditProfileModal }"
           @click="emit('showEditProfile')"
       >Profile</li>
@@ -20,11 +20,11 @@
           :class="{ active: route.path.includes(step.link) }"
           @click="redirect(step.link)">{{ step.title }}</li>
       <li
-          v-if="store.state.userData.name"
+          v-if="userStore.userData.name"
           @click="redirect('/cart')"
       >Cart</li>
       <li
-          v-if="store.state.userData.name"
+          v-if="userStore.userData.name"
           @click="logout"
       >Logout</li>
     </ul>
@@ -34,11 +34,11 @@
 
 <script setup>
 import {computed, reactive} from 'vue';
-import { useStore } from "vuex";
 import router from "../../router";
 import { useRoute } from "vue-router";
+import {useUserStore} from "../../store/useUserStore";
 
-const store = useStore()
+const userStore = useUserStore()
 const route = useRoute()
 
 const isLogin = computed(() => route.path === '/login')
@@ -63,7 +63,7 @@ const redirect = (path) => {
 
 const logout = () => {
   // Remove User data.
-  store.commit('setUserLogged', {})
+  userStore.userData = {}
   localStorage.clear()
 
   // Close dropdown.

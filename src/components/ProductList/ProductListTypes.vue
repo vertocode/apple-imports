@@ -1,7 +1,7 @@
 <template>
   <div>
     <Loading :is-loading="true" v-if="isLoading" />
-    <div v-for="(listType, index) in store.state.productListTypes" :key="index" v-if="store.state.productListTypes.length">
+    <div v-for="(listType, index) in productListStore.productListTypes" :key="index" v-if="productListStore.productListTypes.length">
       <product-list-type :list-type="listType"></product-list-type>
     </div>
     <NoProductListTypes v-else/>
@@ -10,19 +10,18 @@
 
 <script setup lang="ts">
 import ProductListType from './ProductListType.vue'
-import { useStore } from 'vuex'
-import { onMounted, ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import Loading from '../Loading/Loading.vue'
-import { ProductTypes } from '../../services/product/ProductTypes'
+import {ProductTypes} from '../../services/product/ProductTypes'
 import NoProductListTypes from './NoProductListTypes.vue'
+import {useProductListStore} from "../../store/useProductListStore";
 
-const store = useStore()
+const productListStore = useProductListStore()
 const isLoading = ref(true)
 
 onMounted(async () => {
   const productTypes = new ProductTypes()
-  await productTypes.getProductListTypes(store)
+  productListStore.productListTypes = await productTypes.getProductListTypes()
   isLoading.value = false
-  console.log(isLoading.value)
 })
 </script>

@@ -25,12 +25,12 @@
 
 <script setup>
 
-import { reactive } from "vue";
-import { useStore } from "vuex";
-import { Products } from "../../services/product/ProductList";
+import {reactive} from "vue";
+import {Products} from "../../services/product/ProductList";
 import Loading from '../../components/Loading/Loading.vue'
+import {useProductListStore} from "../../store/useProductListStore";
 
-const store = useStore()
+const productListStore = useProductListStore()
 const props = defineProps({
   filters: {
     type: Array,
@@ -51,15 +51,14 @@ const applyFilters = async () => {
   state.isLoading = true
   const products = new Products()
   const allProducts = await products.getAllProducts()
-  const filteredProducts = allProducts
-    .filter(product => {
-      if (state.selectedFilters.some(filter => filter === product?.type)) {
-        return product
-      }
-      return null
-    })
-    .filter(p => p)
-  store.commit('setAllProducts', filteredProducts)
+  productListStore.products = allProducts
+      .filter(product => {
+        if (state.selectedFilters.some(filter => filter === product?.type)) {
+          return product
+        }
+        return null
+      })
+      .filter(p => p)
   state.isLoading = false
 }
 </script>

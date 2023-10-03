@@ -6,7 +6,7 @@
         <i :class="icon"></i>
       </div>
       <datalist id="search">
-        <option v-for="option in store.state.products" :value="option.name" :key="option.name"/>
+        <option v-for="option in productListStore.products" :value="option.name" :key="option.name"/>
       </datalist>
       <input
         list="search"
@@ -24,9 +24,9 @@
 
 <script setup>
 import { reactive, watch } from "vue"
-import { useStore } from "vuex"
+import {useProductListStore} from "../../store/useProductListStore";
 
-const store = useStore()
+const productListStore = useProductListStore()
 const state = reactive({
   value: ''
 })

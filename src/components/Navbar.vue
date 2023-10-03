@@ -5,13 +5,13 @@
         :options="steps"
     ></hamburguer>
 
-    <div class="profile-info" v-if="store.state.userData.name">
+    <div class="profile-info" v-if="userStore.userData.name">
       <div class="profile-text">
-        <h4>{{ store.state.userData.name }}</h4>
-        <h6>{{ store.state.userData.email }}</h6>
+        <h4>{{ userStore.userData.name }}</h4>
+        <h6>{{ userStore.userData.email }}</h6>
       </div>
       <img
-          :src="store.state.userData.picture"
+          :src="userStore.userData.picture"
           alt="img-profile"
           class="profile-image"
       >
@@ -25,15 +25,15 @@
 
 <script setup>
 import { reactive } from "vue";
-import { useStore } from "vuex";
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
+import {useUserStore} from "../store/useUserStore"
 
 const state = reactive({
   showEditProfileModal: false
 })
 
-const store = useStore()
+const userStore = useUserStore()
 const steps = [
   {
     link: '/product-list',

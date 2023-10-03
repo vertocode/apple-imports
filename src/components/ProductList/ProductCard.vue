@@ -71,8 +71,9 @@
 <script setup>
 
 import {computed, onMounted, reactive, ref} from "vue";
-import { useStore } from "vuex";
 import Slider from "../Slider/Slider.vue";
+import {useCartStore} from "../../store/useCartStore";
+import {useUserStore} from "../../store/useUserStore";
 
 const props = defineProps({
   value: Number,
@@ -87,7 +88,8 @@ const props = defineProps({
 let itemsMarked = []
 let totalValue = ref(props.value)
 
-const store = useStore()
+const cartStore = useCartStore()
+const userStore = useUserStore()
 const state = reactive({
   isActive: true,
   isAddedCart: false,
@@ -95,7 +97,7 @@ const state = reactive({
 })
 
 const numberOfItems = computed(() => {
-  return store.state.cart.filter(product => product.name === props.name).length
+  return cartStore.cart.filter(product => product.name === props.name).length
 })
 
 const allImages = computed(() => {
@@ -107,7 +109,7 @@ const allImages = computed(() => {
   ]
 })
 
-const isLogged = store.state.userData?.name
+const isLogged = userStore.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const calculateValue = (specification, title) => {
@@ -137,9 +139,9 @@ const calculateValue = (specification, title) => {
 }
 
 const addItemCart = () => {
-  console.log(itemsMarked)
   const { srcImg, name, indexProduct, value } = props
-  store.commit('addItemCart', {
+  console.log(cartStore)
+  cartStore.cart.push({
     srcImg,
     name,
     value: itemsMarked.reduce(({value: previousValue}, {value: currentValue}) => {
@@ -157,6 +159,7 @@ const addItemCart = () => {
     }),
     indexProduct
   })
+  console.log(cartStore)
 }
 
 onMounted(() => {

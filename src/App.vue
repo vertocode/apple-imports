@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <loading v-if="state.isLoading" :is-loading="true"></loading>
-    <navbar v-if="store.state.showNavbar"/>
+    <navbar />
     <router-view />
     <toasted
         :key="toasted"
@@ -15,35 +15,20 @@
 
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { useStore } from "vuex";
-import { Users } from "./services/users/user";
-import {computed, onMounted, watch} from "vue";
+import {computed} from "vue";
 import { reactive } from "vue";
 import Loading from './components/Loading/Loading.vue'
-import { useRoute } from "vue-router";
 import Toasted from "./components/Toast/Toasted.vue";
+import {useToastStore} from "./store/useToastStore";
+import {useGeneralStore} from "./store/useGeneralStore";
 
-const store = useStore()
-const route = useRoute()
+const toastStore = useToastStore()
+const generalStore = useGeneralStore()
 const state = reactive({
-  isLoading: store.state.isLoading
+  isLoading: generalStore.isLoading
 })
 
-const toasted = computed(() => {
-  console.log(store.state.toasted)
-  return store.state.toasted
-})
-const users = new Users()
-onMounted(async () => {
-  const allUsers = await users.getAllUsers()
-  state.isLoading = false
-  store.commit('setAllUsers', allUsers)
-})
-
-watch(() => route.path, () => {
-  store.state.showNavbar = true
-})
-
+const toasted = computed(() =>  toastStore.toasted)
 </script>
 
 <style>

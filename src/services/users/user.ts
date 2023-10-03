@@ -4,13 +4,10 @@ import {Api} from "../Api";
 const api = new Api()
 
 export class Users {
-    allUsers = []
-
     async getAllUsers(): Promise<NormalUser[] | GoogleUser[] | Error> {
         try {
             const response = await api.get('/users')
-            this.allUsers = response.data
-            return this.allUsers
+            return response.data
         } catch (error: unknown | any) {
             throw new Error(error)
         }
