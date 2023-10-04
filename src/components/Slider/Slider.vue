@@ -1,31 +1,36 @@
 <template>
-  <div class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }">
+  <div style="position: relative" class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }">
     <div class="content-btn-slider">
       <button v-if="allImages?.length > 1" @click="displayPreviousSlide" class="slider-btn">
-        <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180850.png" alt="previous">
+        <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180850.png" alt="previous" />
       </button>
     </div>
     <transition name="slide-fade" mode="out-in">
       <div :key="selectedImage" v-if="selectedImage" class="d-flex justify-content-center align-self-center">
-        <img :src="selectedImage" :key="selectedImage" :alt="selectedImage" :style="{ 'max-height': isMini ? '10rem' : '100%' }"/>
+        <Loading v-if="!selectedImage" style="width: 200px; height: 200px; position: absolute; margin: auto" :is-loading="true"/>
+        <img v-else class="transition-image" :src="selectedImage" :key="selectedImage" :alt="selectedImage" :style="{ 'max-height': isMini ? '10rem' : '100%' }"/>
       </div>
     </transition>
     <div class="content-btn-slider">
       <button v-if="allImages?.length > 1" @click="displayNextSlide" class="slider-btn">
-        <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180852.png" alt="next">
+        <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180852.png" alt="next" />
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import Loading from '../Loading/Loading.vue'
+
 export default {
   name: "App",
+  components: {Loading},
   data() {
     return {
       urls: [],
       selectedImage: null,
-      imageIndex: 0
+      imageIndex: 0,
+      loading: false // Adicionando o estado de carregamento
     };
   },
   computed: {
@@ -58,20 +63,28 @@ export default {
       this.selectedImage = value
     },
     displayNextSlide() {
-      if (this.imageIndex < this.urls.length - 1) {
-        this.imageIndex++;
-      } else {
-        this.imageIndex = 0;
-      }
-      this.selectedImage = this.urls[this.imageIndex];
+      this.loading = true
+      setTimeout(() => {
+        if (this.imageIndex < this.urls.length - 1) {
+          this.imageIndex++;
+        } else {
+          this.imageIndex = 0;
+        }
+        this.selectedImage = this.urls[this.imageIndex];
+        this.loading = false
+      }, 500)
     },
     displayPreviousSlide() {
-      if (this.imageIndex > 0) {
-        this.imageIndex--;
-      } else {
-        this.imageIndex = this.urls.length - 1;
-      }
-      this.selectedImage = this.urls[this.imageIndex];
+      this.loading = true
+      setTimeout(() => {
+        if (this.imageIndex > 0) {
+          this.imageIndex--;
+        } else {
+          this.imageIndex = this.urls.length - 1;
+        }
+        this.selectedImage = this.urls[this.imageIndex];
+        this.loading = false
+      }, 500);
     }
   }
 }
@@ -106,12 +119,23 @@ export default {
 }
 
 .slider-btn img {
-  width: 50px ;
-  height: 50px !important; ;
+  width: 50px;
+  height: 50px !important;
 }
 
 .content-btn-slider {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 768px) {
+  .transition-image {
+    max-height: 200px;
+  }
+
+  .slider-btn {
+    padding: 0;
+    margin: 0;
+  }
 }
 </style>

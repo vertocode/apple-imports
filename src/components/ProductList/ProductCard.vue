@@ -4,7 +4,7 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <div style="height: 15rem">
+      <div style="height: 15rem" class="image-content">
         <slider :is-mini="name.toLowerCase().includes('mini')" :selectedImageByColor="state.imageColor" :images="allImages"/>
       </div>
       <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
@@ -19,14 +19,14 @@
       </button>
       <ol class="list-group px-3 py-2" v-if="state.isActive">
         <li
-            style="list-style-type: circle"
+            style="list-style-type: none"
             class="text-capitalize font-monospace"
             v-for="(textDescription, index) in description?.split('\n')"
             :key="index"
         >
           {{ textDescription }}
         </li>
-        <li class="justify-content-between align-items-start">
+        <li class="justify-content-between align-items-start specifications-content">
           <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
             <div class="item-specification" :style="{ 'border-bottom': indexSpecification === props.specifications.length - 1 ? 'none' : ''  }">
               <div class="d-flex justify-content-between">
@@ -113,9 +113,6 @@ const isLogged = userStore.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const calculateValue = (specification, title) => {
-  // change the selected specification.
-  console.log(itemsMarked)
-
   const { name, value, srcImg } = specification
   totalValue.value = props.value || 0
 
@@ -159,7 +156,6 @@ const addItemCart = () => {
     }),
     indexProduct
   })
-  console.log(cartStore)
 }
 
 onMounted(() => {
@@ -178,62 +174,166 @@ onMounted(() => {
 .product-card {
   .dropdown-btn {
     position: relative;
-    background-color: white;
-    border: solid black 0.5px;
-    padding: 5px 40px 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-  }
+    transition: background-color 0.3s ease;
 
-  .arrow-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 5px 5px;
-    border-color: transparent transparent black transparent;
-    transform: translateY(-50%) rotate(0deg);
-  }
-
-  .arrow-active {
-    transform: translateY(-50%) rotate(180deg);
+    &:hover {
+      background-color: #0056b3;
+    }
   }
 
   .card-item {
-    background-color: white;
+    background-color: #fff;
     margin: 20px auto;
     max-width: 700px;
     min-width: 200px;
-    padding: 10px;
-    border-style: groove;
-    border-radius: 30px;
-    img {
-      max-width: 100%;
-      height: 200px;
-    }
-    ol {
-      width: 95%;
-      margin: auto;
-    }
-    li {
-      list-style-type: none;
-      text-align: start;
-    }
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .slider-container {
+    height: 15rem;
+    margin-top: 20px;
+  }
+
+  .list-group {
+    margin-top: 20px;
+
     .item-specification {
-      min-height: 140px;
-      border-bottom: rgba(13, 110, 253, 0.69) solid 1px;
-      margin-top: 4px;
-      padding: 3px;
+      border-bottom: 1px solid #ddd;
+      padding: 20px;
+      margin-top: 20px;
+
+      .fw-bold {
+        font-size: 1.2rem;
+        color: #333;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          input[type="radio"] {
+            margin-right: 10px;
+          }
+
+          .specification-text {
+            font-size: 1rem;
+            color: #555;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            cursor: pointer;
+            position: relative;
+
+            &:hover {
+              &:after {
+                content: attr(title);
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.9);
+                color: #fff;
+                padding: 5px;
+                border-radius: 4px;
+                top: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+                z-index: 999;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  #action-buttons {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 20px;
+
+    .text-primary {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .image-content .transition-image {
+    height: 15em;
+    width: 100%;
+  }
+
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+
+    .text-green {
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
-    #action-buttons {
-      margin: auto;
-      display: grid;
-      grid-template-columns: 0.8fr 1fr;
-      gap: 1.5em;
-      justify-content: space-between;
-      width: 80%;
+    .link-info {
+      cursor: pointer;
+      text-decoration: underline;
     }
   }
 }
