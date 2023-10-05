@@ -16,6 +16,10 @@
           class="profile-image"
       >
     </div>
+    <div v-else-if="$route.path !== '/login'" class="sign-in-button" @click="$router.push('/login')">
+      <h3 class="sign-in-text">Sign In</h3>
+      <img src="../assets/login-icon.webp" alt="">
+    </div>
   </div>
   <edit-profile-modal
       v-if="state.showEditProfileModal"
@@ -60,6 +64,29 @@ const steps = [
   justify-content: space-between;
   padding: 0.3em 2em;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+  .sign-in-button {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border-radius: 5%;
+    box-shadow: white 0.4px 0.2px 8px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+    .sign-in-text {
+      margin-top: 5px;
+      font-family: "Times New Roman", sans-serif
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
 }
 
 .profile-info {
