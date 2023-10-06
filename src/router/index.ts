@@ -1,11 +1,12 @@
-import { createWebHistory, createRouter, RouteRecordRaw, RouteLocationNormalized} from "vue-router"
+import { createWebHistory, createRouter, RouteRecordRaw} from "vue-router"
 import Login from "../Pages/Login.vue"
 import AddNewProduct from "../Pages/AddNewProduct.vue"
 import NotFound from "../Pages/NotFound.vue";
 import Cart from "../Pages/Cart.vue";
 import ProductListProducts from "../components/ProductList/ProductListProducts.vue";
 import ProductListTypes from "../components/ProductList/ProductListTypes.vue";
-import RequestProduct from "../components/ProductList/RequestProduct.vue";
+import Requests from '../Pages/Requests.vue'
+import RequestProduct from '../Pages/RequestProduct.vue'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -49,8 +50,12 @@ const routes: RouteRecordRaw[] = [
         }
     },
     {
-      path: '/request-product',
-      component: RequestProduct
+        path: '/product-list/request-product',
+        component: RequestProduct
+    },
+    {
+      path: '/requests',
+      component: Requests
     },
     {
       path: "/cart",

@@ -1,9 +1,25 @@
 <template>
   <div class="navbar">
-    <hamburguer
-        @show-edit-profile="state.showEditProfileModal = true"
-        :options="steps"
-    ></hamburguer>
+    <div class="hamburger">
+      <hamburguer
+          @show-edit-profile="state.showEditProfileModal = true"
+          :options="steps"
+      ></hamburguer>
+    </div>
+
+    <div class="navbar-items">
+      <ul class="items">
+        <li
+            class="item"
+            :class="{
+          subnavBarActive: $route.path.includes(`${link}/`) && !$route.path.includes('request-product'),
+           active: $route.path.includes(link) }"
+            v-for="{ title, link } in steps"
+            :key="title"
+            @click="$router.push(link)"
+        >{{ title }}</li>
+      </ul>
+    </div>
 
     <div class="profile-info" v-if="userStore.userData.name">
       <div class="profile-text">
@@ -28,7 +44,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import {computed, reactive, ref, watch} from "vue";
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
 import {useUserStore} from "../store/useUserStore"
@@ -36,23 +52,41 @@ import {useUserStore} from "../store/useUserStore"
 const state = reactive({
   showEditProfileModal: false
 })
-
 const userStore = useUserStore()
-const steps = [
+
+
+const hamburgerId = ref(0)
+
+const steps = computed(() => [
   {
     link: '/product-list',
-    title: 'Product list'
+    title: 'Product list',
+    isVisible: true
   },
-  // {
-  //   link: '/requests',
-  //   title: 'Requests'
-  // },
+  {
+    link: '/cart',
+    title: 'Cart',
+    isVisible: userStore.isLogged
+  },
+  {
+    link: '/requests',
+    title: 'Requests',
+    isVisible: userStore.isLogged
+  },
   // {
   //   link: '/add-new-product',
   //   title: 'Add a new product (Admin)',
   //   notShow: true
   // },
-]
+])
+
+watch(() => userStore.isLogged, () => {
+  console.log('changed',userStore.isLogged)
+  hamburgerId.value++
+  console.log(steps.value)
+})
+
+console.log(steps.value)
 </script>
 
 <style lang="scss">
@@ -87,6 +121,36 @@ const steps = [
       height: 60px;
     }
   }
+
+  .items {
+    display: flex;
+    justify-content: space-between;
+    gap: 3em;
+    .item {
+      cursor: pointer;
+      font-weight: bold;
+      list-style-type: none;
+      font-size: 2em;
+      padding-top: 12px;
+      font-family: "Times New Roman", sans-serif;
+      position: relative;
+    }
+    .item:first-child.subnavBarActive::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid #007bff;
+      position: absolute;
+      top: 110%;
+      left: 43%;
+    }
+
+    .item.active {
+      border-bottom: white solid;
+    }
+  }
 }
 
 .profile-info {
@@ -109,6 +173,10 @@ const steps = [
 .profile-image {
   width: 70px;
   border-radius: 50%;
+}
+
+.hamburger {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -145,7 +213,17 @@ const steps = [
   }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .navbar-items {
+    display: none;
+  }
+}
+
+@media (max-width: 435px) {
   .navbar {
     flex-direction: column-reverse;
     gap: 0.2em;

@@ -1,32 +1,23 @@
 <template>
-  <nav>
-    <div class="hamburger-menu" @click="toggleMenu">
+  <nav style="cursor: pointer" @click="toggleMenu">
+    <div class="hamburger-menu">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
-      <li v-if="!userStore.userData.name"
-      :class="{ active: isLogin }"
-       @click="redirect('/login')"
-      >Login</li>
       <li
           v-if="userStore.userData.name"
           :class="{ active: state.showEditProfileModal }"
           @click="emit('showEditProfile')"
       >Profile</li>
       <li
-          v-for="step in options"
+          v-for="step in steps"
+          :key="step.title"
           :class="{ active: route.path.includes(step.link) }"
-          @click="redirect(step.link)">{{ step.title }}</li>
-      <li
-          v-if="userStore.userData.name"
-          @click="redirect('/cart')"
-      >Cart</li>
-      <li
-          v-if="userStore.userData.name"
-          @click="logout"
-      >Logout</li>
+          v-show="step?.isVisible"
+          @click="selectItem(step)"
+      >{{ step.title }}</li>
     </ul>
   </nav>
 
@@ -34,19 +25,24 @@
 
 <script setup>
 import {computed, reactive} from 'vue';
-import router from "../../router";
-import { useRoute } from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useUserStore} from "../../store/useUserStore";
 
 const userStore = useUserStore()
 const route = useRoute()
-
-const isLogin = computed(() => route.path === '/login')
+const router = useRouter()
 
 const props = defineProps({
   options: Array
 })
+
+const steps = computed(() => props.options)
 const emit = defineEmits(['close'])
+
+const selectItem = (step) => {
+  emit('close')
+  router.push(step.link)
+}
 
 const state = reactive({
   isMenuOpen: false,
@@ -55,22 +51,6 @@ const state = reactive({
 
 const toggleMenu = () => {
   state.isMenuOpen = !state.isMenuOpen
-}
-
-const redirect = (path) => {
-  router.push(path)
-}
-
-const logout = () => {
-  // Remove User data.
-  userStore.userData = {}
-  localStorage.clear()
-
-  // Close dropdown.
-  state.dropdownActivated = false
-
-  // Redirect to the login screen.
-  redirect('/login')
 }
 </script>
 
@@ -83,6 +63,7 @@ nav {
   color: #fff;
   height: 80px;
   padding: 0 50px;
+  position: relative;
   .hamburger-menu {
     display: flex;
     flex-direction: column;
@@ -102,11 +83,11 @@ nav {
     z-index: 1;
     display: none;
     position: absolute;
-    top: 85px;
-    left: 2.11%;
+    top: 90px;
+    left: -8px;
     background-color: #333;
     padding: 20px;
-    width: 20rem;
+    width: 100vw;
     list-style: none;
   }
 
@@ -130,15 +111,6 @@ nav {
 
   .show {
     display: block;
-  }
-
-  @media (max-width: 450px) {
-   .menu {
-     top: 184px;
-     left: 9%;
-   }
-
-    width: 5px;
   }
 }
 </style>

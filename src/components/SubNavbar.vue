@@ -1,6 +1,9 @@
 <template>
   <div>
     <nav class="sub-navbar">
+      <div class="back-button-div">
+        <BackButton />
+      </div>
       <ul class="nav-list">
         <li
             :class="['nav-item', { 'active': selectedType === item.type }]"
@@ -16,6 +19,8 @@
 </template>
 
 <script setup>
+import BackButton from "./Buttons/BackButton.vue";
+
 const props = defineProps({
   items: {
     type: Array,
@@ -36,12 +41,18 @@ const select = (type) => {
 
 <style lang="scss">
 .sub-navbar {
+  .back-button-div {
+    height: 20px;
+  }
   background-color: #007bff;
+  display: flex;
+  justify-content: center;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
 }
 
 .nav-list {
+  width: 100%;
   display: flex;
   justify-content: center;
   list-style-type: none;
