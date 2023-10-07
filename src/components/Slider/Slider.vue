@@ -1,13 +1,17 @@
 <template>
-  <div style="position: relative" class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }">
+  <div :key="selectedImage" class="d-flex justify-content-center align-self-center" v-if="hiddeControlButtons">
+    <Loading v-if="loading" style="width: 100px; height: 100px; position: absolute; margin: auto" :is-loading="true"/>
+    <img v-else class="transition-image" :src="selectedImage" :key="selectedImage" :alt="selectedImage" />
+  </div>
+  <div style="position: relative" class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }" v-else>
     <div class="content-btn-slider">
       <button v-if="allImages?.length > 1" @click="displayPreviousSlide" class="slider-btn">
         <img src="https://cdn.icon-icons.com/icons2/2838/PNG/512/go_previous_icon_180850.png" alt="previous" />
       </button>
     </div>
     <transition name="slide-fade" mode="out-in">
-      <div :key="selectedImage" v-if="selectedImage" class="d-flex justify-content-center align-self-center">
-        <Loading v-if="!selectedImage" style="width: 200px; height: 200px; position: absolute; margin: auto" :is-loading="true"/>
+      <div :key="selectedImage" class="d-flex justify-content-center align-self-center">
+        <Loading v-if="loading" style="width: 100px; height: 100px; position: absolute; margin: auto" :is-loading="true"/>
         <img v-else class="transition-image" :src="selectedImage" :key="selectedImage" :alt="selectedImage" :style="{ 'max-height': isMini ? '10rem' : '100%' }"/>
       </div>
     </transition>
@@ -19,75 +23,73 @@
   </div>
 </template>
 
-<script>
-import Loading from '../Loading/Loading.vue'
+<script setup lang="ts">
+import { ref, computed, watch, onMounted } from 'vue';
 
-export default {
-  name: "App",
-  components: {Loading},
-  data() {
-    return {
-      urls: [],
-      selectedImage: null,
-      imageIndex: 0,
-      loading: false // Adicionando o estado de carregamento
-    };
-  },
-  computed: {
-    allImages() {
-      return typeof this.$props.images === 'string' ? [this.$props.images] : this.$props.images
-    }
-  },
-  props: {
-    images: Array | String,
-    selectedImageByColor: {
-      type: String,
-      default: null
-    },
-    isMini: {
-      type: Boolean,
-      default: false
-    }
-  },
-  watch: {
-    selectedImageByColor: function (value) {
-      this.updateSelectedImage(value)
-    }
-  },
-  mounted() {
-    this.urls = this.allImages
-    this.selectedImage = this.urls[0];
-  },
-  methods: {
-    updateSelectedImage(value) {
-      this.selectedImage = value
-    },
-    displayNextSlide() {
-      this.loading = true
-      setTimeout(() => {
-        if (this.imageIndex < this.urls.length - 1) {
-          this.imageIndex++;
-        } else {
-          this.imageIndex = 0;
-        }
-        this.selectedImage = this.urls[this.imageIndex];
-        this.loading = false
-      }, 500)
-    },
-    displayPreviousSlide() {
-      this.loading = true
-      setTimeout(() => {
-        if (this.imageIndex > 0) {
-          this.imageIndex--;
-        } else {
-          this.imageIndex = this.urls.length - 1;
-        }
-        this.selectedImage = this.urls[this.imageIndex];
-        this.loading = false
-      }, 500);
-    }
+const urls = ref<string[]>([]);
+const selectedImage = ref<string | null | symbol | undefined>(null);
+const imageIndex = ref<number>(0);
+const loading = ref(false);
+
+const allImages = computed(():any  => {
+  return typeof props.images === 'string' ? [props.images] : props.images;
+});
+
+const updateSelectedImage = (value: string) => {
+  selectedImage.value = value;
+};
+
+const displayNextSlide = () => {
+  loading.value = true;
+  if (imageIndex.value < urls.value.length - 1) {
+    imageIndex.value++;
+  } else {
+    imageIndex.value = 0;
   }
-}
+  selectedImage.value = urls.value[imageIndex.value];
+  loading.value = false;
+};
+
+const displayPreviousSlide = () => {
+  loading.value = true;
+  setTimeout(() => {
+    if (imageIndex.value > 0) {
+      imageIndex.value--;
+    } else {
+      imageIndex.value = urls.value.length - 1;
+    }
+    selectedImage.value = urls.value[imageIndex.value];
+    loading.value = false;
+  }, 500);
+};
+
+const props = defineProps({
+  images: {
+    type: Array<String>,
+    default: []
+    },
+  selectedImageByColor: {
+    type: String,
+    default: null,
+  },
+  isMini: {
+    type: Boolean,
+    default: false,
+  },
+  hiddeControlButtons: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+watch(() => props.selectedImageByColor, (value) => {
+  updateSelectedImage(value);
+});
+
+onMounted(() => {
+  urls.value = allImages.value;
+  selectedImage.value = urls.value[0];
+});
 </script>
 
 <style>
@@ -128,10 +130,12 @@ export default {
   align-items: center;
 }
 
+.transition-image {
+  max-height: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 768px) {
-  .transition-image {
-    max-height: 200px;
-  }
 
   .slider-btn {
     padding: 0;

@@ -19,11 +19,11 @@ const props = defineProps<Props>()
 
 <style lang="scss" scoped>
 .back-button-content {
-  width: 100%;
   display: flex;
   justify-content: left;
   margin: 0 2em;
   .back-button {
+    width: max-content;
     background-color: #333;
     color: #fff;
     padding: 10px 20px;

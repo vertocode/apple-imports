@@ -1,9 +1,6 @@
 <template>
   <div>
     <nav class="sub-navbar">
-      <div class="back-button-div">
-        <BackButton />
-      </div>
       <ul class="nav-list">
         <li
             :class="['nav-item', { 'active': selectedType === item.type }]"
@@ -41,9 +38,6 @@ const select = (type) => {
 
 <style lang="scss">
 .sub-navbar {
-  .back-button-div {
-    height: 20px;
-  }
   background-color: #007bff;
   display: flex;
   justify-content: center;

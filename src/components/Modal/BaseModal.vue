@@ -138,5 +138,9 @@ const socials = [
   @media (min-width: 600px) {
     min-width: 600px;
   }
+
+  @media (min-width: 800px) {
+    min-width: 800px;
+  }
 }
 </style>

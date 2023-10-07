@@ -4,7 +4,7 @@
         :disabled="disabled"
         class="custom-btn"
         :class="[
-        {'btn-sm': size === 'small'},
+        { 'btn-sm': size === 'small' },
         variantClass
       ]"
     >{{ action }}</button>
@@ -99,6 +99,16 @@ const variantClass = computed(() => {
   &.btn-outline-danger:hover {
     background-color: #dc3545;
     color: #fff;
+  }
+
+  &[disabled] {
+    background-color: gray;
+    border-color: gray;
+    cursor: auto;
+    &:hover {
+      background-color: gray;
+      border-color: gray;
+    }
   }
 }
 </style>

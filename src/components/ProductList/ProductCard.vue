@@ -4,51 +4,19 @@
       <h3 class="text-primary">
         {{ name }}
       </h3>
-      <div style="height: 15rem" class="image-content">
-        <slider :is-mini="name.toLowerCase().includes('mini')" :selectedImageByColor="state.imageColor" :images="allImages"/>
+      <div class="image-content">
+        <slider :selectedImageByColor="state.imageColor" :images="allImages"/>
       </div>
-      <h4 class="mt-4 text-muted my-3">{{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
-      <button
-          class="btn btn-sm dropdown-btn"
-          @click="state.isActive = !state.isActive"
-      >
-        See more details <span
-          class="arrow-icon"
-          :class="{ 'arrow-active': state.isActive }"
-      ></span>
-      </button>
-      <ol class="list-group px-3 py-2" v-if="state.isActive">
-        <li
-            style="list-style-type: none"
-            class="text-capitalize font-monospace"
-            v-for="(textDescription, index) in description?.split('\n')"
-            :key="index"
+      <h4 class="mt-4 text-muted my-3">Starting from {{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
+      <router-link :to="`${$route.params.category}/${product.id}`">
+        <BaseButton
+            action="See More Details"
+            class="btn btn-sm"
         >
-          {{ textDescription }}
-        </li>
-        <li class="justify-content-between align-items-start specifications-content">
-          <div class="ms-2 me-auto" v-for="(specification, indexSpecification) in specifications" :key="indexSpecification">
-            <div class="item-specification" :style="{ 'border-bottom': indexSpecification === props.specifications.length - 1 ? 'none' : ''  }">
-              <div class="d-flex justify-content-between">
-                <div class="fw-bold mx-2 my-2">{{ specification.title }}:</div>
-                <div>
-                  <span class="badge bg-primary rounded-pill mt-2" title="Options">{{ specification.items.length ?? 0 }}</span>
-                </div>
-              </div>
-              <ul>
-                <li v-for="(item, index) in specification.items">
-                  <input class="float-start mx-3 mt-1" type="radio" :name="`${indexSpecification}-${indexProduct}`" v-if="index === 0" checked @click="calculateValue(item, specification.title)">
-                  <input class="float-start mx-3 mt-1" type="radio" :name="`${indexSpecification}-${indexProduct}`" v-else @click="calculateValue(item, specification.title)">
-                  <span class="specification-text">{{ item.name }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ol>
-      <div id="action-buttons" class="mt-5">
-        <button :title="tooltipButtons" :disabled="!isLogged" class="btn btn-primary" @click="addItemCart">Add to cart</button>
-      </div>
+          See more details
+        </BaseButton>
+      </router-link>
+
       <p class="mt-3" v-if="!isLogged">You need do the
         <span @click="$router.push('/login')" class="text-primary" style="cursor: pointer">login</span>
         to enable this button</p>
@@ -74,69 +42,51 @@ import {computed, onMounted, reactive, ref} from "vue";
 import Slider from "../Slider/Slider.vue";
 import {useCartStore} from "../../store/useCartStore";
 import {useUserStore} from "../../store/useUserStore";
+import BaseButton from "../Buttons/BaseButton.vue";
 
 const props = defineProps({
-  value: Number,
-  indexProduct: Number,
-  description: String,
-  name: String,
-  isAddedCart: Boolean,
-  srcImg: String,
-  specifications: Object
+  product: Object
 })
 
+const {
+  value,
+  indexProduct,
+  description,
+  name,
+  isAddedCart,
+  srcImg,
+  specifications
+} = props.product
+
 let itemsMarked = []
-let totalValue = ref(props.value)
+let totalValue = ref(value)
 
 const cartStore = useCartStore()
 const userStore = useUserStore()
 const state = reactive({
   isActive: true,
   isAddedCart: false,
-  imageColor: null
+  imageColor: null,
+  showModal: false
 })
 
 const numberOfItems = computed(() => {
-  return cartStore.cart.filter(product => product.name === props.name).length
+  return cartStore.cart.filter(product => product.name === name).length
 })
 
 const allImages = computed(() => {
-  const { items = [] } = props.specifications.filter(specification => specification.title === 'Color')[0] || {}
+  const { items = [] } = specifications.filter(specification => specification.title === 'Color')[0] || {}
   const colorImages = items?.map(item => item?.srcImg).filter(item => item) || []
   return [
     ...colorImages,
-    ...(typeof props.srcImg === 'string' ? [props.srcImg] : props.srcImg)
+    ...(typeof srcImg === 'string' ? [srcImg] : srcImg)
   ]
 })
 
 const isLogged = userStore.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
-const calculateValue = (specification, title) => {
-  const { name, value, srcImg } = specification
-  totalValue.value = props.value || 0
-
-  const currentItem = itemsMarked.filter(item => item.title === title)
-
-  const indexItem = itemsMarked.indexOf(currentItem[0])
-
-  itemsMarked[indexItem] = {
-    title,
-    name,
-    value: value || 0
-  }
-
-  for (const item of itemsMarked) {
-    totalValue.value += item.value || 0
-  }
-
-  if (title === 'Color') {
-    state.imageColor = srcImg || null
-  }
-}
-
 const addItemCart = () => {
-  const { srcImg, name, indexProduct, value } = props
   console.log(cartStore)
   cartStore.cart.push({
     srcImg,
@@ -159,7 +109,7 @@ const addItemCart = () => {
 }
 
 onMounted(() => {
-  props.specifications.forEach(specification => {
+  specifications.forEach(specification => {
     totalValue.value += specification.items[0].value ?? 0
     itemsMarked.push({
       title: specification.title,
@@ -313,9 +263,15 @@ onMounted(() => {
     }
   }
 
-  .image-content .transition-image {
-    height: 15em;
-    width: 100%;
+  .image-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .transition-image {
+      height: 15em;
+      width: 100%;
+    }
   }
 
   .alert-success {

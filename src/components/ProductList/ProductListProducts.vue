@@ -4,7 +4,12 @@
     <main>
       <loading v-if="state.isLoading" :is-loading="true"></loading>
       <div v-else>
-        <h1 class="mt-3">{{ subNavbarItems.filter(item => item.type === state.selectedProductType)[0].label }} Products: </h1>
+        <div class="title-content">
+          <div class="back-button-div">
+            <BackButton />
+          </div>
+          <h1 class="mt-3">{{ subNavbarItems.filter(item => item.type === state.selectedProductType)[0].label }} Products: </h1>
+        </div>
         <div class="content-filters mt-3">
           <div class="center d-flex gap-3 align-items-end justify-content-center">
             <base-text-field
@@ -21,14 +26,7 @@
         <div class="all-products" v-if="productListStore.products.length">
           <div class="product-item" v-for="(product, index) in productListStore.products" :key="index">
             <product-card
-                :key="product"
-                :index-product="index"
-                :value="product.value"
-                :name="product.name"
-                :description="product.description"
-                :src-img="product.srcImg"
-                :is-added-cart="isAddedInTheCart(product)"
-                :specifications="product.specifications"
+                :product="product"
             />
           </div>
         </div>
@@ -56,6 +54,7 @@ import SubNavbar from "../SubNavbar.vue";
 import {useRoute, useRouter} from "vue-router";
 import {useProductListStore} from "../../store/useProductListStore";
 import {useCartStore} from "../../store/useCartStore";
+import BackButton from "../Buttons/BackButton.vue";
 
 const router = useRouter()
 const productListStore = useProductListStore()
@@ -115,9 +114,9 @@ const setProductSelected = (type) => {
 onMounted(async () => {
   const route = useRoute()
 
-  if (route.params.id) {
+  if (route.params.category) {
     state.selectedProductListType = route.path
-    state.selectedProductType = route.params.id || 'iphone'
+    state.selectedProductType = route.params.category || 'iphone'
     productListStore.products = await product.getProductByType(state.selectedProductType)
   } else {
     // Force wrong route if unexpect behavior happens.
@@ -134,6 +133,18 @@ onMounted(async () => {
     width: 90%;
     margin: auto;
   }
+  .title-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .back-button-div {
+      height: 20px;
+    }
+    h1 {
+      width: 100%;
+    }
+  }
+
   .content-filters {
     @media only screen and (min-width: 800px) {
       display: flex;

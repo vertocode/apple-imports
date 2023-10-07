@@ -12,7 +12,7 @@
         <li
             class="item"
             :class="{
-          subnavBarActive: $route.path.includes(`${link}/`) && !$route.path.includes('request-product'),
+          subnavBarActive: $route.path.includes(`${link}/`) && !$route.path.includes('request-product') && !$route.params?.productId,
            active: $route.path.includes(link) }"
             v-for="{ title, link } in steps"
             :key="title"

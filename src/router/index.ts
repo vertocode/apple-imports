@@ -7,6 +7,7 @@ import ProductListProducts from "../components/ProductList/ProductListProducts.v
 import ProductListTypes from "../components/ProductList/ProductListTypes.vue";
 import Requests from '../Pages/Requests.vue'
 import RequestProduct from '../Pages/RequestProduct.vue'
+import ProductDetails from "../Pages/ProductDetails.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -31,7 +32,7 @@ const routes: RouteRecordRaw[] = [
         redirect: 'not-found',
     },
     {
-        path: "/product-list/apple/:id",
+        path: "/product-list/apple/:category",
         name: "ProductList",
         component: ProductListProducts,
         beforeEnter: (to: any, from, next) => {
@@ -43,11 +44,16 @@ const routes: RouteRecordRaw[] = [
                 'mac-studio',
                 'accessories'
             ]
-            if (allTypes.includes(to.params.id)) {
+            if (allTypes.includes(to.params.category)) {
                 next()
             }
             next('/not-found')
         }
+    },
+    {
+        path: "/product-list/apple/:category/:productId",
+        name: "ProductDetails",
+        component: ProductDetails
     },
     {
         path: '/product-list/request-product',

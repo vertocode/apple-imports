@@ -83,11 +83,11 @@ nav {
     z-index: 1;
     display: none;
     position: absolute;
-    top: 90px;
-    left: -8px;
+    top: 80px;
+    left: 0;
     background-color: #333;
     padding: 20px;
-    width: 100vw;
+    width: 50vw;
     list-style: none;
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoading" class="loading">
+  <div class="loading">
     <span class="spinner"></span>
     <span class="text">{{ text }}</span>
   </div>
