@@ -83,16 +83,16 @@
 </template>
 
 <script setup>
-import {computed, onBeforeUnmount, onMounted, reactive, ref} from 'vue';
-import Slider from '../components/Slider/Slider.vue';
-import { useProductListStore } from '../store/useProductListStore';
-import {useRoute, useRouter} from 'vue-router';
-import BackButton from '../components/Buttons/BackButton.vue';
-import Loading from "../components/Loading/Loading.vue";
-import BaseButton from "../components/Buttons/BaseButton.vue";
-import {useCartStore} from "../store/useCartStore";
-import BaseAutocomplete from "../components/Input/BaseAutocomplete.vue";
-import BaseTextField from "../components/Input/BaseTextField.vue";
+import {computed, onBeforeUnmount, onMounted, reactive, ref} from 'vue'
+import Slider from '../components/Slider/Slider.vue'
+import { useProductListStore } from '../store/useProductListStore'
+import {useRoute, useRouter} from 'vue-router'
+import BackButton from '../components/Buttons/BackButton.vue'
+import Loading from "../components/Loading/Loading.vue"
+import BaseButton from "../components/Buttons/BaseButton.vue"
+import {useCartStore} from "../store/useCartStore"
+import BaseAutocomplete from "../components/Input/BaseAutocomplete.vue"
+import BaseTextField from "../components/Input/BaseTextField.vue"
 
 const productListStore = useProductListStore()
 const cartStore = useCartStore()
@@ -137,9 +137,9 @@ const optionsNumberOfItems = [
 ]
 
 const allImages = computed(() => {
-  const { items = [] } = product.value.specifications.find((specification) => specification.title === 'Color') || {};
-  const colorImages = items?.map((item) => item?.srcImg).filter((item) => item) || [];
-  return [...colorImages, ...(typeof product.value.srcImg === 'string' ? [product.value.srcImg] : product.value.srcImg)];
+  const { items = [] } = product.value.specifications.find((specification) => specification.title === 'Color') || {}
+  const colorImages = items?.map((item) => item?.srcImg).filter((item) => item) || []
+  return [...colorImages, ...(typeof product.value.srcImg === 'string' ? [product.value.srcImg] : product.value.srcImg)]
 })
 
 const addToCart = () => {
@@ -156,34 +156,34 @@ const buy = () => {
 
 const calculateValue = (specification, title) => {
   const { name, value, srcImg } = specification
-  const currentItem = itemsMarked.filter((item) => item.title === title)
+  const currentItem = itemsMarked.value.filter((item) => item.title === title)
 
-  const indexItem = itemsMarked.indexOf(currentItem[0])
+  const indexItem = itemsMarked.value.indexOf(currentItem[0])
 
-  itemsMarked[indexItem] = {
+  itemsMarked.value[indexItem] = {
     title,
     name,
     value: value || 0,
   }
 
-  for (const item of itemsMarked) {
-    console.log(item)
-    totalValue.value += item.value || 0;
+  totalValue.value = product.value.value
+  for (const item of itemsMarked.value) {
+    totalValue.value += item.value || 0
   }
 
   if (title === 'Color') {
-    state.imageColor = srcImg || null;
+    state.imageColor = srcImg || null
   }
 }
 
 const markInput = (indexSpecification, indexProduct, index) => {
-  const inputId = `input-${indexSpecification}-${indexProduct}-${index}`;
-  const inputElement = document.getElementById(inputId);
+  const inputId = `input-${indexSpecification}-${indexProduct}-${index}`
+  const inputElement = document.getElementById(inputId)
 
   if (inputElement) {
-    inputElement.checked = true;
+    inputElement.checked = true
   }
-};
+}
 
 
 onMounted(async () => {

@@ -24,44 +24,44 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue'
 
-const urls = ref<string[]>([]);
-const selectedImage = ref<string | null | symbol | undefined>(null);
-const imageIndex = ref<number>(0);
-const loading = ref(false);
+const urls = ref<string[]>([])
+const selectedImage = ref<any>(null)
+const imageIndex = ref<number>(0)
+const loading = ref(false)
 
 const allImages = computed(():any  => {
-  return typeof props.images === 'string' ? [props.images] : props.images;
-});
+  return typeof props.images === 'string' ? [props.images] : props.images
+})
 
 const updateSelectedImage = (value: string) => {
-  selectedImage.value = value;
-};
+  selectedImage.value = value
+}
 
 const displayNextSlide = () => {
-  loading.value = true;
+  loading.value = true
   if (imageIndex.value < urls.value.length - 1) {
-    imageIndex.value++;
+    imageIndex.value++
   } else {
-    imageIndex.value = 0;
+    imageIndex.value = 0
   }
-  selectedImage.value = urls.value[imageIndex.value];
-  loading.value = false;
-};
+  selectedImage.value = urls.value[imageIndex.value]
+  loading.value = false
+}
 
 const displayPreviousSlide = () => {
-  loading.value = true;
+  loading.value = true
   setTimeout(() => {
     if (imageIndex.value > 0) {
-      imageIndex.value--;
+      imageIndex.value--
     } else {
-      imageIndex.value = urls.value.length - 1;
+      imageIndex.value = urls.value.length - 1
     }
-    selectedImage.value = urls.value[imageIndex.value];
-    loading.value = false;
-  }, 500);
-};
+    selectedImage.value = urls.value[imageIndex.value]
+    loading.value = false
+  }, 500)
+}
 
 const props = defineProps({
   images: {
@@ -80,16 +80,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-});
+})
 
 watch(() => props.selectedImageByColor, (value) => {
-  updateSelectedImage(value);
-});
+  updateSelectedImage(value)
+})
 
 onMounted(() => {
-  urls.value = allImages.value;
-  selectedImage.value = urls.value[0];
-});
+  urls.value = allImages.value
+  selectedImage.value = urls.value[0]
+})
 </script>
 
 <style>
