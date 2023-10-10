@@ -1,36 +1,59 @@
 <template>
   <div style="width: max-content">
     <button
-        :disabled="disabled"
-        class="custom-btn"
+        class="base-button"
         :class="[
-        { 'btn-sm': size === 'small' },
-        variantClass
-      ]"
+          sizeClass,
+          variantClass
+        ]"
+        :disabled="props.disabled"
+        :title="titleMessage"
     >{{ action }}</button>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
+import {Size, Variant} from "../../typing/BaseButton"
 
-const props = defineProps({
-  action: String,
-  disabled: Boolean,
-  size: String,
-  variant: {
-    type: String,
-    default: 'outline-primary'
-  }
-});
+interface Props {
+  action?: string
+  disabled?: boolean
+  tooltipMessage?: string | null
+  size?: Size
+  variant?: Variant
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  action: 'Action',
+  disabled: false,
+  tooltipMessage: null,
+  variant: 'outline-primary',
+  size: 'medium'
+})
 
 const variantClass = computed(() => {
-  return `btn-${props.variant}`;
-});
+  return `btn-${props.variant}`
+})
+
+const titleMessage = computed(() => {
+  return props.tooltipMessage ?? props.disabled ? 'This button is disabled.' : null
+})
+
+const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'small':
+      return 'btn-small'
+    case 'medium':
+      return 'btn-medium'
+    case 'large':
+      return 'btn-large'
+  }
+})
 </script>
 
 <style scoped lang="scss">
-.custom-btn {
+.base-button {
   padding: 10px 20px;
   border: 1px solid transparent;
   color: #fff;
@@ -99,6 +122,21 @@ const variantClass = computed(() => {
   &.btn-outline-danger:hover {
     background-color: #dc3545;
     color: #fff;
+  }
+
+  &.btn-small {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  &.btn-medium {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  &.btn-large {
+    font-size: 18px;
+    padding: 15px 30px;
   }
 
   &[disabled] {
