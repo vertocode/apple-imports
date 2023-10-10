@@ -1,4 +1,3 @@
-import { Store } from 'vuex'
 import {Api} from "../Api";
 
 const api = new Api()

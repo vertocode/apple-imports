@@ -1,4 +1,4 @@
-import { Product } from "../../interfaces/Product";
+import { Product } from "../../typing/Product";
 import { Api } from '../Api'
 
 const api: Api = new Api()

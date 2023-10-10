@@ -15,3 +15,10 @@ export interface Product {
         }
     ]
 }
+
+export interface ProductListType {
+    route: string
+    srcImg: string
+    name: string
+    description: string
+}

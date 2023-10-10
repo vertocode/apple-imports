@@ -1,8 +1,13 @@
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
+import {GoogleUser, NormalUser} from "../typing/User";
 
+type State = {
+    allUsers: (NormalUser | GoogleUser)[],
+    userData: (NormalUser | GoogleUser) | {}
+}
 export const useUserStore = defineStore("userStore", {
-    state: (): any => ({
+    state: (): State => ({
         allUsers: [],
         userData: {},
     }),

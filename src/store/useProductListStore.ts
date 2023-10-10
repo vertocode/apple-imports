@@ -1,10 +1,16 @@
 import { defineStore } from "pinia";
 import {Products} from "../services/product/ProductList";
+import {Product, ProductListType} from "../typing/Product";
 
 const product = new Products()
 
+type State = {
+    products: Product[]
+    productListTypes: ProductListType[]
+    loading: boolean
+}
 export const useProductListStore = defineStore("productStore",  {
-    state: (): any => ({
+    state: (): State => ({
         products: [],
         productListTypes: [],
         loading: false

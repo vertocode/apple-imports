@@ -1,4 +1,4 @@
-import { NormalUser, GoogleUser } from '../../interfaces/User'
+import { NormalUser, GoogleUser } from '../../typing/User'
 import {Api} from "../Api";
 
 const api = new Api()
