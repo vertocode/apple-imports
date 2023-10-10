@@ -4,7 +4,7 @@
  * @param {string} email
  * @param {string} password
  */
-Cypress.Commands.add('login', (email, password) => {
+Cypress.Commands.add('login', (email: string, password: string) => {
     cy.get('[data-cy=password]').type(password)
     cy.get('[data-cy=email]').handleEmail(email)
     cy.get('[data-cy=password]').type(password)
