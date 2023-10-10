@@ -55,6 +55,8 @@ Verto Imports includes several npm scripts to streamline development and deploym
 
 - `preview`: Previews the production build using Vite.
 
+- `lint`: Check code styles of all files using Eslint.
+
 ## Development Dependencies
 
 - `@vitejs/plugin-vue`: Vite plugin for Vue.js development.
