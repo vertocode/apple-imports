@@ -4,7 +4,7 @@
 
 <script setup>
 const props = defineProps({
-  itemName: String
+	itemName: String
 })
 </script>
 

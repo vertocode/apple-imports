@@ -55,73 +55,73 @@
 import BaseModal from './BaseModal.vue'
 import BaseButton from './../Buttons/BaseButton.vue'
 import Toasted from './../Toast/Toasted.vue'
-import {computed, onMounted, reactive} from "vue";
+import { computed, onMounted, reactive } from 'vue'
 import Loading from '../Loading/Loading.vue'
-import {Users} from '../../services/users/user'
-import {useUserStore} from "../../store/useUserStore";
+import { Users } from '../../services/users/user'
+import { useUserStore } from '../../store/useUserStore'
 
 const userStore = useUserStore()
 const userData = userStore.userData
 
 const state = reactive({
-  profile: {
-    name: userData.name,
-    email: userData.email,
-    password: userData.password
-  },
-  toastEnabled: false,
-  titleToast: 'Successfully saved!',
-  descriptionToast: '',
-  isLoading: false
+	profile: {
+		name: userData.name,
+		email: userData.email,
+		password: userData.password
+	},
+	toastEnabled: false,
+	titleToast: 'Successfully saved!',
+	descriptionToast: '',
+	isLoading: false
 })
 
 const emit = defineEmits(['close'])
 const users = new Users()
 
 onMounted(() => {
-  state.isLoading = false
+	state.isLoading = false
 })
 
 const saveChangesDisabled = computed(() => {
-  const { name, email, password } = userStore.userData
+	const { name, email, password } = userStore.userData
 
-  const nameChanged = state.profile.name !== name
-  const emailChanged = state.profile.email !== email
-  const passwordChanged = state.profile.password !== password
+	const nameChanged = state.profile.name !== name
+	const emailChanged = state.profile.email !== email
+	const passwordChanged = state.profile.password !== password
 
-  return ![nameChanged, emailChanged, passwordChanged].some(field => field)
+	return ![nameChanged, emailChanged, passwordChanged].some(field => field)
   || Object.values(state.profile).some(field => field === '')
 })
 
 const saveChanges = async () => {
-  if (saveChangesDisabled.value) {
-    return
-  }
-  state.isLoading = true
+	if (saveChangesDisabled.value) {
+		return
+	}
+	state.isLoading = true
 
-  const userData = {
-    ...userStore.userData,
-    ...state.profile
-  }
+	const userData = {
+		...userStore.userData,
+		...state.profile
+	}
 
-  const allUsers = await users.getAllUsers()
-  const index = allUsers.findIndex(user => user.email === userStore.userData.email)
+	const allUsers = await users.getAllUsers()
+	const index = allUsers.findIndex(user => user.email === userStore.userData.email)
 
-  try {
-    const response = await users.updateUserData(userData, index)
+	try {
+		const response = await users.updateUserData(userData, index)
 
-    userStore.userData = response?.data || userData
-    state.titleToast = 'Successfully saved!'
-  } catch (e) {
-    state.titleToast = 'I apologize, as there appears to be an error occurring in the Rest API to change the profile data.'
-    state.descriptionToast = e
-  }
-  state.toastEnabled = true
-  state.isLoading = false
+		userStore.userData = response?.data || userData
+		state.titleToast = 'Successfully saved!'
+	} catch (e) {
+		state.titleToast = 'I apologize, as there appears to be an error occurring in the Rest API to change the profile data.'
+		state.descriptionToast = e
+	}
+	state.toastEnabled = true
+	state.isLoading = false
 
-  setTimeout(() => {
-    state.toastEnabled = false
-  }, 5000)
+	setTimeout(() => {
+		state.toastEnabled = false
+	}, 5000)
 }
 </script>
 

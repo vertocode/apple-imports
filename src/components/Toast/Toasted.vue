@@ -14,19 +14,19 @@
 const emit = defineEmits(['close'])
 
 const props = defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: false
-  },
-  state: {
-    type: String,
-    required: false,
-    default: 'success'
-  }
+	title: {
+		type: String,
+		required: true
+	},
+	description: {
+		type: String,
+		required: false
+	},
+	state: {
+		type: String,
+		required: false,
+		default: 'success'
+	}
 })
 </script>
 

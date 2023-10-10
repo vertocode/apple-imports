@@ -8,22 +8,22 @@
 </template>
 
 <script setup>
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { onMounted } from "vue";
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 
 const store = useStore()
 const router = useRouter()
 
 
 const goHome = () => {
-  store.state.showNavbar = true
+	store.state.showNavbar = true
 
-  router.push('/')
+	router.push('/')
 }
 
 onMounted(() => {
-  store.state.showNavbar = false
+	store.state.showNavbar = false
 })
 </script>
 

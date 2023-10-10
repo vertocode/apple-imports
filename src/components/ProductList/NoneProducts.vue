@@ -7,9 +7,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const message = ref('We\'re sorry, but no products match the selected filters at this time. Please try adjusting your search criteria and try again. Thank you for your understanding.');
+const message = ref('We\'re sorry, but no products match the selected filters at this time. Please try adjusting your search criteria and try again. Thank you for your understanding.')
 </script>
 
 <style scoped lang="scss">

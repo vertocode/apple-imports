@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
 type State = {
     isLoading: boolean
 }
-export const useGeneralStore = defineStore("generalStore",  {
-    state: (): State => ({
-        isLoading: false,
-    })
+export const useGeneralStore = defineStore('generalStore',  {
+	state: (): State => ({
+		isLoading: false,
+	})
 })

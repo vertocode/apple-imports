@@ -44,13 +44,13 @@
 </template>
 
 <script setup>
-import {computed, reactive, ref, watch} from "vue";
+import { computed, reactive, ref, watch } from 'vue'
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
-import {useUserStore} from "../store/useUserStore"
+import { useUserStore } from '../store/useUserStore'
 
 const state = reactive({
-  showEditProfileModal: false
+	showEditProfileModal: false
 })
 const userStore = useUserStore()
 
@@ -58,32 +58,32 @@ const userStore = useUserStore()
 const hamburgerId = ref(0)
 
 const steps = computed(() => [
-  {
-    link: '/product-list',
-    title: 'Product list',
-    isVisible: true
-  },
-  {
-    link: '/cart',
-    title: 'Cart',
-    isVisible: userStore.isLogged
-  },
-  {
-    link: '/requests',
-    title: 'Requests',
-    isVisible: userStore.isLogged
-  },
-  // {
-  //   link: '/add-new-product',
-  //   title: 'Add a new product (Admin)',
-  //   notShow: true
-  // },
+	{
+		link: '/product-list',
+		title: 'Product list',
+		isVisible: true
+	},
+	{
+		link: '/cart',
+		title: 'Cart',
+		isVisible: userStore.isLogged
+	},
+	{
+		link: '/requests',
+		title: 'Requests',
+		isVisible: userStore.isLogged
+	},
+	// {
+	//   link: '/add-new-product',
+	//   title: 'Add a new product (Admin)',
+	//   notShow: true
+	// },
 ])
 
 watch(() => userStore.isLogged, () => {
-  console.log('changed',userStore.isLogged)
-  hamburgerId.value++
-  console.log(steps.value)
+	console.log('changed',userStore.isLogged)
+	hamburgerId.value++
+	console.log(steps.value)
 })
 
 console.log(steps.value)

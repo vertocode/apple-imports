@@ -38,24 +38,24 @@
 
 <script setup>
 
-import {computed, onMounted, reactive, ref} from "vue";
-import Slider from "../Slider/Slider.vue";
-import {useCartStore} from "../../store/useCartStore";
-import {useUserStore} from "../../store/useUserStore";
-import BaseButton from "../Buttons/BaseButton.vue";
+import { computed, onMounted, reactive, ref } from 'vue'
+import Slider from '../Slider/Slider.vue'
+import { useCartStore } from '../../store/useCartStore'
+import { useUserStore } from '../../store/useUserStore'
+import BaseButton from '../Buttons/BaseButton.vue'
 
 const props = defineProps({
-  product: Object
+	product: Object
 })
 
 const {
-  value,
-  indexProduct,
-  description,
-  name,
-  isAddedCart,
-  srcImg,
-  specifications
+	value,
+	indexProduct,
+	description,
+	name,
+	isAddedCart,
+	srcImg,
+	specifications
 } = props.product
 
 let itemsMarked = []
@@ -64,59 +64,59 @@ let totalValue = ref(value)
 const cartStore = useCartStore()
 const userStore = useUserStore()
 const state = reactive({
-  isActive: true,
-  isAddedCart: false,
-  imageColor: null,
-  showModal: false
+	isActive: true,
+	isAddedCart: false,
+	imageColor: null,
+	showModal: false
 })
 
 const numberOfItems = computed(() => {
-  return cartStore.cart.filter(product => product.name === name).length
+	return cartStore.cart.filter(product => product.name === name).length
 })
 
 const allImages = computed(() => {
-  const { items = [] } = specifications.filter(specification => specification.title === 'Color')[0] || {}
-  const colorImages = items?.map(item => item?.srcImg).filter(item => item) || []
-  return [
-    ...colorImages,
-    ...(typeof srcImg === 'string' ? [srcImg] : srcImg)
-  ]
+	const { items = [] } = specifications.filter(specification => specification.title === 'Color')[0] || {}
+	const colorImages = items?.map(item => item?.srcImg).filter(item => item) || []
+	return [
+		...colorImages,
+		...(typeof srcImg === 'string' ? [srcImg] : srcImg)
+	]
 })
 
 const isLogged = userStore.userData?.name
 const tooltipButtons = !isLogged ? 'You need do the login to use this button' : 'Click to action'
 
 const addItemCart = () => {
-  console.log(cartStore)
-  cartStore.cart.push({
-    srcImg,
-    name,
-    value: itemsMarked.reduce(({value: previousValue}, {value: currentValue}) => {
-      return (previousValue || 0) + (currentValue || 0)
-    }) + value,
-    specifications: itemsMarked.map(item => {
-      return {
-        title: item.title,
-        items: [
-          {
-            name: item.name
-          }
-        ]
-      }
-    }),
-    indexProduct
-  })
+	console.log(cartStore)
+	cartStore.cart.push({
+		srcImg,
+		name,
+		value: itemsMarked.reduce(({ value: previousValue }, { value: currentValue }) => {
+			return (previousValue || 0) + (currentValue || 0)
+		}) + value,
+		specifications: itemsMarked.map(item => {
+			return {
+				title: item.title,
+				items: [
+					{
+						name: item.name
+					}
+				]
+			}
+		}),
+		indexProduct
+	})
 }
 
 onMounted(() => {
-  specifications.forEach(specification => {
-    totalValue.value += specification.items[0].value ?? 0
-    itemsMarked.push({
-      title: specification.title,
-      name: specification.items[0].name,
-      value: specification.items[0].value || 0
-    })
-  })
+	specifications.forEach(specification => {
+		totalValue.value += specification.items[0].value ?? 0
+		itemsMarked.push({
+			title: specification.title,
+			name: specification.items[0].name,
+			value: specification.items[0].value || 0
+		})
+	})
 })
 </script>
 

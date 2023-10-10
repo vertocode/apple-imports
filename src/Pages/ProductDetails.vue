@@ -83,71 +83,71 @@
 </template>
 
 <script setup>
-import {computed, onBeforeUnmount, onMounted, reactive, ref} from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import Slider from '../components/Slider/Slider.vue'
 import { useProductListStore } from '../store/useProductListStore'
-import {useRoute, useRouter} from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BackButton from '../components/Buttons/BackButton.vue'
-import Loading from "../components/Loading/Loading.vue"
-import BaseButton from "../components/Buttons/BaseButton.vue"
-import {useCartStore} from "../store/useCartStore"
-import BaseAutocomplete from "../components/Input/BaseAutocomplete.vue"
-import BaseTextField from "../components/Input/BaseTextField.vue"
+import Loading from '../components/Loading/Loading.vue'
+import BaseButton from '../components/Buttons/BaseButton.vue'
+import { useCartStore } from '../store/useCartStore'
+import BaseAutocomplete from '../components/Input/BaseAutocomplete.vue'
+import BaseTextField from '../components/Input/BaseTextField.vue'
 
 const productListStore = useProductListStore()
 const cartStore = useCartStore()
 const route = useRoute()
 const router = useRouter()
 const product = computed(() => {
-  return productListStore.products.filter((product) => Number(product.id) === Number(route.params.productId)).at(0)
+	return productListStore.products.filter((product) => Number(product.id) === Number(route.params.productId)).at(0)
 })
 
 const itemsMarked = ref([])
 const totalValue = ref(0)
 const state = reactive({
-  imageColor: null,
-  selectedNumberOfItems: 0
+	imageColor: null,
+	selectedNumberOfItems: 0
 })
 
 const optionsNumberOfItems = [
-  {
-    value: 1,
-    label: '1'
-  },
-  {
-    value: 2,
-    label: '2'
-  },
-  {
-    value: 3,
-    label: '3'
-  },
-  {
-    value: 4,
-    label: '4'
-  },
-  {
-    value: 5,
-    label: '5'
-  },
-  {
-    value: '+',
-    label: 'More than 5'
-  }
+	{
+		value: 1,
+		label: '1'
+	},
+	{
+		value: 2,
+		label: '2'
+	},
+	{
+		value: 3,
+		label: '3'
+	},
+	{
+		value: 4,
+		label: '4'
+	},
+	{
+		value: 5,
+		label: '5'
+	},
+	{
+		value: '+',
+		label: 'More than 5'
+	}
 ]
 
 const allImages = computed(() => {
-  const { items = [] } = product.value.specifications.find((specification) => specification.title === 'Color') || {}
-  const colorImages = items?.map((item) => item?.srcImg).filter((item) => item) || []
-  return [...colorImages, ...(typeof product.value.srcImg === 'string' ? [product.value.srcImg] : product.value.srcImg)]
+	const { items = [] } = product.value.specifications.find((specification) => specification.title === 'Color') || {}
+	const colorImages = items?.map((item) => item?.srcImg).filter((item) => item) || []
+	return [...colorImages, ...(typeof product.value.srcImg === 'string' ? [product.value.srcImg] : product.value.srcImg)]
 })
 
 const addToCart = () => {
-  console.log(state.selectedNumberOfItems)
-  for (const times in new Array(state.selectedNumberOfItems).fill('time')) {
-    cartStore.cart.push(product.value)
-  }
-  router.push('/cart')
+	console.log(state.selectedNumberOfItems)
+	for (const times in new Array(state.selectedNumberOfItems).fill('time')) {
+		cartStore.cart.push(product.value)
+	}
+	router.push('/cart')
 }
 
 const buy = () => {
@@ -155,48 +155,48 @@ const buy = () => {
 }
 
 const calculateValue = (specification, title) => {
-  const { name, value, srcImg } = specification
-  const currentItem = itemsMarked.value.filter((item) => item.title === title)
+	const { name, value, srcImg } = specification
+	const currentItem = itemsMarked.value.filter((item) => item.title === title)
 
-  const indexItem = itemsMarked.value.indexOf(currentItem[0])
+	const indexItem = itemsMarked.value.indexOf(currentItem[0])
 
-  itemsMarked.value[indexItem] = {
-    title,
-    name,
-    value: value || 0,
-  }
+	itemsMarked.value[indexItem] = {
+		title,
+		name,
+		value: value || 0,
+	}
 
-  totalValue.value = product.value.value
-  for (const item of itemsMarked.value) {
-    totalValue.value += item.value || 0
-  }
+	totalValue.value = product.value.value
+	for (const item of itemsMarked.value) {
+		totalValue.value += item.value || 0
+	}
 
-  if (title === 'Color') {
-    state.imageColor = srcImg || null
-  }
+	if (title === 'Color') {
+		state.imageColor = srcImg || null
+	}
 }
 
 const markInput = (indexSpecification, indexProduct, index) => {
-  const inputId = `input-${indexSpecification}-${indexProduct}-${index}`
-  const inputElement = document.getElementById(inputId)
+	const inputId = `input-${indexSpecification}-${indexProduct}-${index}`
+	const inputElement = document.getElementById(inputId)
 
-  if (inputElement) {
-    inputElement.checked = true
-  }
+	if (inputElement) {
+		inputElement.checked = true
+	}
 }
 
 
 onMounted(async () => {
-  const productListStore = useProductListStore()
-  await productListStore.getProductByType(route.params.category)
+	const productListStore = useProductListStore()
+	await productListStore.getProductByType(route.params.category)
 
-  state.imageColor = allImages[0]
-  totalValue.value = product.value.value
-  itemsMarked.value = product.value.specifications.map(specification => ({ title: specification.title, ...specification.items[0] }))
+	state.imageColor = allImages.value[0]
+	totalValue.value = product.value.value
+	itemsMarked.value = product.value.specifications.map(specification => ({ title: specification.title, ...specification.items[0] }))
 })
 
 onBeforeUnmount(() => {
-  productListStore.products = []
+	productListStore.products = []
 })
 </script>
 

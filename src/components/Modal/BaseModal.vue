@@ -37,36 +37,36 @@
 <script setup>
 
 const {
-  title = ''
+	title = ''
 } = defineProps({
-  title: String,
-  showModal: Boolean
+	title: String,
+	showModal: Boolean
 })
 
 const emit = defineEmits(['close'])
 
 const socials = [
-  {
-    id: 0,
-    src: 'https://i.imgur.com/lyw4LJi.png',
-    href: 'https://www.vertocode.com/contact',
-    alt: 'Contact',
-    title: 'Contact'
-  },
-  {
-    id: 1,
-    src: 'https://i.imgur.com/g9chQFf.png',
-    href: 'https://www.linkedin.com/in/evertonvanoni/',
-    alt: 'Linkedin',
-    title: 'Linkedin'
-  },
-  {
-    id: 1,
-    src: 'https://i.imgur.com/IEHUVU9.png',
-    href: 'mailto:evertonvanoni1@gmail.com',
-    alt: 'Gmail',
-    title: 'Gmail'
-  }
+	{
+		id: 0,
+		src: 'https://i.imgur.com/lyw4LJi.png',
+		href: 'https://www.vertocode.com/contact',
+		alt: 'Contact',
+		title: 'Contact'
+	},
+	{
+		id: 1,
+		src: 'https://i.imgur.com/g9chQFf.png',
+		href: 'https://www.linkedin.com/in/evertonvanoni/',
+		alt: 'Linkedin',
+		title: 'Linkedin'
+	},
+	{
+		id: 1,
+		src: 'https://i.imgur.com/IEHUVU9.png',
+		href: 'mailto:evertonvanoni1@gmail.com',
+		alt: 'Gmail',
+		title: 'Gmail'
+	}
 ]
 </script>
 

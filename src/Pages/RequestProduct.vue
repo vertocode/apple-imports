@@ -41,30 +41,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import BackButton from "../components/Buttons/BackButton.vue";
+import { ref } from 'vue'
+import BackButton from '../components/Buttons/BackButton.vue'
 
-const productName = ref('');
-const productDescription = ref('');
-const requesterEmail = ref('');
+const productName = ref('')
+const productDescription = ref('')
+const requesterEmail = ref('')
 
 const submitForm = (event: Event) => {
-  event.preventDefault();
+	event.preventDefault()
 
-  // Here you can send the data to the server or perform other necessary actions
-  const formData = {
-    productName: productName.value,
-    productDescription: productDescription.value,
-    requesterEmail: requesterEmail.value,
-  };
+	// Here you can send the data to the server or perform other necessary actions
+	const formData = {
+		productName: productName.value,
+		productDescription: productDescription.value,
+		requesterEmail: requesterEmail.value,
+	}
 
-  console.log('Form Data:', formData);
+	console.log('Form Data:', formData)
 
-  // Clear the fields after submission
-  productName.value = '';
-  productDescription.value = '';
-  requesterEmail.value = '';
-};
+	// Clear the fields after submission
+	productName.value = ''
+	productDescription.value = ''
+	requesterEmail.value = ''
+}
 </script>
 
 <style scoped lang="scss">

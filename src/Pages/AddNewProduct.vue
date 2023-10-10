@@ -44,66 +44,66 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
 
 const store = useStore()
 const route = useRouter()
 const addNewProductIsDisabled = ref(false)
 const addProductPayload = reactive({
-  value: 0,
-  name: '',
-  description: '',
-  srcImg: '',
-  specifications: []
+	value: 0,
+	name: '',
+	description: '',
+	srcImg: '',
+	specifications: []
 })
 
 function handleFiles(event) {
-  const appendImg = document.getElementById('image-append')
-  const reader = new FileReader()
-  reader.onload = function () {
-    appendImg.innerHTML = `<img src="${reader.result}" alt="img">`
-    // Add image that was done an uploaded in payload to add product.
-  }
-  reader.readAsDataURL(event.target.files[0])
-  const clientId = '082f3d63c4c2091'
-  // const clientSecret = 'cd63c09150ce871d3fb57e6eaf5fcbbf447db1a3'
-  // Base authorization = Authorization: Client-ID YOUR_CLIENT_ID
+	const appendImg = document.getElementById('image-append')
+	const reader = new FileReader()
+	reader.onload = function () {
+		appendImg.innerHTML = `<img src="${reader.result}" alt="img">`
+		// Add image that was done an uploaded in payload to add product.
+	}
+	reader.readAsDataURL(event.target.files[0])
+	const clientId = '082f3d63c4c2091'
+	// const clientSecret = 'cd63c09150ce871d3fb57e6eaf5fcbbf447db1a3'
+	// Base authorization = Authorization: Client-ID YOUR_CLIENT_ID
 
-  const formData = new FormData()
-  formData.append('image', event.target.files[0])
-  fetch('https://api.imgur.com/3/upload', {
-    method: 'post',
-    headers: {
-      Authorization: `Client-ID ${clientId}`
-    },
-    body: formData
-  }).then(res => res.json()).then(res => {
-    addProductPayload.srcImg = res.data.link
-    if(res.data.error) {
-      alert(`Error with upload image. [Error:${res.data.error}][Status: ${res.status}][Success:${res.success}]`)
-      addProductPayload.srcImg = reader.result
-    }
-  })
+	const formData = new FormData()
+	formData.append('image', event.target.files[0])
+	fetch('https://api.imgur.com/3/upload', {
+		method: 'post',
+		headers: {
+			Authorization: `Client-ID ${clientId}`
+		},
+		body: formData
+	}).then(res => res.json()).then(res => {
+		addProductPayload.srcImg = res.data.link
+		if(res.data.error) {
+			alert(`Error with upload image. [Error:${res.data.error}][Status: ${res.status}][Success:${res.success}]`)
+			addProductPayload.srcImg = reader.result
+		}
+	})
 }
 
 const addProduct = () => {
-  let inputConfigs = [{key: 'name', id:'name'}, {id:'description'}, {key:'value',id:'value'}]
-  for (const config of inputConfigs) {
-    const { key, id } = config
-    const currentValueInput = document.querySelector(`#${id}-input`).value
-    if (key) {
-      addProductPayload[key] = currentValueInput
-      if (!currentValueInput.length > 0) {
-        alert('There are incomplete mandatory fields. Please fill this out.')
-        return
-      }
-    }
-  }
-  store.commit('addProducts', addProductPayload)
-  route.push('/product-list')
-  setTimeout(() => {
-    document.querySelector('#last-item').scrollIntoView()
-  }, 100)
+	let inputConfigs = [{ key: 'name', id:'name' }, { id:'description' }, { key:'value',id:'value' }]
+	for (const config of inputConfigs) {
+		const { key, id } = config
+		const currentValueInput = document.querySelector(`#${id}-input`).value
+		if (key) {
+			addProductPayload[key] = currentValueInput
+			if (!currentValueInput.length > 0) {
+				alert('There are incomplete mandatory fields. Please fill this out.')
+				return
+			}
+		}
+	}
+	store.commit('addProducts', addProductPayload)
+	route.push('/product-list')
+	setTimeout(() => {
+		document.querySelector('#last-item').scrollIntoView()
+	}, 100)
 }
 </script>
 

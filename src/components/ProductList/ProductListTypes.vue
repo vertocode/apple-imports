@@ -10,18 +10,18 @@
 
 <script setup lang="ts">
 import ProductListType from './ProductListType.vue'
-import {onMounted, ref} from 'vue'
+import { onMounted, ref } from 'vue'
 import Loading from '../Loading/Loading.vue'
-import {ProductTypes} from '../../services/product/ProductTypes'
+import { ProductTypes } from '../../services/product/ProductTypes'
 import NoProductListTypes from './NoProductListTypes.vue'
-import {useProductListStore} from "../../store/useProductListStore";
+import { useProductListStore } from '../../store/useProductListStore'
 
 const productListStore = useProductListStore()
 const isLoading = ref(true)
 
 onMounted(async () => {
-  const productTypes = new ProductTypes()
-  productListStore.productListTypes = await productTypes.getProductListTypes()
-  isLoading.value = false
+	const productTypes = new ProductTypes()
+	productListStore.productListTypes = await productTypes.getProductListTypes()
+	isLoading.value = false
 })
 </script>

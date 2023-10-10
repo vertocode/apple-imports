@@ -24,33 +24,33 @@
 </template>
 
 <script setup>
-import {computed, reactive} from 'vue';
-import {useRoute, useRouter} from "vue-router";
-import {useUserStore} from "../../store/useUserStore";
+import { computed, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '../../store/useUserStore'
 
 const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 
 const props = defineProps({
-  options: Array
+	options: Array
 })
 
 const steps = computed(() => props.options)
 const emit = defineEmits(['close'])
 
 const selectItem = (step) => {
-  emit('close')
-  router.push(step.link)
+	emit('close')
+	router.push(step.link)
 }
 
 const state = reactive({
-  isMenuOpen: false,
-  showEditProfileModal: false
+	isMenuOpen: false,
+	showEditProfileModal: false
 })
 
 const toggleMenu = () => {
-  state.isMenuOpen = !state.isMenuOpen
+	state.isMenuOpen = !state.isMenuOpen
 }
 </script>
 

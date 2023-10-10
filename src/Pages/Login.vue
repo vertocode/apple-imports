@@ -50,80 +50,80 @@
 </template>
 
 <script setup>
-import {decodeCredential} from 'vue3-google-login'
-import {computed, onMounted, reactive, ref} from "vue";
-import router from "../router";
+import { decodeCredential } from 'vue3-google-login'
+import { computed, onMounted, reactive, ref } from 'vue'
+import router from '../router'
 import Toasted from '../components/Toast/Toasted.vue'
-import {useUserStore} from "../store/useUserStore"
-import {Users} from "../services/users/user";
+import { useUserStore } from '../store/useUserStore'
+import { Users } from '../services/users/user'
 
 const userStore = useUserStore()
 const state = reactive({
-  toastEnabled: false,
-  stateToasted: 'error',
-  titleToasted: 'Something is wrong!',
-  descriptionToasted: ''
+	toastEnabled: false,
+	stateToasted: 'error',
+	titleToasted: 'Something is wrong!',
+	descriptionToasted: ''
 })
 const email = ref('')
 const password = ref('')
 const isFormValid = computed(() => {
-  return email.value && password.value
+	return email.value && password.value
 })
 
 const checkIfIsLoggedAndRedirect = (isLogged) => {
-  if (isLogged) {
-    router.push('product-list')
-  }
+	if (isLogged) {
+		router.push('product-list')
+	}
 }
 
 const manualLogin = () => {
-  const allUsers = userStore.allUsers
-  const existAccount = allUsers.map(user => {
-    if (user.email === email.value && user.password === password.value) {
-      return user
-    }
-  }).filter(user => user)
-  if (existAccount.length) {
-    try {
-      userStore.userData = existAccount[0]
-      state.toastEnabled = true
-      state.stateToasted = 'success'
-      state.titleToasted = 'You are logged now.'
-      state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
-      checkIfIsLoggedAndRedirect(userStore.userData.name)
-      setInterval(() => state.toastEnabled = false, 5000)
-    } catch (e) {
-      state.toastEnabled = true
-      state.stateToasted = 'error'
-      state.titleToasted = 'We regret to inform you that there appears to be an issue. Please verify your credentials and attempt to proceed again.'
-      state.descriptionToasted = e
-    }
-  } else {
-    state.toastEnabled = true
-    state.stateToasted = 'warning'
-    state.titleToasted = 'Login Error: Invalid credentials. Please check your username and password and try again.'
-    state.descriptionToasted = 'You can Sign with Google if you do not have an account..'
-  }
-  setTimeout(() => {
-    state.toastEnabled = false
-  }, 5000)
+	const allUsers = userStore.allUsers
+	const existAccount = allUsers.map(user => {
+		if (user.email === email.value && user.password === password.value) {
+			return user
+		}
+	}).filter(user => user)
+	if (existAccount.length) {
+		try {
+			userStore.userData = existAccount[0]
+			state.toastEnabled = true
+			state.stateToasted = 'success'
+			state.titleToasted = 'You are logged now.'
+			state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
+			checkIfIsLoggedAndRedirect(userStore.userData.name)
+			setInterval(() => state.toastEnabled = false, 5000)
+		} catch (e) {
+			state.toastEnabled = true
+			state.stateToasted = 'error'
+			state.titleToasted = 'We regret to inform you that there appears to be an issue. Please verify your credentials and attempt to proceed again.'
+			state.descriptionToasted = e
+		}
+	} else {
+		state.toastEnabled = true
+		state.stateToasted = 'warning'
+		state.titleToasted = 'Login Error: Invalid credentials. Please check your username and password and try again.'
+		state.descriptionToasted = 'You can Sign with Google if you do not have an account..'
+	}
+	setTimeout(() => {
+		state.toastEnabled = false
+	}, 5000)
 }
 
 const loginWithGoogle = (response) => {
-  // decodeCredential will retrive the JWT payload from the credential
-  userStore.userData = decodeCredential(response.credential)
-  state.toastEnabled = true
-  state.stateToasted = 'success'
-  state.titleToasted = 'You are logged now.'
-  state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
-  checkIfIsLoggedAndRedirect(userStore.userData.name)
-  setInterval(() => state.toastEnabled = false, 5000)
+	// decodeCredential will retrive the JWT payload from the credential
+	userStore.userData = decodeCredential(response.credential)
+	state.toastEnabled = true
+	state.stateToasted = 'success'
+	state.titleToasted = 'You are logged now.'
+	state.descriptionToasted = `Welcome ${userStore.userData.name || ''}!`
+	checkIfIsLoggedAndRedirect(userStore.userData.name)
+	setInterval(() => state.toastEnabled = false, 5000)
 }
 
 onMounted(async () => {
-  const users = new Users()
-  userStore.allUsers = await users.getAllUsers()
-  checkIfIsLoggedAndRedirect(userStore.userData.name)
+	const users = new Users()
+	userStore.allUsers = await users.getAllUsers()
+	checkIfIsLoggedAndRedirect(userStore.userData.name)
 })
 </script>
 

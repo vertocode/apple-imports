@@ -23,25 +23,25 @@
 </template>
 
 <script setup>
-import { reactive, watch } from "vue"
-import {useProductListStore} from "../../store/useProductListStore";
+import { reactive, watch } from 'vue'
+import { useProductListStore } from '../../store/useProductListStore'
 
 const state = reactive({
-  value: ''
+	value: ''
 })
 
 const emits = defineEmits(['input-value'])
 
 const props = defineProps({
-  placeholder: String,
-  label: String,
-  color: String,
-  icon: String,
-  classInput: String,
-  options: {
-    type: Array,
-    default: []
-  }
+	placeholder: String,
+	label: String,
+	color: String,
+	icon: String,
+	classInput: String,
+	options: {
+		type: Array,
+		default: []
+	}
 })
 
 watch(() => state.value, () => emits('input-value', state.value))

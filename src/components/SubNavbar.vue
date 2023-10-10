@@ -16,23 +16,23 @@
 </template>
 
 <script setup>
-import BackButton from "./Buttons/BackButton.vue";
+import BackButton from './Buttons/BackButton.vue'
 
 const props = defineProps({
-  items: {
-    type: Array,
-    default: []
-  },
-  selectedType: {
-    type: String,
-    default: 'iphone'
-  }
+	items: {
+		type: Array,
+		default: []
+	},
+	selectedType: {
+		type: String,
+		default: 'iphone'
+	}
 })
 
 const emits = defineEmits(['select-product-type'])
 
 const select = (type) => {
-  emits('select-product-type', type)
+	emits('select-product-type', type)
 }
 </script>
 

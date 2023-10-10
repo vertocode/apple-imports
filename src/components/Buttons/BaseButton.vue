@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import {Size, Variant} from "../../typing/BaseButton"
+import { Size, Variant } from '../../typing/BaseButton'
 
 interface Props {
   action?: string
@@ -25,30 +25,30 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  action: 'Action',
-  disabled: false,
-  tooltipMessage: null,
-  variant: 'outline-primary',
-  size: 'medium'
+	action: 'Action',
+	disabled: false,
+	tooltipMessage: null,
+	variant: 'outline-primary',
+	size: 'medium'
 })
 
 const variantClass = computed(() => {
-  return `btn-${props.variant}`
+	return `btn-${props.variant}`
 })
 
 const titleMessage = computed(() => {
-  return props.tooltipMessage ?? props.disabled ? 'This button is disabled.' : null
+	return props.tooltipMessage ?? props.disabled ? 'This button is disabled.' : ''
 })
 
 const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'small':
-      return 'btn-small'
-    case 'medium':
-      return 'btn-medium'
-    case 'large':
-      return 'btn-large'
-  }
+	switch (props.size) {
+	case 'small':
+		return 'btn-small'
+	case 'medium':
+		return 'btn-medium'
+	case 'large':
+		return 'btn-large'
+	}
 })
 </script>
 

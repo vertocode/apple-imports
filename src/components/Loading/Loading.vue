@@ -6,16 +6,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const props = defineProps({
-  isLoading: {
-    type: Boolean,
-    default: false
-  }
+	isLoading: {
+		type: Boolean,
+		default: false
+	}
 })
-const isLoading = ref(props.isLoading);
-const text = ref('');
+const isLoading = ref(props.isLoading)
+const text = ref('')
 </script>
 
 <style>

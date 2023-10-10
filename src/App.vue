@@ -15,17 +15,17 @@
 
 <script setup>
 import Navbar from './components/Navbar.vue'
-import {computed} from "vue";
-import { reactive } from "vue";
+import { computed } from 'vue'
+import { reactive } from 'vue'
 import Loading from './components/Loading/Loading.vue'
-import Toasted from "./components/Toast/Toasted.vue";
-import {useToastStore} from "./store/useToastStore";
-import {useGeneralStore} from "./store/useGeneralStore";
+import Toasted from './components/Toast/Toasted.vue'
+import { useToastStore } from './store/useToastStore'
+import { useGeneralStore } from './store/useGeneralStore'
 
 const toastStore = useToastStore()
 const generalStore = useGeneralStore()
 const state = reactive({
-  isLoading: generalStore.isLoading
+	isLoading: generalStore.isLoading
 })
 
 const toasted = computed(() =>  toastStore.toasted)

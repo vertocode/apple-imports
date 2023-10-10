@@ -5,22 +5,22 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits } from 'vue'
 
-const show = ref(false);
-const message = ref('');
+const show = ref(false)
+const message = ref('')
 
-const emits = defineEmits(['showError']);
+const emits = defineEmits(['showError'])
 
 function showError(errorMessage) {
-  message.value = errorMessage;
-  show.value = true;
-  setTimeout(() => {
-    show.value = false;
-  }, 5000);
+	message.value = errorMessage
+	show.value = true
+	setTimeout(() => {
+		show.value = false
+	}, 5000)
 }
 
-emits('showError');
+emits('showError')
 
 </script>
 

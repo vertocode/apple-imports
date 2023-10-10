@@ -46,15 +46,15 @@ import ProductCard from './ProductCard.vue'
 import NoneProducts from './NoneProducts.vue'
 import Loading from '../Loading/Loading.vue'
 import Pagination from './Pagination.vue'
-import {Products} from '../../services/product/ProductList'
-import {computed, onMounted, reactive, watch} from "vue";
-import BaseTextField from "../Input/BaseTextField.vue";
-import BaseButton from "../Buttons/BaseButton.vue";
-import SubNavbar from "../SubNavbar.vue";
-import {useRoute, useRouter} from "vue-router";
-import {useProductListStore} from "../../store/useProductListStore";
-import {useCartStore} from "../../store/useCartStore";
-import BackButton from "../Buttons/BackButton.vue";
+import { Products } from '../../services/product/ProductList'
+import { computed, onMounted, reactive, watch } from 'vue'
+import BaseTextField from '../Input/BaseTextField.vue'
+import BaseButton from '../Buttons/BaseButton.vue'
+import SubNavbar from '../SubNavbar.vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useProductListStore } from '../../store/useProductListStore'
+import { useCartStore } from '../../store/useCartStore'
+import BackButton from '../Buttons/BackButton.vue'
 
 const router = useRouter()
 const productListStore = useProductListStore()
@@ -62,68 +62,68 @@ const cartStore = useCartStore()
 const product = new Products()
 
 const state = reactive({
-  isLoading: true,
-  searchValue: '',
-  selectedProductListType: '',
-  selectedProductType: ''
+	isLoading: true,
+	searchValue: '',
+	selectedProductListType: '',
+	selectedProductType: ''
 })
 
 const subNavbarItems = computed(() => {
-  return [
-    { label: 'iPhone', type: 'iphone' },
-    { label: 'MacBook', type: 'macbook' },
-    { label: 'iPad', type: 'ipad' },
-    { label: 'Mac Mini', type: 'mac-mini' },
-    { label: 'Mac Studio', type: 'mac-studio' },
-    { label: 'Accessories', type: 'accessories' }
-  ]
+	return [
+		{ label: 'iPhone', type: 'iphone' },
+		{ label: 'MacBook', type: 'macbook' },
+		{ label: 'iPad', type: 'ipad' },
+		{ label: 'Mac Mini', type: 'mac-mini' },
+		{ label: 'Mac Studio', type: 'mac-studio' },
+		{ label: 'Accessories', type: 'accessories' }
+	]
 })
 
 watch(() => state.selectedProductType, async () => {
-  state.isLoading = true
-  const allProducts = await product.getProductByType(state.selectedProductType)
-  productListStore.products = allProducts
-      .filter(product => {
-        if (product.type === state.selectedProductType) {
-          return product
-        }
-        return null
-      }).filter(p => p)
-  state.isLoading = false
+	state.isLoading = true
+	const allProducts = await product.getProductByType(state.selectedProductType)
+	productListStore.products = allProducts
+		.filter(product => {
+			if (product.type === state.selectedProductType) {
+				return product
+			}
+			return null
+		}).filter(p => p)
+	state.isLoading = false
 })
 
 const search = () => {
-  const { products } = product
-  const { searchValue } = state
-  productListStore.products = products.filter(product => {
-    if (product.name.toLowerCase().includes(searchValue.toLowerCase()) && product.type === state.selectedProductType) {
-      return product
-    }
-  })
+	const { products } = product
+	const { searchValue } = state
+	productListStore.products = products.filter(product => {
+		if (product.name.toLowerCase().includes(searchValue.toLowerCase()) && product.type === state.selectedProductType) {
+			return product
+		}
+	})
 }
 
 const isAddedInTheCart = (product) => {
-  return cartStore.cart.map(product => product.name).includes(product.name)
+	return cartStore.cart.map(product => product.name).includes(product.name)
 }
 
 const setProductSelected = (type) => {
-  router.push(type)
-  state.selectedProductType = type
+	router.push(type)
+	state.selectedProductType = type
 }
 
 onMounted(async () => {
-  const route = useRoute()
+	const route = useRoute()
 
-  if (route.params.category) {
-    state.selectedProductListType = route.path
-    state.selectedProductType = route.params.category || 'iphone'
-    productListStore.products = await product.getProductByType(state.selectedProductType)
-  } else {
-    // Force wrong route if unexpect behavior happens.
-    window.replace.path = 'not-found'
-  }
+	if (route.params.category) {
+		state.selectedProductListType = route.path
+		state.selectedProductType = route.params.category || 'iphone'
+		productListStore.products = await product.getProductByType(state.selectedProductType)
+	} else {
+		// Force wrong route if unexpect behavior happens.
+		window.replace.path = 'not-found'
+	}
 
-  state.isLoading = false
+	state.isLoading = false
 })
 </script>
 

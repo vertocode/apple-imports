@@ -60,19 +60,19 @@
 </template>
 
 <script setup>
-import BaseButton from "../components/Buttons/BaseButton.vue";
-import Tooltip from "../components/Tooltip/Tooltip.vue";
-import { useCartStore } from "../store/useCartStore";
+import BaseButton from '../components/Buttons/BaseButton.vue'
+import Tooltip from '../components/Tooltip/Tooltip.vue'
+import { useCartStore } from '../store/useCartStore'
 
-const cartStore = useCartStore();
+const cartStore = useCartStore()
 
 const deleteItemCart = async (index) => {
-  cartStore.cart.splice(index, 1);
-};
+	cartStore.cart.splice(index, 1)
+}
 
 const formatCurrency = (value) => {
-  return value.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
-};
+	return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
+}
 </script>
 
 <style lang="scss" scoped>

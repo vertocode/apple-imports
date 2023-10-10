@@ -32,63 +32,63 @@ const imageIndex = ref<number>(0)
 const loading = ref(false)
 
 const allImages = computed(():any  => {
-  return typeof props.images === 'string' ? [props.images] : props.images
+	return typeof props.images === 'string' ? [props.images] : props.images
 })
 
 const updateSelectedImage = (value: string) => {
-  selectedImage.value = value
+	selectedImage.value = value
 }
 
 const displayNextSlide = () => {
-  loading.value = true
-  if (imageIndex.value < urls.value.length - 1) {
-    imageIndex.value++
-  } else {
-    imageIndex.value = 0
-  }
-  selectedImage.value = urls.value[imageIndex.value]
-  loading.value = false
+	loading.value = true
+	if (imageIndex.value < urls.value.length - 1) {
+		imageIndex.value++
+	} else {
+		imageIndex.value = 0
+	}
+	selectedImage.value = urls.value[imageIndex.value]
+	loading.value = false
 }
 
 const displayPreviousSlide = () => {
-  loading.value = true
-  setTimeout(() => {
-    if (imageIndex.value > 0) {
-      imageIndex.value--
-    } else {
-      imageIndex.value = urls.value.length - 1
-    }
-    selectedImage.value = urls.value[imageIndex.value]
-    loading.value = false
-  }, 500)
+	loading.value = true
+	setTimeout(() => {
+		if (imageIndex.value > 0) {
+			imageIndex.value--
+		} else {
+			imageIndex.value = urls.value.length - 1
+		}
+		selectedImage.value = urls.value[imageIndex.value]
+		loading.value = false
+	}, 500)
 }
 
 const props = defineProps({
-  images: {
-    type: Array<String>,
-    default: []
-    },
-  selectedImageByColor: {
-    type: String,
-    default: null,
-  },
-  isMini: {
-    type: Boolean,
-    default: false,
-  },
-  hiddeControlButtons: {
-    type: Boolean,
-    default: false,
-  },
+	images: {
+		type: Array<string>,
+		default: []
+	},
+	selectedImageByColor: {
+		type: String,
+		default: null,
+	},
+	isMini: {
+		type: Boolean,
+		default: false,
+	},
+	hiddeControlButtons: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 watch(() => props.selectedImageByColor, (value) => {
-  updateSelectedImage(value)
+	updateSelectedImage(value)
 })
 
 onMounted(() => {
-  urls.value = allImages.value
-  selectedImage.value = urls.value[0]
+	urls.value = allImages.value
+	selectedImage.value = urls.value[0]
 })
 </script>
 

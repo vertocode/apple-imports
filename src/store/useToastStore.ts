@@ -1,4 +1,4 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 
 type State = {
     toasted: {
@@ -8,8 +8,8 @@ type State = {
         isEnabled: boolean
     } | {}
 }
-export const useToastStore = defineStore("toastStore",  {
-    state: (): State => ({
-        toasted: {},
-    })
+export const useToastStore = defineStore('toastStore',  {
+	state: (): State => ({
+		toasted: {},
+	})
 })
