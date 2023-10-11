@@ -1,13 +1,14 @@
 <template>
   <div class="back-button-content">
     <router-link :to="props?.route || '/'">
-      <button class="back-button">&#9664; Back</button>
+      <BaseButton action="Back" variant="outline-dark"/>
     </router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import BaseButton from './BaseButton.vue'
 
 interface Props {
   route?: string

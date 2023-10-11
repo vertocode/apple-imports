@@ -5,6 +5,8 @@ export type Variant =
     | 'outline-primary'
     | 'outline-success'
     | 'outline-danger'
+	| 'dark'
+	| 'outline-dark'
 
 export type Size = 'small' | 'medium' | 'large'
 
