@@ -9,7 +9,13 @@
         :disabled="props.disabled"
         :title="titleMessage"
     >
+      <span class="icon" v-if="leftIcon">
+        <i :class="leftIcon"></i>
+      </span>
       {{ action }}
+      <span class="icon" v-if="rightIcon">
+        <i :class="rightIcon"></i>
+      </span>
     </button>
   </div>
 </template>
@@ -24,6 +30,8 @@ interface Props {
   tooltipMessage?: string | null
   size?: Size
   variant?: Variant
+  leftIcon?: string
+  rightIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,6 +70,10 @@ const sizeClass = computed(() => {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+  align-items: center;
 
   &.btn-primary {
     background-color: #007bff;

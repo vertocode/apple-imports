@@ -12,7 +12,7 @@
         </div>
         <div class="content-filters mt-3">
           <div class="center d-flex gap-3 align-items-end justify-content-center">
-            <base-text-field
+            <BaseTextField
                 icon="fa fa-search"
                 @input-value="state.searchValue = $event"
             />

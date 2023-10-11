@@ -16,6 +16,7 @@
     "cypress": "^12.12.0",
     "pinia-plugin-persistedstate": "^3.2.0",
     "vue": "^3.3.4",
+    "vue-fontawesome": "^0.0.2",
     "vue-router": "^4.0.13",
     "vue3-google-login": "^2.0.14",
     "vuex": "^4.0.2",

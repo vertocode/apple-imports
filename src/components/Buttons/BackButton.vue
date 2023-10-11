@@ -1,7 +1,11 @@
 <template>
   <div class="back-button-content">
     <router-link :to="props?.route || '/'">
-      <BaseButton action="Back" variant="outline-dark"/>
+      <BaseButton
+          left-icon="fa fa-arrow-left"
+          action="Back"
+          variant="outline-dark"
+      />
     </router-link>
   </div>
 </template>
