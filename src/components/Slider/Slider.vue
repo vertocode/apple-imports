@@ -1,6 +1,6 @@
 <template>
   <div :key="selectedImage" class="d-flex justify-content-center align-self-center" v-if="hiddeControlButtons">
-    <Loading v-if="loading" style="width: 100px; height: 100px; position: absolute; margin: auto" :is-loading="true"/>
+    <Spinner v-if="loading" style="width: 100px; height: 100px; border-top-color: #0a53be" />
     <img v-else class="transition-image" :src="selectedImage" :key="selectedImage" :alt="selectedImage" />
   </div>
   <div style="position: relative" class="transition d-flex justify-content-between" :class="{ 'justify-content-between': allImages?.length > 1 }" v-else>
@@ -11,7 +11,7 @@
     </div>
     <transition name="slide-fade" mode="out-in">
       <div :key="selectedImage" class="d-flex justify-content-center align-self-center">
-        <Loading v-if="loading" style="width: 100px; height: 100px; position: absolute; margin: auto" :is-loading="true"/>
+        <Spinner v-if="loading" style="width: 14em; height: 14.3em; border-top-color: #0a53be" />
         <img v-else class="transition-image" :src="selectedImage" :key="selectedImage" :alt="selectedImage" :style="{ 'max-height': isMini ? '10rem' : '100%' }"/>
       </div>
     </transition>
@@ -25,11 +25,12 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
+import Spinner from '../Loading/Spinner.vue'
 
 const urls = ref<string[]>([])
 const selectedImage = ref<any>(null)
 const imageIndex = ref<number>(0)
-const loading = ref(false)
+const loading = ref(true)
 
 const allImages = computed(():any  => {
 	return typeof props.images === 'string' ? [props.images] : props.images
@@ -89,6 +90,7 @@ watch(() => props.selectedImageByColor, (value) => {
 onMounted(() => {
 	urls.value = allImages.value
 	selectedImage.value = urls.value[0]
+  loading.value = false
 })
 </script>
 

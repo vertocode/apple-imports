@@ -4,17 +4,19 @@
         class="base-button"
         :class="[
           sizeClass,
-          variantClass
+          variantClass,
+          customClass
         ]"
         :disabled="props.disabled"
         :title="titleMessage"
     >
-      <span class="icon" v-if="leftIcon">
-        <i :class="leftIcon"></i>
+      <span v-if="loading">
+        <Spinner />
       </span>
-      {{ action }}
-      <span class="icon" v-if="rightIcon">
-        <i :class="rightIcon"></i>
+      <span v-else class="base-button-content">
+        <i v-if="leftIcon" :class="leftIcon"></i>
+        {{ action }}
+        <i v-if="rightIcon" :class="rightIcon"></i>
       </span>
     </button>
   </div>
@@ -23,6 +25,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Size, Variant } from '../../typing/BaseButton'
+import Spinner from '../Loading/Spinner.vue'
 
 interface Props {
   action?: string
@@ -32,6 +35,8 @@ interface Props {
   variant?: Variant
   leftIcon?: string
   rightIcon?: string
+  loading?: boolean
+  customClass?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -39,7 +44,8 @@ const props = withDefaults(defineProps<Props>(), {
 	disabled: false,
 	tooltipMessage: null,
 	variant: 'outline-primary',
-	size: 'medium'
+	size: 'medium',
+  loading: false
 })
 
 const variantClass = computed(() => {
@@ -71,8 +77,7 @@ const sizeClass = computed(() => {
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   display: flex;
-  gap: 0.5em;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   &.btn-primary {
@@ -159,17 +164,23 @@ const sizeClass = computed(() => {
   }
 
   &.btn-small {
-    font-size: 12px;
+    height: 3em;
+    width: 8em;
+    font-size: 0.8rem;
     padding: 5px 10px;
   }
 
   &.btn-medium {
-    font-size: 14px;
+    height: 3em;
+    width: 10em;
+    font-size: 0.9rem;
     padding: 10px 20px;
   }
 
   &.btn-large {
-    font-size: 18px;
+    height: 3em;
+    width: 12em;
+    font-size: 1rem;
     padding: 15px 30px;
   }
 
@@ -180,6 +191,18 @@ const sizeClass = computed(() => {
     &:hover {
       background-color: gray;
       border-color: gray;
+    }
+  }
+
+  .base-button-content {
+    display: flex;
+    min-width: max-content;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7em;
+
+    icon {
+      margin-top: 5px;
     }
   }
 }

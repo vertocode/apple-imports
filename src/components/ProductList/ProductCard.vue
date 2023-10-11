@@ -10,7 +10,9 @@
       <h4 class="mt-4 text-muted my-3">Starting from {{ Number(totalValue).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) }}</h4>
       <router-link :to="`${$route.params.category}/${product.id}`">
         <BaseButton
+            size="large"
             action="See More Details"
+            right-icon="fa fa-envelope-open"
             class="btn btn-sm"
         >
           See more details

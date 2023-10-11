@@ -3,7 +3,7 @@
     <Loading v-if="!product?.value"/>
     <div v-else>
       <BackButton :route="$route.path.replace(`/${product.id}`, '')" class="mt-4" />
-      <div class="product-image-content">
+      <div class="product-image-content mt-3">
         <h1 class="font-monospace">{{ product.name }} <span>#{{ product.id }}</span></h1>
         <Slider
             hidde-control-buttons
@@ -25,8 +25,8 @@
       </div>
 
       <div class="action-buttons">
-        <BaseButton :disabled="!state.selectedNumberOfItems" @click="addToCart" action="Add to Cart" variant="primary"/>
-        <BaseButton :disabled="!state.selectedNumberOfItems" @click="buy" action="Buy" variant="success"/>
+        <BaseButton size="large" left-icon="fa fa-cart-plus" :disabled="!state.selectedNumberOfItems" @click="addToCart" action="Add to Cart" variant="primary"/>
+        <BaseButton size="large" left-icon="fa fa-money" :disabled="!state.selectedNumberOfItems" @click="buy" action="Buy" variant="success"/>
       </div>
       <div class="product-content">
         <div class="product-details">
@@ -210,6 +210,7 @@ onBeforeUnmount(() => {
 
   .action-buttons {
     display: flex;
+    flex-wrap: wrap;
     margin-top: 2em;
     justify-content: center;
     gap: 3em
