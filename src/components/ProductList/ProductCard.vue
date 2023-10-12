@@ -18,22 +18,6 @@
           See more details
         </BaseButton>
       </router-link>
-
-      <p class="mt-3" v-if="!isLogged">You need do the
-        <span @click="$router.push('/login')" class="text-primary" style="cursor: pointer">login</span>
-        to enable this button</p>
-      <br v-else>
-      <div v-if="isAddedCart" class="alert-success">
-        <p class="text-green">
-          You have {{ numberOfItems }} {{ name }}
-          <span v-if="numberOfItems === 1">product</span>
-          <span v-else>products</span>
-          added in the Cart!
-        </p>
-        <span @click="$router.push('/cart')" class="link-info" style="cursor:pointer;">
-          Click here to redirect to your cart.
-        </span>
-      </div>
     </div>
   </div>
 </template>

@@ -16,7 +16,8 @@
                 icon="fa fa-search"
                 @input-value="state.searchValue = $event"
             />
-            <base-button
+            <BaseButton
+                left-icon="fa fa-arrow-down"
                 variant="primary"
                 action="Search"
                 @click="search"
@@ -70,12 +71,13 @@ const state = reactive({
 
 const subNavbarItems = computed(() => {
 	return [
-		{ label: 'iPhone', type: 'iphone' },
-		{ label: 'MacBook', type: 'macbook' },
-		{ label: 'iPad', type: 'ipad' },
-		{ label: 'Mac Mini', type: 'mac-mini' },
-		{ label: 'Mac Studio', type: 'mac-studio' },
-		{ label: 'Accessories', type: 'accessories' }
+		{ label: 'iPhone', type: 'iphone', leftIcon: 'fa fa-mobile' },
+		{ label: 'MacBook', type: 'macbook', leftIcon: 'fa fa-laptop' },
+		{ label: 'iPad', type: 'ipad', leftIcon: 'fa fa-tablet' },
+		{ label: 'Mac Mini', type: 'mac-mini', leftIcon: 'fa fa-square' },
+		{ label: 'IMac', type: 'imac', leftIcon: 'fa fa-desktop' },
+		{ label: 'Mac Studio', type: 'mac-studio', leftIcon: 'fa fa-window-maximize' },
+		{ label: 'Accessories', type: 'accessories', leftIcon: 'fa fa-plug' }
 	]
 })
 

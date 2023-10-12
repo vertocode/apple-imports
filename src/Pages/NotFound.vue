@@ -1,29 +1,28 @@
 <template>
   <div class="not-found">
     <h1>404</h1>
-    <h2>Rota não encontrada</h2>
-    <p>A página que você está procurando não existe.</p>
-    <button @click="goHome">Voltar para a página inicial</button>
+    <h2>Route not found</h2>
+    <p>The page you are looking for does not exist.</p>
+    <button @click="goHome">Return to the home page</button>
   </div>
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
+import { useGeneralStore } from '../store/useGeneralStore'
 
-const store = useStore()
+const generalStore = useGeneralStore()
 const router = useRouter()
 
-
 const goHome = () => {
-	store.state.showNavbar = true
+  generalStore.showNavbar = true
 
 	router.push('/')
 }
 
 onMounted(() => {
-	store.state.showNavbar = false
+  generalStore.showNavbar = false
 })
 </script>
 

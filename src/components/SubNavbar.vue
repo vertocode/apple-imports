@@ -8,7 +8,9 @@
             v-for="(item, index) in items"
             :key="index"
         >
+          <i v-if="item?.leftIcon" :class="item.leftIcon"></i>
           {{ item.label }}
+          <i v-if="item?.rightIcon" :class="item.rightIcon"></i>
         </li>
       </ul>
     </nav>
