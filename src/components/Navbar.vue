@@ -25,17 +25,7 @@
       </ul>
     </div>
 
-    <div class="profile-info" v-if="userStore.userData.name">
-      <div class="profile-text">
-        <h4>{{ userStore.userData.name }}</h4>
-        <h6>{{ userStore.userData.email }}</h6>
-      </div>
-      <img
-          :src="userStore.userData.picture"
-          alt="img-profile"
-          class="profile-image"
-      >
-    </div>
+    <ProfileDropdown :user-data="userStore.userData" v-if="userStore.userData.name"/>
     <div v-else-if="$route.path !== '/login'" class="sign-in-button" @click="$router.push('/login')">
       <h3 class="sign-in-text">Sign In</h3>
       <img src="../assets/login-icon.webp" alt="">
@@ -52,6 +42,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import Hamburguer from './Navbar/Hamburguer.vue'
 import EditProfileModal from './Modal/EditProfileModal.vue'
 import { useUserStore } from '../store/useUserStore'
+import ProfileDropdown from './Profile/ProfileDropdown.vue'
 
 const state = reactive({
 	showEditProfileModal: false
@@ -164,30 +155,6 @@ console.log(steps.value)
   }
 }
 
-.profile-info {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-}
-
-.profile-text {
-  h4 {
-    font-size: 1.2rem;
-    margin: 0;
-  }
-
-  h6 {
-    font-size: 0.9rem;
-    margin: 0;
-  }
-}
-
-.profile-image {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
-
 .hamburger {
   display: none;
 }
@@ -198,20 +165,6 @@ console.log(steps.value)
     gap: 0.2em;
     padding: 0.5em;
     text-align: center;
-  }
-
-  .profile-info {
-    margin-top: 20px;
-    margin-bottom: 2em;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media (max-width: 500px) {
-  .profile-image {
-    width: 50px;
-    height: 50px;
   }
 }
 
@@ -229,12 +182,6 @@ console.log(steps.value)
   .navbar {
     flex-direction: column-reverse;
     gap: 0.2em;
-  }
-
-  .profile-info {
-    flex-direction: row-reverse;
-    margin-top: 5px;
-    margin-bottom: 0.5em;
   }
 }
 

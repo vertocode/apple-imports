@@ -2,6 +2,7 @@ export interface NormalUser {
     name: string,
     email: string,
     password: string,
+    picture?: string
 }
 
 export interface GoogleUser {
