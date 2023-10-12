@@ -7,11 +7,6 @@
     </div>
     <ul class="menu" :class="{ show: state.isMenuOpen }" @click="state.isMenuOpen = false">
       <li
-          v-if="userStore.userData.name"
-          :class="{ active: state.showEditProfileModal }"
-          @click="emit('showEditProfile')"
-      >Profile</li>
-      <li
           v-for="{ title, link, isVisible, leftIcon, rightIcon } in steps"
           :key="title"
           :class="{ active: route.path.includes(link) }"
@@ -49,8 +44,7 @@ const selectItem = (link) => {
 }
 
 const state = reactive({
-	isMenuOpen: false,
-	showEditProfileModal: false
+	isMenuOpen: false
 })
 
 const toggleMenu = () => {

@@ -8,24 +8,31 @@
       <img
           :src="userData.picture"
           alt="img-profile"
-
       >
-      <i class="fa fa-th-large"></i>
+      <i class="fa fa-caret-down"></i>
     </div>
 
     <div class="profile-menu" v-if="showMenu">
       <ul>
-        <li>Profile</li>
+        <li @click="showEditProfile = true">Profile</li>
         <li>Settings</li>
-        <li>Log out</li>
+        <li @click="userStore.logout()">Log out</li>
       </ul>
     </div>
   </div>
+  <EditProfileModal
+      v-if="showEditProfile"
+      @close="showEditProfile = false"
+  />
 </template>
 
 <script setup lang="ts">
 import { NormalUser } from '../../typing/User'
 import { ref } from 'vue'
+import { useUserStore } from '../../store/useUserStore'
+import EditProfileModal from '../Modal/EditProfileModal.vue'
+
+const userStore = useUserStore()
 
 interface Props {
   userData: NormalUser
@@ -33,6 +40,7 @@ interface Props {
 defineProps<Props>()
 
 const showMenu = ref(false)
+const showEditProfile = ref(false)
 </script>
 
 <style lang="scss">
@@ -55,28 +63,37 @@ const showMenu = ref(false)
   }
 
   .profile-image {
+    position: relative;
     cursor: pointer;
 
     i {
       width: 2em;
-      height: 2em;
+      height: 1em;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
-      right: 7%;
-      bottom: 20%;
-      background-color: rgba(0, 0, 0, 0.28);
+      right: 30%;
+      bottom: -5%;
+      background-color: gray;
+      z-index: 1;
     }
 
     img {
       width: 70px;
       height: 70px;
       border-radius: 50%;
+    }
 
-      @media (max-width: 500px) {
+    @media (max-width: 500px) {
+      img {
         width: 50px;
         height: 50px;
+      }
+
+      i {
+        right: 20%;
+        bottom: -15%;
       }
     }
 
@@ -88,7 +105,7 @@ const showMenu = ref(false)
     background-color: rgba(255, 255, 255, 0.95);
     color: black;
     position: absolute;
-    top: 80%;
+    top: 115%;
     left: 0;
 
     ul {

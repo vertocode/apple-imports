@@ -33,7 +33,7 @@
           <base-button
               v-if="!saveChangesDisabled"
               class="m-auto mt-3"
-              :loading="true"
+              :loading="state.isLoading"
               :disabled="saveChangesDisabled"
               action="Save Changes"
               @click="saveChanges"
@@ -127,6 +127,7 @@ const saveChanges = async () => {
 
 <style lang="scss">
 .edit-profile-modal {
+  position: absolute;
   main {
     display: flex;
     justify-content: center;

@@ -119,6 +119,7 @@ const socials = [
   .base-modal-footer {
     padding: 1rem;
     background-color: #f8f8f8;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;

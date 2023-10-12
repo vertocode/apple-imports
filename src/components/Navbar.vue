@@ -31,10 +31,7 @@
       <img src="../assets/login-icon.webp" alt="">
     </div>
   </div>
-  <edit-profile-modal
-      v-if="state.showEditProfileModal"
-      @close="state.showEditProfileModal = false"
-  ></edit-profile-modal>
+
 </template>
 
 <script setup>
