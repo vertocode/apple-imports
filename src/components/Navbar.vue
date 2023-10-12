@@ -14,10 +14,14 @@
             :class="{
           subnavBarActive: $route.path.includes(`${link}/`) && !$route.path.includes('request-product') && !$route.params?.productId,
            active: $route.path.includes(link) }"
-            v-for="{ title, link } in steps"
+            v-for="{ title, link, leftIcon, rightIcon } in steps"
             :key="title"
             @click="$router.push(link)"
-        >{{ title }}</li>
+        >
+          <i v-if="leftIcon" :class="leftIcon"></i>
+          {{ title }}
+          <i v-if="rightIcon" :class="rightIcon"></i>
+        </li>
       </ul>
     </div>
 
@@ -61,16 +65,19 @@ const steps = computed(() => [
 	{
 		link: '/product-list',
 		title: 'Product list',
+    leftIcon: 'fa fa-list',
 		isVisible: true
 	},
 	{
 		link: '/cart',
 		title: 'Cart',
+    leftIcon: 'fa fa-cart-plus',
 		isVisible: userStore.isLogged
 	},
 	{
 		link: '/requests',
 		title: 'Requests',
+    leftIcon: 'fa fa-money',
 		isVisible: userStore.isLogged
 	},
 	// {

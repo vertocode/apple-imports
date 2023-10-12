@@ -12,12 +12,16 @@
           @click="emit('showEditProfile')"
       >Profile</li>
       <li
-          v-for="step in steps"
-          :key="step.title"
-          :class="{ active: route.path.includes(step.link) }"
-          v-show="step?.isVisible"
-          @click="selectItem(step)"
-      >{{ step.title }}</li>
+          v-for="{ title, link, isVisible, leftIcon, rightIcon } in steps"
+          :key="title"
+          :class="{ active: route.path.includes(link) }"
+          v-show="isVisible"
+          @click="selectItem(link)"
+      >
+        <i v-if="leftIcon" :class="leftIcon"></i>
+        {{ title }}
+        <i v-if="rightIcon" :class="rightIcon"></i>
+      </li>
     </ul>
   </nav>
 
@@ -39,9 +43,9 @@ const props = defineProps({
 const steps = computed(() => props.options)
 const emit = defineEmits(['close'])
 
-const selectItem = (step) => {
-	emit('close')
-	router.push(step.link)
+const selectItem = (link) => {
+	toggleMenu()
+	router.push(link)
 }
 
 const state = reactive({
@@ -92,6 +96,7 @@ nav {
   }
 
   .menu li {
+    text-align: start;
     margin-bottom: 10px;
     cursor: pointer;
     border-bottom: 0.1px rgba(255, 255, 255, 0.21) solid;
