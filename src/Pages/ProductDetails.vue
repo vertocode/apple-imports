@@ -103,6 +103,7 @@ const product = computed(() => {
 })
 
 const itemsMarked = ref([])
+const currentProduct = ref({})
 const totalValue = ref(0)
 const state = reactive({
 	imageColor: null,
@@ -143,9 +144,8 @@ const allImages = computed(() => {
 })
 
 const addToCart = () => {
-	console.log(state.selectedNumberOfItems)
 	for (const times in new Array(state.selectedNumberOfItems).fill('time')) {
-		cartStore.cart.push(product.value)
+		cartStore.cart.push(currentProduct.value)
 	}
 	router.push('/cart')
 }
@@ -165,6 +165,12 @@ const calculateValue = (specification, title) => {
 		name,
 		value: value || 0,
 	}
+
+  currentProduct.value = {
+    ...currentProduct.value,
+    specifications: itemsMarked.value,
+    value: totalValue.value
+  }
 
 	totalValue.value = product.value.value
 	for (const item of itemsMarked.value) {
@@ -193,6 +199,10 @@ onMounted(async () => {
 	state.imageColor = allImages.value[0]
 	totalValue.value = product.value.value
 	itemsMarked.value = product.value.specifications.map(specification => ({ title: specification.title, ...specification.items[0] }))
+  currentProduct.value = {
+    ...product.value,
+    specifications: itemsMarked.value
+  }
 })
 
 onBeforeUnmount(() => {

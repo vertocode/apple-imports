@@ -31,12 +31,7 @@
             <template #content>
               <ul>
                 <li v-for="(specification, indexSpecification) in product.specifications" :key="indexSpecification">
-                  {{ specification.title }}
-                  <ul>
-                    <li v-for="(item, indexItems) in specification.items" :key="indexItems">
-                      {{ item.name }}
-                    </li>
-                  </ul>
+                  <strong>{{ specification.title }}: {{ specification.name }} </strong>
                 </li>
               </ul>
             </template>
