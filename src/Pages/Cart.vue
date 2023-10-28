@@ -46,9 +46,7 @@
     <div v-else>
       <div class="empty-cart">
         <img src="../assets/empty-cart.png" alt="Empty Cart" class="empty-cart-icon" />
-        <div class="shop-now-button">
-          <BaseButton action="Shop Now" @click="$router.push('/product-list')" />
-        </div>
+        <ShopNowButton />
       </div>
     </div>
   </main>
@@ -58,6 +56,7 @@
 import BaseButton from '../components/Buttons/BaseButton.vue'
 import Tooltip from '../components/Tooltip/Tooltip.vue'
 import { useCartStore } from '../store/useCartStore'
+import ShopNowButton from '../components/Buttons/ShopNowButton.vue'
 
 const cartStore = useCartStore()
 
@@ -162,11 +161,6 @@ const formatCurrency = (value) => {
     .empty-cart-icon {
       width: 300px;
       margin-bottom: 20px;
-    }
-
-    .shop-now-button {
-      display: flex;
-      justify-content: center;
     }
 
     p {

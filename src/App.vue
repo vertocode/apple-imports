@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <loading v-if="state.isLoading" :is-loading="true"></loading>
-    <navbar />
-    <router-view />
-    <toasted
+    <Loading v-if="state.isLoading" :is-loading="true"></Loading>
+    <Navbar />
+    <div class="router-link">
+      <router-view />
+    </div>
+    <Toasted
         :key="toasted"
         :title="toasted.title"
         :description="toasted.description"
         :state="toasted.status"
         v-if="toasted.isEnabled"
     />
+    <Footer />
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import { computed } from 'vue'
 import { reactive } from 'vue'
 import Loading from './components/Loading/Loading.vue'
 import Toasted from './components/Toast/Toasted.vue'
+import Footer from './components/Footer.vue'
 import { useToastStore } from './store/useToastStore'
 import { useGeneralStore } from './store/useGeneralStore'
 
@@ -35,5 +39,8 @@ const toasted = computed(() =>  toastStore.toasted)
 body {
   position: relative;
   background-color: #EBEBEB;
+  .router-link {
+    min-height: 74.47vh;
+  }
 }
 </style>

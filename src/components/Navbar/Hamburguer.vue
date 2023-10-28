@@ -59,7 +59,7 @@ nav {
   align-items: center;
   background-color: #333;
   color: #fff;
-  height: 80px;
+  height: 60px;
   padding: 0 50px;
   position: relative;
   .hamburger-menu {
@@ -81,7 +81,7 @@ nav {
     z-index: 1;
     display: none;
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: 0;
     background-color: #333;
     padding: 20px;

@@ -176,9 +176,8 @@ console.log(steps.value)
 }
 
 @media (max-width: 435px) {
-  .navbar {
-    flex-direction: column-reverse;
-    gap: 0.2em;
+  .hamburger nav {
+    width: 10px;
   }
 }
 

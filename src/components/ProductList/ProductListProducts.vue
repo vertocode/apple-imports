@@ -138,12 +138,15 @@ onMounted(async () => {
   .title-content {
     display: flex;
     justify-content: center;
+    gap: 2em;
+    flex-wrap: wrap;
     align-items: center;
     .back-button-div {
+      margin-top: 1em;
       height: 20px;
     }
     h1 {
-      width: 100%;
+      width: 80%;
     }
   }
 
