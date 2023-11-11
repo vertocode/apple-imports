@@ -3511,10 +3511,10 @@ vue@^3.3.4, vue@^3.3.7:
     "@vue/server-renderer" "3.3.8"
     "@vue/shared" "3.3.8"
 
-vuetage@ˆ0.0.31:
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/vuetage/-/vuetage-0.0.31.tgz#79fd0b6dbea4164745a70bb7ec1fd43d317af43c"
-  integrity sha512-KBBB5pcVpZAE5mMD0unyzLOrDoNVnbNKEzcvu2VmfC2LhflK9XKrBzequlqtTS+yakchNNFSjnVNw5yUIRZBkA==
+vuetage@ˆ0.0.33:
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/vuetage/-/vuetage-0.0.33.tgz#44b6f17fcdfbb85a182b389218c60e9c40092439"
+  integrity sha512-ZP6mxLLf9OISWxs42svAeRLqDrKKdT+YSU0ZAZuKXVIjUXtcwJQ9+/z909SvY44IKcvBIS50Zch1TYJ1iigJUA==
   dependencies:
     vue "^3.3.7"
 

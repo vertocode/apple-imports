@@ -27,6 +27,7 @@
     "node": "^18.16.1"
   },
   "devDependencies": {
+    "vuetage": "ˆ0.0.33",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
@@ -41,7 +42,6 @@
     "sass": "^1.52.2",
     "typescript": "^4.5.4",
     "vite": "^2.9.16",
-    "vue-tsc": "^0.34.7",
-    "vuetage": "ˆ0.0.31"
+    "vue-tsc": "^0.34.7"
   }
 }
