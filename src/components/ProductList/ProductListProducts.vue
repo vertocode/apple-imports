@@ -19,9 +19,8 @@
             <BaseButton
                 left-icon="fa fa-arrow-down"
                 variant="primary"
-                action="Search"
                 @click="search"
-            />
+            >Search</BaseButton>
           </div>
         </div>
         <div class="all-products" v-if="productListStore.products.length">
@@ -50,7 +49,7 @@ import Pagination from './Pagination.vue'
 import { Products } from '../../services/product/ProductList'
 import { computed, onMounted, reactive, watch } from 'vue'
 import BaseTextField from '../Input/BaseTextField.vue'
-import BaseButton from '../Buttons/BaseButton.vue'
+import { BaseButton } from 'vuetage'
 import SubNavbar from '../SubNavbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductListStore } from '../../store/useProductListStore'

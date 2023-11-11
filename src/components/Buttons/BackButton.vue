@@ -3,16 +3,18 @@
     <router-link :to="props?.route || '/'">
       <BaseButton
           left-icon="fa fa-arrow-left"
-          action="Back"
           variant="outline-dark"
-      />
+      >
+        Back
+      </BaseButton>
     </router-link>
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import BaseButton from './BaseButton.vue'
+import { BaseButton } from 'vuetage'
 
 interface Props {
   route?: string

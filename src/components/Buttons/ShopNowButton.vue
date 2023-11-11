@@ -1,10 +1,10 @@
 <template>
   <div class="shop-now-button">
-    <BaseButton action="Shop Now" @click="$router.push('/product-list')" />
+    <BaseButton @click="$router.push('/product-list')">Shop Now</BaseButton>
   </div>
 </template>
 <script setup lang="ts">
-import BaseButton from './BaseButton.vue'
+import { BaseButton } from 'vuetage'
 </script>
 
 <style lang="scss">

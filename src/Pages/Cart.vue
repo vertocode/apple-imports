@@ -2,7 +2,7 @@
   <main class="cart-container mt-3">
     <div class="cart-header d-flex justify-content-between align-items-center">
       <h1>Your Cart</h1>
-      <BaseButton v-if="cartStore.cart.length" action="Add New Items" @click="$router.push('/product-list')" />
+      <BaseButton v-if="cartStore.cart.length" @click="$router.push('/product-list')">Add New Items</BaseButton>
     </div>
 
     <table class="cart-table" v-if="cartStore.cart.length">
@@ -38,7 +38,7 @@
           </Tooltip>
         </td>
         <td class="delete-button-content">
-          <BaseButton action="Delete" variant="danger" @click="deleteItemCart(index)" />
+          <BaseButton variant="danger" @click="deleteItemCart(index)">Delete</BaseButton>
         </td>
       </tr>
       </tbody>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import BaseButton from '../components/Buttons/BaseButton.vue'
+import { BaseButton } from 'vuetage'
 import Tooltip from '../components/Tooltip/Tooltip.vue'
 import { useCartStore } from '../store/useCartStore'
 import ShopNowButton from '../components/Buttons/ShopNowButton.vue'

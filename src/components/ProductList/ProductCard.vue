@@ -11,11 +11,10 @@
       <router-link :to="`${$route.params.category}/${product.id}`">
         <BaseButton
             size="large"
-            action="See More Details"
             right-icon="fa fa-envelope-open"
             class="btn btn-sm"
         >
-          See more details
+          See More Details
         </BaseButton>
       </router-link>
     </div>
@@ -28,7 +27,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import Slider from '../Slider/Slider.vue'
 import { useCartStore } from '../../store/useCartStore'
 import { useUserStore } from '../../store/useUserStore'
-import BaseButton from '../Buttons/BaseButton.vue'
+import { BaseButton } from 'vuetage'
 
 const props = defineProps({
 	product: Object

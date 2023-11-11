@@ -25,8 +25,12 @@
       </div>
 
       <div class="action-buttons">
-        <BaseButton size="large" left-icon="fa fa-cart-plus" :disabled="!state.selectedNumberOfItems" @click="addToCart" action="Add to Cart" variant="primary"/>
-        <BaseButton size="large" left-icon="fa fa-money" :disabled="!state.selectedNumberOfItems" @click="buy" action="Buy" variant="success"/>
+        <BaseButton size="large" left-icon="fa fa-cart-plus" :disabled="!state.selectedNumberOfItems" @click="addToCart" variant="primary">
+          Add to Cart
+        </BaseButton>
+        <BaseButton size="large" left-icon="fa fa-money" :disabled="!state.selectedNumberOfItems" @click="buy" variant="success">
+          Buy
+        </BaseButton>
       </div>
       <div class="product-content">
         <div class="product-details">
@@ -89,7 +93,7 @@ import { useProductListStore } from '../store/useProductListStore'
 import { useRoute, useRouter } from 'vue-router'
 import BackButton from '../components/Buttons/BackButton.vue'
 import Loading from '../components/Loading/Loading.vue'
-import BaseButton from '../components/Buttons/BaseButton.vue'
+import { BaseButton } from 'vuetage'
 import { useCartStore } from '../store/useCartStore'
 import BaseAutocomplete from '../components/Input/BaseAutocomplete.vue'
 import BaseTextField from '../components/Input/BaseTextField.vue'

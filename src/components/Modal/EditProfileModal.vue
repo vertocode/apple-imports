@@ -53,7 +53,7 @@
 
 <script setup>
 import BaseModal from './BaseModal.vue'
-import BaseButton from './../Buttons/BaseButton.vue'
+import { BaseButton } from 'vuetage'
 import Toasted from './../Toast/Toasted.vue'
 import { computed, onMounted, reactive } from 'vue'
 import Loading from '../Loading/Loading.vue'
