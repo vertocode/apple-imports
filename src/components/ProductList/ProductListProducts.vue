@@ -11,13 +11,19 @@
           <h1 class="mt-3">{{ subNavbarItems.filter(item => item.type === state.selectedProductType)[0].label }} Products: </h1>
         </div>
         <div class="content-filters mt-3">
-          <div class="center d-flex gap-3 align-items-end justify-content-center">
+          <div class="center d-flex gap-3 align-items-center justify-content-center">
             <BaseTextField
-                icon="fa fa-search"
-                @input-value="state.searchValue = $event"
+                label="Search by Product Name"
+                left-icon="fa fa-search"
+                variant="underlined"
+                customStyle="background-color: transparent;"
+                height="2.3em"
+                @input:value="state.searchValue = $event"
             />
             <BaseButton
+                size="small"
                 left-icon="fa fa-arrow-down"
+                :disabled="!state.searchValue || state.searchValue === ''"
                 variant="primary"
                 @click="search"
             >Search</BaseButton>
@@ -48,8 +54,7 @@ import Loading from '../Loading/Loading.vue'
 import Pagination from './Pagination.vue'
 import { Products } from '../../services/product/ProductList'
 import { computed, onMounted, reactive, watch } from 'vue'
-import BaseTextField from '../Input/BaseTextField.vue'
-import { BaseButton } from 'vuetage'
+import { BaseButton, BaseTextField } from 'vuetage'
 import SubNavbar from '../SubNavbar.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProductListStore } from '../../store/useProductListStore'

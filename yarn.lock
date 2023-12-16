@@ -86,32 +86,6 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.53.0.tgz#bea56f2ed2b5baea164348ff4d5a879f6f81f20d"
   integrity sha512-Kn7K8dx/5U6+cT1yEhpX1w4PCSg0M+XyRILPgvwcEBjerFWCwQj5sbr3/VmxqV0JGHCBCzyd6LxypEuehypY1w==
 
-"@fortawesome/fontawesome-common-types@6.4.2":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.4.2.tgz#1766039cad33f8ad87f9467b98e0d18fbc8f01c5"
-  integrity sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==
-
-"@fortawesome/free-brands-svg-icons@^6.4.2":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-6.4.2.tgz#9b8e78066ea6dd563da5dfa686615791d0f7cc71"
-  integrity sha512-LKOwJX0I7+mR/cvvf6qIiqcERbdnY+24zgpUSouySml+5w8B4BJOx8EhDR/FTKAu06W12fmUIcv6lzPSwYKGGg==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.2"
-
-"@fortawesome/free-regular-svg-icons@^6.4.2":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.4.2.tgz#aee79ed76ce5dd04931352f9d83700761b8b1b25"
-  integrity sha512-0+sIUWnkgTVVXVAPQmW4vxb9ZTHv0WstOa3rBx9iPxrrrDH6bNLsDYuwXF9b6fGm+iR7DKQvQshUH/FJm3ed9Q==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.2"
-
-"@fortawesome/free-solid-svg-icons@^6.4.2":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.4.2.tgz#33a02c4cb6aa28abea7bc082a9626b7922099df4"
-  integrity sha512-sYwXurXUEQS32fZz9hVCUUv/xu49PEJEyUOsA51l6PU/qVgfbTb2glsTEaJngVVT8VqBATRIdh7XVgV1JF1LkA==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "6.4.2"
-
 "@fortawesome/vue-fontawesome@^3.0.3":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-3.0.5.tgz#fef21fbb0277711160f9105e8e5bb9a15f5fce25"
@@ -3511,11 +3485,12 @@ vue@^3.3.4, vue@^3.3.7:
     "@vue/server-renderer" "3.3.8"
     "@vue/shared" "3.3.8"
 
-vuetage@ˆ0.0.33:
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/vuetage/-/vuetage-0.0.33.tgz#44b6f17fcdfbb85a182b389218c60e9c40092439"
-  integrity sha512-ZP6mxLLf9OISWxs42svAeRLqDrKKdT+YSU0ZAZuKXVIjUXtcwJQ9+/z909SvY44IKcvBIS50Zch1TYJ1iigJUA==
+vuetage@^0.0.42:
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/vuetage/-/vuetage-0.0.42.tgz#952d55fd95fde6bb34307a904e40d18890c09a17"
+  integrity sha512-bS/gHZJWfDyPANxaHkHjHl4GT3qCteZuwAMPRARYnd+iCX7pxpfoBjsqLoZiwvOA+hMTNHkNatrlm7s2Kj372Q==
   dependencies:
+    font-awesome "^4.7.0"
     vue "^3.3.7"
 
 vuex-persist@^3.1.3:

@@ -20,7 +20,7 @@
         <div class="number-products">
           <span>Number of Items:</span>
           <BaseAutocomplete @value="state.selectedNumberOfItems = $event" :options="optionsNumberOfItems"></BaseAutocomplete>
-          <BaseTextField placeholder="How many products do you need?" v-if="state.selectedNumberOfItems === '+'"></BaseTextField>
+          <BaseTextField right-icon="fa fa-plus" label="How many products do you need?" v-if="state.selectedNumberOfItems === '+'"></BaseTextField>
         </div>
       </div>
 
@@ -93,10 +93,9 @@ import { useProductListStore } from '../store/useProductListStore'
 import { useRoute, useRouter } from 'vue-router'
 import BackButton from '../components/Buttons/BackButton.vue'
 import Loading from '../components/Loading/Loading.vue'
-import { BaseButton } from 'vuetage'
+import { BaseButton, BaseTextField } from 'vuetage'
 import { useCartStore } from '../store/useCartStore'
 import BaseAutocomplete from '../components/Input/BaseAutocomplete.vue'
-import BaseTextField from '../components/Input/BaseTextField.vue'
 
 const productListStore = useProductListStore()
 const cartStore = useCartStore()

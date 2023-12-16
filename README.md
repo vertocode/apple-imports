@@ -61,8 +61,6 @@ Verto Imports includes several npm scripts to streamline development and deploym
 
 - `@vitejs/plugin-vue`: Vite plugin for Vue.js development.
 
-- `font-awesome`: Icons and fonts library.
-
 - `sass`: Syntactically Awesome Style Sheets (Sass) for styling.
 
 - `typescript`: TypeScript for type checking and static analysis.
